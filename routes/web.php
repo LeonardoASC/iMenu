@@ -4,19 +4,18 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\SessionController;
+use App\Http\Controllers\MenuController;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return Inertia::render('Welcome');
 });
 
-Route::get('/menu', function () {
-    return Inertia::render('public/Menu');
-});
+Route::post('/create-session', [SessionController::class, 'create'])->name('create-session');
+
+// Route::resource('menu', 'MenuController');
+Route::resource('/menu', MenuController::class);
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
