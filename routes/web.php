@@ -8,8 +8,12 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\MenuController;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome');
+    return Inertia::render('Public/Welcome');
 });
+
+Route::get('login', function () {
+    return Inertia::render('Auth/Login');
+})->name('login');
 
 Route::post('/create-session', [SessionController::class, 'create'])->name('create-session');
 
@@ -18,7 +22,7 @@ Route::resource('/menu', MenuController::class);
 
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Profile/Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
