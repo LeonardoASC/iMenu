@@ -10,10 +10,10 @@ class SessionController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'cpf' => ['required', 'string', 'min:11', 'max:11'],
+            'email' => 'required|email',
         ]);
 
-        session(['cpf' => $request->input('cpf')]);
+        session(['email' => $request->input('email')]);
 
         return redirect()->route('menu.index');
     }
