@@ -25,9 +25,16 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         // $categories = $this->categoryRepository->getAll();
-        $categories = Category::all();
+        $categories = Category::all()->map(function ($category) {
+            return [
+                'image' => $category->image,
+                'name' => $category->name,
+                'status' => $category->status,
+                'created_at' => $category->created_at->format('d-m-Y'),
+            ];
+        });
 
-        return Inertia::render('Profile/Category/index', compact('categories'));
+        return Inertia::render('Profile/Category/index', ['categories' => $categories]);
     }
 
     /**

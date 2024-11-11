@@ -1,6 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
-import { usePage } from '@inertiajs/inertia-react';
+import { usePage } from '@inertiajs/react';
+import { TableCategory } from '@/Components/TableCategory';
 
 
 export default function Index() {
@@ -10,15 +11,7 @@ export default function Index() {
     return (
         <AuthenticatedLayout>
             <Head title="Profile" />
-
-            <h1>Categorias</h1>
-            <ul>
-                {categories.data.map((category) => (
-                    <li key={category.id}>{category.name}</li>
-                ))}
-            </ul>
-
-
+            <TableCategory categories={categories} />
         </AuthenticatedLayout>
     );
 }
