@@ -19,17 +19,13 @@ class Establishment extends Model
         'logo_path',
     ];
 
-    public function scopeFilter($query, $request)
-    {
-        if(!$request) return;
-        return $query
-            ->when(data_get($request, 'name'), function ($query, $name) {
-                return $query->where('name', 'like', '%' . $name . '%');
-            });
-    }
-
     public function users() : HasMany
     {
         return $this->hasMany(User::class);
+    }
+
+    public function tables() : HasMany
+    {
+        return $this->hasMany(Table::class);
     }
 }
