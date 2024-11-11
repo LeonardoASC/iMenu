@@ -53,7 +53,7 @@ export default function AuthenticatedLayout({ header, children }) {
                             Dashboard
                         </NavLink>
                     </Typography>
-                    
+
                 </div>
                 <div className="p-2">
                     <Input icon={<MagnifyingGlassIcon className="h-5 w-5" />} label="Search" />
@@ -122,12 +122,14 @@ export default function AuthenticatedLayout({ header, children }) {
                         </ListItem>
                         <AccordionBody className="py-1">
                             <List className="p-0">
-                                <ListItem>
-                                    <ListItemPrefix>
-                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                    </ListItemPrefix>
-                                    Orders
-                                </ListItem>
+                                <Link href={route('category.index')}>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        </ListItemPrefix>
+                                        Categoria
+                                    </ListItem>
+                                </Link>
                                 <ListItem>
                                     <ListItemPrefix>
                                         <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />

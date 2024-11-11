@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\Admin\CategoryController;
 
 Route::get('/', function () {
     return Inertia::render('Public/Welcome');
@@ -20,6 +21,7 @@ Route::post('/create-session', [SessionController::class, 'create'])->name('crea
 // Route::resource('menu', 'MenuController');
 Route::resource('/menu', MenuController::class);
 
+Route::resource('/category', CategoryController::class);
 
 Route::get('/dashboard', function () {
     return Inertia::render('Profile/Dashboard');
