@@ -33,7 +33,7 @@ class CategoryController extends Controller
             ];
         });
 
-        return Inertia::render('Profile/Category/index', ['categories' => $categories]);
+        return Inertia::render('Profile/Category/Index', ['categories' => $categories]);
     }
 
     /**
@@ -41,7 +41,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Categories/Create');
+        return Inertia::render('Profile/Category/Create');
     }
 
     /**

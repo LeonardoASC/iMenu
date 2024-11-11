@@ -1,5 +1,6 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
+import { Link } from "@inertiajs/react";
 import {
     Card,
     CardHeader,
@@ -53,9 +54,11 @@ export function TableCategory({ categories }) {
                         <Button variant="outlined" size="sm">
                             view all
                         </Button>
-                        <Button className="flex items-center gap-3" size="sm">
-                            <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Category
-                        </Button>
+                        <Link href={route('category.create')}>
+                            <Button className="flex items-center gap-3" size="sm">
+                                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Category
+                            </Button>
+                        </Link>
                     </div>
                 </div>
                 <div className="flex flex-col items-center justify-between gap-4 md:flex-row ">

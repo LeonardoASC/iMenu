@@ -12,11 +12,11 @@ export default function Dashboard() {
             }
         >
             <Head title="Dashboard" />
-                    <div className="bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            Olá {user.name}, seja bem vindo!
-                        </div>
-                    </div>
+            <div className="bg-white shadow-sm sm:rounded-lg">
+                <div className="p-6 text-gray-900">
+                    Olá {user.name}, seja bem vindo!
+                </div>
+            </div>
         </AuthenticatedLayout>
     );
 }
