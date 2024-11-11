@@ -52,16 +52,18 @@ class EstablishmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Establishment $establishment)
+    public function show($id)
     {
+        $establishment = $this->establishmentRepository->findById($id);
         return Inertia::render('Admin/Establishments/Show', compact('establishment'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Establishment $establishment)
+    public function edit($id)
     {
+        $establishment = $this->establishmentRepository->findById($id);
         return Inertia::render('Admin/Establishments/Edit', compact('establishment'));
     }
 
@@ -72,7 +74,7 @@ class EstablishmentController extends Controller
     {
         $data = $request->validated();
 
-        $catregory = $this->establishmentRepository->update($data, $establishment);
+        $establishment = $this->establishmentRepository->update($data, $establishment);
 
         return Redirect::route('establishments.show', $establishment->id)->with('message', 'Estabelecimento atualizado com sucesso.');
     }
