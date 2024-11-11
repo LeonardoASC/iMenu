@@ -1,6 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
-import { usePage } from "@inertiajs/react";
 import {
     Card,
     CardHeader,
@@ -36,6 +35,7 @@ const TABS = [
 const TABLE_HEAD = ["Category", "Status", "created_at", ""];
 
 export function TableCategory({ categories }) {
+    const categoryData = categories.data || [];
 
     return (
         <Card className="h-full w-full">
@@ -97,9 +97,9 @@ export function TableCategory({ categories }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {categories.map(
+                        {categoryData.map(
                             ({ image, name, status, created_at }, index) => {
-                                const isLast = index === categories.length - 1;
+                                const isLast = index === categoryData.length - 1;
                                 const classes = isLast
                                     ? "p-4"
                                     : "p-4 border-b border-blue-gray-50";
@@ -155,7 +155,7 @@ export function TableCategory({ categories }) {
             </CardBody>
             <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4 ">
                 <Typography variant="small" color="blue-gray" className="font-normal">
-                    Page 1 of 10
+                    Page {categories.current_page} of {categories.last_page}
                 </Typography>
                 <div className="flex gap-2">
                     <Button variant="outlined" size="sm">

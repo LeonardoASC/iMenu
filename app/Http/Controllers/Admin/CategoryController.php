@@ -24,8 +24,7 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        // $categories = $this->categoryRepository->getAll();
-        $categories = Category::all()->map(function ($category) {
+        $categories = Category::paginate(5)->through(function ($category) {
             return [
                 'image' => $category->image,
                 'name' => $category->name,
