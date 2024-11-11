@@ -15,18 +15,19 @@ class CategoryController extends Controller
 {
     private $categoryRepository;
 
-    public function __construct(CategoryRepository $repository) {
-        $this->categoryRepository = $repository;
-    }
+    // public function __construct(CategoryRepository $repository) {
+    //     $this->categoryRepository = $repository;
+    // }
 
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $categories = $this->categoryRepository->getAll();
+        // $categories = $this->categoryRepository->getAll();
+        $categories = Category::all();
 
-        return Inertia::render('Admin/Categories/Index', compact('categories'));
+        return Inertia::render('Profile/Category/index', compact('categories'));
     }
 
     /**

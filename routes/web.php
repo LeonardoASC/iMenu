@@ -18,10 +18,9 @@ Route::get('login', function () {
 
 Route::post('/create-session', [SessionController::class, 'create'])->name('create-session');
 
-// Route::resource('menu', 'MenuController');
 Route::resource('/menu', MenuController::class);
-
 Route::resource('/category', CategoryController::class);
+// Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Profile/Dashboard');
