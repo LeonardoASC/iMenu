@@ -1,72 +1,75 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, useForm } from '@inertiajs/react';
 import {
     Card,
     Input,
-    Checkbox,
     Button,
     Typography,
     Option,
     Select
 } from "@material-tailwind/react";
-import React, { useRef, useState, useEffect } from 'react';
-
-
+import React, { useRef } from 'react';
 
 export default function Create() {
+    const { data, setData, post, processing, errors } = useForm({
+        name: '',
+        image: null,
+        status: '',
+    });
 
-    const [imageName, setImageName] = useState('');
     const fileInputRef = useRef(null);
 
-    const handleButtonClick = () => { fileInputRef.current.click()};
+    const handleButtonClick = () => {
+        fileInputRef.current.click();
+    };
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
-        if (file) { setImageName(file.name) }
+        if (file) { setData('image', file)}
+    };
+
+    const handleStatusChange = (value) => {setData('status', value)};
+
+    const submit = (e) => {
+        e.preventDefault();
+        post(route('category.store'));
     };
 
     return (
         <AuthenticatedLayout>
-            <Head title="Profile" />
+            <Head title="Create Category" />
 
             <Card shadow={false} className="bg-white p-4">
                 <Typography variant="h4" color="blue-gray">
                     Create a Category
                 </Typography>
                 <Typography color="gray" className="mt-1 font-normal">
-                    Below you will need to provide image, name, status.
+                    Below you will need to provide image, name, and status.
                 </Typography>
-                <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96">
+                <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={submit}>
                     <div className="mb-1 flex flex-col gap-6">
-                        <Typography variant="h6" color="blue-gray" className="-mb-3">
-                            Name
-                        </Typography>
                         <Input
+                            id="name"
+                            name="name"
+                            value={data.name}
+                            onChange={(e) => setData('name', e.target.value)}
                             size="lg"
-                            placeholder="name@mail.com"
-                            className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-                            labelProps={{
-                                className: "before:content-none after:content-none",
-                            }}
+                            placeholder="Ex: Eletrônicos"
+                            autoComplete="name"
+                            required
                         />
+                        <Typography variant="small" color="red">{errors.name}</Typography>
 
-                        <Typography variant="h6" color="blue-gray" className="-mb-3">
-                            Image
-                        </Typography>
                         <div className="relative flex w-full max-w-[24rem]">
                             <Input
                                 type="text"
                                 label="Image"
-                                value={imageName}
+                                value={data.image ? data.image.name : ''}
                                 readOnly
-                                className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-                                containerProps={{
-                                    className: "!border-t-blue-gray-200 focus:!border-t-gray-900",
-                                }}
                             />
                             <Button
                                 size="sm"
-                                color={imageName ? "blue" : "gray"}
+                                color={data.image ? "blue" : "gray"}
                                 onClick={handleButtonClick}
                                 className="!absolute right-1 top-1 rounded"
                             >
@@ -76,33 +79,27 @@ export default function Create() {
                                 type="file"
                                 accept="image/*"
                                 ref={fileInputRef}
-                                style={{ display: 'none' }} 
+                                style={{ display: 'none' }}
                                 onChange={handleFileChange}
                             />
                         </div>
+                        <Typography variant="small" color="red">{errors.image}</Typography>
 
-                        <Typography variant="h6" color="blue-gray" className="-mb-3">
-                            Status
-                        </Typography>
                         <Select
                             label="Select Status"
-                            animate={{
-                                mount: { y: 0 },
-                                unmount: { y: 25 },
-                            }}
+                            onChange={(e) => handleStatusChange(e)}
                         >
-                            <Option>Enable</Option>
-                            <Option>Disable</Option>
+                            <Option value="Enable">Enable</Option>
+                            <Option value="Disable">Disable</Option>
                         </Select>
+                        <Typography variant="small" color="red">{errors.status}</Typography>
                     </div>
 
-                    <Button className="mt-6" fullWidth>
+                    <Button className="mt-6" type="submit" disabled={processing} fullWidth>
                         ADD
                     </Button>
                 </form>
             </Card>
-
-
         </AuthenticatedLayout>
     );
 }

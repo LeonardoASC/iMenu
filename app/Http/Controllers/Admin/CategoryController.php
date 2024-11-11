@@ -11,13 +11,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
+
 class CategoryController extends Controller
 {
-    private $categoryRepository;
+    protected $categoryRepository;
 
-    // public function __construct(CategoryRepository $repository) {
-    //     $this->categoryRepository = $repository;
-    // }
+    public function __construct(CategoryRepository $categoryRepository)
+    {
+        $this->categoryRepository = $categoryRepository;
+    }
 
     /**
      * Display a listing of the resource.
@@ -51,6 +53,10 @@ class CategoryController extends Controller
     {
         $data = $request->validated();
 
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('categories', 'public'); // Armazena em `storage/app/public/categories`
+        }
+
         $category = $this->categoryRepository->create($data);
 
         return Redirect::route('categories.show', $category->id)->with('message', 'Categoria cadastrada com sucesso.');
@@ -61,7 +67,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return Inertia::render('Admin/Categories/Show', compact('category'));
+        return Inertia::render('Profile/Category/Show', compact('category'));
     }
 
     /**

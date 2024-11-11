@@ -10,7 +10,9 @@ class Category extends Model
     use SoftDeletes;
 
     protected $fillable = [
+        'image',
         'name',
+        'status'
     ];
 
     public function scopeFilter($query, $request)
