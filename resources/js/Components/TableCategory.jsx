@@ -1,6 +1,7 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
-import { Link } from "@inertiajs/react";
+import { PencilIcon, UserPlusIcon, TrashIcon, EyeIcon } from "@heroicons/react/24/solid";
+import { Link, router, useForm } from "@inertiajs/react";
+import { ModalDelete } from "./ModalDelete";
 import {
     Card,
     CardHeader,
@@ -17,6 +18,7 @@ import {
     IconButton,
     Tooltip,
 } from "@material-tailwind/react";
+import { useState } from "react";
 
 const TABS = [
     {
@@ -38,6 +40,25 @@ const TABLE_HEAD = ["Category", "Status", "created_at", ""];
 export function TableCategory({ categories }) {
     const categoryData = categories.data || [];
 
+    const { delete: forceDelete } = useForm();
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+
+    const handleDelete = (id) => {
+        setSelectedCategoryId(id);
+        setIsModalOpen(true);
+    };
+
+    const handleConfirmDelete = () => {
+        forceDelete(route("category.forceDelete", selectedCategoryId));
+        setIsModalOpen(false);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedCategoryId(null);
+    };
 
     return (
         <Card className="h-full w-full">
@@ -144,6 +165,15 @@ export function TableCategory({ categories }) {
                                             </Typography>
                                         </td>
                                         <td className={classes}>
+                                            {/* icone de show */}
+                                            <Tooltip content="Show Category">
+                                                <Link href={route('category.show', id)}>
+                                                    <IconButton variant="text">
+                                                        <EyeIcon className="h-4 w-4" />
+                                                    </IconButton>
+                                                </Link>
+                                            </Tooltip>
+                                            {/* icone de edit */}
                                             <Tooltip content="Edit Category">
                                                 <Link href={route('category.edit', id)}>
                                                     <IconButton variant="text">
@@ -151,6 +181,17 @@ export function TableCategory({ categories }) {
                                                     </IconButton>
                                                 </Link>
                                             </Tooltip>
+                                            {/* icone de delete */}
+                                            <Tooltip content="Delete Category">
+                                                <IconButton
+                                                    variant="text"
+                                                    onClick={() => handleDelete(id)}
+                                                >
+                                                    <TrashIcon className="h-4 w-4" />
+                                                </IconButton>
+                                            </Tooltip>
+
+
                                         </td>
                                     </tr>
                                 );
@@ -172,6 +213,11 @@ export function TableCategory({ categories }) {
                     </Button>
                 </div>
             </CardFooter>
+            <ModalDelete
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                onConfirm={handleConfirmDelete}
+            />
         </Card>
     );
 }

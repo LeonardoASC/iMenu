@@ -8,49 +8,28 @@ import {
     Option,
     Select
 } from "@material-tailwind/react";
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
+import { router } from '@inertiajs/react'
 
 export default function Edit({ category }) {
-    
-    const { data, setData, put, processing, errors } = useForm({
-        name: category.name || '',
+
+    const { data, setData, processing, errors } = useForm({
+        name: category.name,
         image: null,
-        status: category.status || '',
+        status: category.status,
     });
-
-    const fileInputRef = useRef(null);
-
-    const handleButtonClick = () => {
-        fileInputRef.current.click();
-    };
-
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) { setData('image', file) } 
-    };
-
-    const handleStatusChange = (value) => { setData('status', value) };
 
     const submit = (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('name', data.name);
-        formData.append('status', data.status);
-    
-        if (data.image instanceof File) { // Apenas incluir a imagem se for um novo arquivo
-            formData.append('image', data.image);
-        }
-    
-        put(route('category.update', category.id), {
-            data: formData,
-            headers: { 'Content-Type': 'multipart/form-data' }
+        router.post(route('category.update', category.id), {
+            ...data,
+            _method: 'put',
         });
     };
-    
-    
-     // Renderizar apenas quando os dados estão prontos
-     if (!data.name && !data.status && category) {
-        return <div>Loading...</div>; // ou qualquer outro tipo de indicador de carregamento
+
+
+    if (!category) {
+        return <div>Loading...</div>;
     }
 
     return (
@@ -69,8 +48,8 @@ export default function Edit({ category }) {
                         <Input
                             id="name"
                             name="name"
-                            value={data.name || ''}
-                            onChange={(e) => setData('name', e.target.value)}
+                            value={data.name} // Mudança aqui
+                            onChange={(e) => setData('name', e.target.value)} // Mudança aqui
                             size="lg"
                             placeholder="Ex: Eletrônicos"
                             autoComplete="name"
@@ -82,29 +61,13 @@ export default function Edit({ category }) {
                             </Typography>
                         )}
 
-                        <div className="relative flex w-full max-w-[24rem]">
-                            <Input
-                                type="text"
-                                label="Image"
-                                value={data.image ? data.image.name : (category.image ? 'Current Image Selected' : '')}
-                                readOnly
-                            />
-                            <Button
-                                size="sm"
-                                color={data.image || category.image ? "blue" : "gray"}
-                                onClick={handleButtonClick}
-                                className="!absolute right-1 top-1 rounded"
-                            >
-                                Select Image
-                            </Button>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                ref={fileInputRef}
-                                style={{ display: 'none' }}
-                                onChange={handleFileChange}
-                            />
-                        </div>
+                        <Input
+                            type="file"
+                            label="Image"
+                            onChange={(e) => setData('image', e.target.files[0])} // Mudança aqui
+                        />
+
+
                         {errors.image && (
                             <Typography variant="small" color="red">
                                 {errors.image}
@@ -113,12 +76,14 @@ export default function Edit({ category }) {
 
                         <Select
                             label="Select Status"
-                            value={data.status || ''}
-                            onChange={(e) => handleStatusChange(e)}
+                            value={data.status || ''} // Mudança aqui
+                            onChange={(value) => setData('status', value)} // Mudança aqui
                         >
                             <Option value="Enable">Enable</Option>
                             <Option value="Disable">Disable</Option>
                         </Select>
+
+
                         {errors.status && (
                             <Typography variant="small" color="red">
                                 {errors.status}

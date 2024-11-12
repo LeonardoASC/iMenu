@@ -10,6 +10,7 @@ use App\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 
 class CategoryController extends Controller
@@ -26,7 +27,7 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = Category::paginate(5)->through(function ($category) {
+        $categories = Category::paginate(10)->through(function ($category) {
             return [
                 'id' => $category->id,
                 'image' => $category->image,
@@ -90,7 +91,6 @@ class CategoryController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            // excluir a imagem antiga
             if ($category->image) {
                 Storage::disk('public')->delete($category->image);
             }
@@ -109,19 +109,18 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $this->categoryRepository->destroy($category);
-
-        return Redirect::route('categories.index')->with('message', 'Categoria desativada com sucesso.');
+        return Redirect::route('category.index')->with('message', 'Categoria desativada com sucesso.');
     }
 
     public function restore(Category $category)
     {
         $this->categoryRepository->restore($category);
-        return Redirect::route('categories.index')->with('message', 'Categoria reativada com sucesso.');
+        return Redirect::route('category.index')->with('message', 'Categoria reativada com sucesso.');
     }
 
     public function forceDelete(Category $category)
     {
         $this->categoryRepository->forceDelete($category);
-        return Redirect::route('categories.index')->with('message', 'Categoria excluída permanentemente.');
+        return Redirect::route('category.index')->with('message', 'Categoria excluída permanentemente.');
     }
 }
