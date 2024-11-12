@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 
 Route::get('/', function () {
     return Inertia::render('Public/Welcome');
@@ -21,6 +22,9 @@ Route::post('/create-session', [SessionController::class, 'create'])->name('crea
 Route::resource('/menu', MenuController::class);
 Route::resource('/category', CategoryController::class);
 Route::delete('/category/{category}/force', [CategoryController::class, 'forceDelete'])->name('category.forceDelete');
+
+Route::resource('/product', ProductController::class);
+Route::delete('/product/{product}/force', [ProductController::class, 'forceDelete'])->name('product.forceDelete');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Profile/Dashboard');

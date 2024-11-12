@@ -130,12 +130,14 @@ export default function AuthenticatedLayout({ header, children }) {
                                         Categoria
                                     </ListItem>
                                 </Link>
-                                <ListItem>
-                                    <ListItemPrefix>
-                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                    </ListItemPrefix>
-                                    Products
-                                </ListItem>
+                                <Link href={route('product.index')}>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        </ListItemPrefix>
+                                        Products
+                                    </ListItem>
+                                </Link>
                             </List>
                         </AccordionBody>
                     </Accordion>
