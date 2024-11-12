@@ -28,6 +28,7 @@ class CategoryController extends Controller
     {
         $categories = Category::paginate(5)->through(function ($category) {
             return [
+                'id' => $category->id,
                 'image' => $category->image,
                 'name' => $category->name,
                 'status' => $category->status,
@@ -54,12 +55,12 @@ class CategoryController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('categories', 'public'); // Armazena em `storage/app/public/categories`
+            $data['image'] = $request->file('image')->store('categories', 'public'); 
         }
 
         $category = $this->categoryRepository->create($data);
 
-        return Redirect::route('categories.show', $category->id)->with('message', 'Categoria cadastrada com sucesso.');
+        return Redirect::route('category.show', $category->id)->with('message', 'Categoria cadastrada com sucesso.');
     }
 
     /**
@@ -67,6 +68,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        if ($category->image) {
+            $category->image = '/storage/' . $category->image;
+        }
         return Inertia::render('Admin/Category/Show', compact('category'));
     }
 
@@ -75,7 +79,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return Inertia::render('Admin/Categories/Edit', compact('category'));
+        return Inertia::render('Admin/Category/Edit', compact('category'));
     }
 
     /**
@@ -85,9 +89,18 @@ class CategoryController extends Controller
     {
         $data = $request->validated();
 
-        $catregory = $this->categoryRepository->update($data, $category);
+        if ($request->hasFile('image')) {
+            // excluir a imagem antiga
+            if ($category->image) {
+                Storage::disk('public')->delete($category->image);
+            }
 
-        return Redirect::route('categories.show', $category->id)->with('message', 'Categoria atualizada com sucesso.');
+        $data['image'] = $request->file('image')->store('categories', 'public');
+    }
+
+        $category = $this->categoryRepository->update($data, $category);
+
+        return Redirect::route('category.show', $category->id)->with('message', 'Categoria atualizada com sucesso.');
     }
 
     /**

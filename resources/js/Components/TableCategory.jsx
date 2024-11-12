@@ -38,6 +38,7 @@ const TABLE_HEAD = ["Category", "Status", "created_at", ""];
 export function TableCategory({ categories }) {
     const categoryData = categories.data || [];
 
+
     return (
         <Card className="h-full w-full">
             <CardHeader floated={false} shadow={false} className="rounded-none h-[15%] ">
@@ -101,7 +102,7 @@ export function TableCategory({ categories }) {
                     </thead>
                     <tbody>
                         {categoryData.map(
-                            ({ image, name, status, created_at }, index) => {
+                            ({ id, image, name, status, created_at }, index) => {
                                 const isLast = index === categoryData.length - 1;
                                 const classes = isLast
                                     ? "p-4"
@@ -143,10 +144,12 @@ export function TableCategory({ categories }) {
                                             </Typography>
                                         </td>
                                         <td className={classes}>
-                                            <Tooltip content="Edit User">
-                                                <IconButton variant="text">
-                                                    <PencilIcon className="h-4 w-4" />
-                                                </IconButton>
+                                            <Tooltip content="Edit Category">
+                                                <Link href={route('category.edit', id)}>
+                                                    <IconButton variant="text">
+                                                        <PencilIcon className="h-4 w-4" />
+                                                    </IconButton>
+                                                </Link>
                                             </Tooltip>
                                         </td>
                                     </tr>
