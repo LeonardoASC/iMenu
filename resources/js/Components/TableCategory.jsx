@@ -133,7 +133,7 @@ export function TableCategory({ categories }) {
                                     <tr key={name}>
                                         <td className={classes}>
                                             <div className="flex items-center gap-3">
-                                                <Avatar src={image} alt={name} size="sm" />
+                                                <Avatar src={`/storage/${image}`} alt={name} size="sm" />
                                                 <div className="flex flex-col">
                                                     <Typography
                                                         variant="small"
@@ -165,7 +165,6 @@ export function TableCategory({ categories }) {
                                             </Typography>
                                         </td>
                                         <td className={classes}>
-                                            {/* icone de show */}
                                             <Tooltip content="Show Category">
                                                 <Link href={route('category.show', id)}>
                                                     <IconButton variant="text">
@@ -173,7 +172,6 @@ export function TableCategory({ categories }) {
                                                     </IconButton>
                                                 </Link>
                                             </Tooltip>
-                                            {/* icone de edit */}
                                             <Tooltip content="Edit Category">
                                                 <Link href={route('category.edit', id)}>
                                                     <IconButton variant="text">
@@ -181,7 +179,6 @@ export function TableCategory({ categories }) {
                                                     </IconButton>
                                                 </Link>
                                             </Tooltip>
-                                            {/* icone de delete */}
                                             <Tooltip content="Delete Category">
                                                 <IconButton
                                                     variant="text"
@@ -190,8 +187,6 @@ export function TableCategory({ categories }) {
                                                     <TrashIcon className="h-4 w-4" />
                                                 </IconButton>
                                             </Tooltip>
-
-
                                         </td>
                                     </tr>
                                 );
