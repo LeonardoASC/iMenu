@@ -21,7 +21,7 @@ export default function Show({ category }) {
                         </Typography>
                     </div>
                     <div className="">
-                        <a href={route('category.edit', category.id)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Edit</a>
+                        <a href={route('category.edit', category.id)} className="bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Edit</a>
                     </div>
                 </div>
                 <figure className="relative h-96 w-full">
