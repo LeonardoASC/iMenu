@@ -8,6 +8,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\OrderController;
 
 Route::get('/', function () {
     return Inertia::render('Public/Welcome');
@@ -25,6 +26,9 @@ Route::delete('/category/{category}/force', [CategoryController::class, 'forceDe
 
 Route::resource('/product', ProductController::class);
 Route::delete('/product/{product}/force', [ProductController::class, 'forceDelete'])->name('product.forceDelete');
+
+Route::resource('/order', OrderController::class);
+Route::delete('/order/{order}/force', [OrderController::class, 'forceDelete'])->name('order.forceDelete');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Profile/Dashboard');
