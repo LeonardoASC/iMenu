@@ -8,17 +8,18 @@ import {
     Option,
     Select
 } from "@material-tailwind/react";
-import React, { useState } from 'react';
+import React from 'react';
 import { router } from '@inertiajs/react'
-import { Description } from '@headlessui/react';
 
-export default function Edit({ product }) {
+
+export default function Edit({ product, categories }) { 
 
     const { data, setData, processing, errors } = useForm({
         name: product.name,
         description: product.description,
         price: product.price,
         status: product.status,
+        category_id: product.category_id,
         image: null,
     });
 
@@ -48,6 +49,7 @@ export default function Edit({ product }) {
                 <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={submit}>
                     <div className="mb-1 flex flex-col gap-6">
                         <Input
+                            label='Name'
                             id="name"
                             name="name"
                             value={data.name}
@@ -63,6 +65,7 @@ export default function Edit({ product }) {
                             </Typography>
                         )}
                         <Input
+                            label='Description'
                             id="description"
                             name="description"
                             value={data.description}
@@ -78,6 +81,7 @@ export default function Edit({ product }) {
                             </Typography>
                         )}
                         <Input
+                            label='Price'
                             id="price"
                             name="price"
                             value={data.price}
@@ -93,7 +97,6 @@ export default function Edit({ product }) {
                             </Typography>
                         )}
 
-
                         <Select
                             label="Select Status"
                             value={data.status || ''}
@@ -105,6 +108,22 @@ export default function Edit({ product }) {
                         {errors.status && (
                             <Typography variant="small" color="red">
                                 {errors.status}
+                            </Typography>
+                        )}
+                        <Select
+                            label="Select Category"
+                            value={data.category_id || ''}
+                            onChange={(value) => setData('category_id', value)}
+                        >
+                            {categories.map((category) => (
+                                <Option key={category.id} value={category.id}>
+                                    {category.name}
+                                </Option>
+                            ))}
+                        </Select>
+                        {errors.category_id && (
+                            <Typography variant="small" color="red">
+                                {errors.category_id}
                             </Typography>
                         )}
 

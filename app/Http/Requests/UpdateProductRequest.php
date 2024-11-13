@@ -25,6 +25,7 @@ class UpdateProductRequest extends FormRequest
             'name' => 'string|max:255',
             'description' => 'string',
             'price' => 'numeric',
+            'status' => 'in:Enable,Disable',
             'image' => 'image',
             'category_id' => 'exists:categories,id',
         ];

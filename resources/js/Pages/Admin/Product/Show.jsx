@@ -35,13 +35,22 @@ export default function Show({ product }) {
                             <Typography variant="h5" color="blue-gray">
                                 {product.name}
                             </Typography>
+                            <Typography variant="h5" color="blue-gray">
+                                {product.category.name}
+                            </Typography>
                             <Typography color="gray" className="mt-2 font-normal">
                                 {product.created_at}
                             </Typography>
                         </div>
-                        <Typography variant="h5" color="blue-gray">
-                            {product.status}
-                        </Typography>
+                        <div>
+                            <Typography variant="h5" color="blue-gray">
+                                {product.status}
+                            </Typography>
+                            <Typography variant="h5" color="blue-gray">
+                                {product.price}
+                            </Typography>
+                        </div>
+
                     </figcaption>
                 </figure>
             </Card>

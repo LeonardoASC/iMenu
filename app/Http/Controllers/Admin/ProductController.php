@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Category;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Repositories\ProductRepository;
@@ -32,11 +33,11 @@ class ProductController extends Controller
                 'description' => $product->description,
                 'price' => $product->price,
                 'status' => $product->status,
+                'category_id' => $product->category->name,
                 'image' => $product->image,
                 'created_at' => $product->created_at->format('d-m-Y'),
             ];
         });
-
         return Inertia::render('Admin/Product/Index', ['products' => $products]);
     }
 
@@ -45,7 +46,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Product/Create');
+        $categories = Category::where('status', 'Enable')->get();
+        return Inertia::render('Admin/Product/Create', ['categories' => $categories]);
     }
 
     /**
@@ -54,11 +56,10 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $data = $request->validated();
-
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('products', 'public'); 
         }
-
+        
         $product = $this->productRepository->create($data);
 
         return Redirect::route('product.show', $product->id)->with('message', 'Produto cadastrada com sucesso.');
@@ -69,6 +70,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        $product->load('category');
         if ($product->image) {
             $product->image = '/storage/' . $product->image;
         }
@@ -80,7 +82,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return Inertia::render('Admin/Product/Edit', compact('product'));
+        $categories = Category::where('status', 'Enable')->get();
+        return Inertia::render('Admin/Product/Edit', compact('product', 'categories'));
     }
 
     /**
