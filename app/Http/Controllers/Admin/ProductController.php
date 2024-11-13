@@ -45,7 +45,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Product/Create');
     }
 
     /**
@@ -53,7 +53,15 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('products', 'public'); 
+        }
+
+        $product = $this->productRepository->create($data);
+
+        return Redirect::route('product.show', $product->id)->with('message', 'Produto cadastrada com sucesso.');
     }
 
     /**
@@ -61,7 +69,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        if ($product->image) {
+            $product->image = '/storage/' . $product->image;
+        }
+        return Inertia::render('Admin/Product/Show', compact('product'));
     }
 
     /**
@@ -69,7 +80,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        return Inertia::render('Admin/Product/Edit', compact('product'));
     }
 
     /**
@@ -77,7 +88,19 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            if ($product->image) {
+                Storage::disk('public')->delete($product->image);
+            }
+
+        $data['image'] = $request->file('image')->store('products', 'public');
+    }
+
+        $product = $this->productRepository->update($data, $product);
+
+        return Redirect::route('product.show', $product->id)->with('message', 'Produto atualizada com sucesso.');
     }
 
     /**
@@ -85,6 +108,19 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $this->productRepository->destroy($product);
+        return Redirect::route('product.index')->with('message', 'Produto desativada com sucesso.');
+    }
+
+    public function restore(Product $product)
+    {
+        $this->productRepository->restore($product);
+        return Redirect::route('product.index')->with('message', 'Produto ativada com sucesso.');
+    }
+
+    public function forceDelete(Product $product)
+    {
+        $this->productRepository->forceDelete($product);
+        return Redirect::route('product.index')->with('message', 'Produto excluída com sucesso.');
     }
 }
