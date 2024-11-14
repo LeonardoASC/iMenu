@@ -23,13 +23,24 @@ class Establishment extends Model
     {
         if(!$request) return;
         return $query
-            ->when(data_get($request, 'name'), function ($query, $name) {
-                return $query->where('name', 'like', '%' . $name . '%');
+            ->when($request['search'] ?? false, function ($query, $search) {
+                return $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
+                    $q->orWhere('email', 'like', '%' . $search . '%');
+                });
+            })
+            ->when(data_get($request, 'email'), function ($query, $email) {
+                return $query->where('email', $email);
             });
     }
 
     public function users() : HasMany
     {
         return $this->hasMany(User::class);
+    }
+
+    public function tables() : HasMany
+    {
+        return $this->hasMany(Table::class);
     }
 }
