@@ -1,7 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
-import { TableCategory } from '@/Components/TableCategory';
+import { TableCategory } from '@/Pages/Admin/Category/Partials/TableCategory';
 
 
 export default function Index() {
