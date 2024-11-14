@@ -7,6 +7,8 @@ use Inertia\Inertia;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\EstablishmentController;
+use App\Http\Controllers\TableController;
 
 Route::get('/', function () {
     return Inertia::render('Public/Welcome');
@@ -30,6 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::resource('/estabelecimentos', EstablishmentController::class)->names('establishments')->parameters(['estabelecimentos' => 'establishment',]);
+
+    Route::resource('/tables', TableController::class)->names('tables')->parameters(['mesas' => 'table',]);
 });
 
 require __DIR__.'/auth.php';
