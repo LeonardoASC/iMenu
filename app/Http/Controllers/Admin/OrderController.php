@@ -25,18 +25,21 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = Order::paginate(10)->through(function ($order) {
+        $orders = Order::with(['user'])->paginate(10)->through(function ($order) {
             return [
                 'id' => $order->id,
-                'user_id' => $order->user_id,
+                'user' => [
+                    'id' => $order->user->id,
+                    'name' => $order->user->name,
+                    'email' => $order->user->email,
+                ],
                 'status' => $order->status,
-                'note' => $order->note,
+                'notes' => $order->notes,
                 // 'payment_method' => $order->payment_method,
                 'total' => $order->total,
                 'created_at' => $order->created_at->format('d-m-Y'),
             ];
         });
-
         return Inertia::render('Admin/Order/Index', ['orders' => $orders]);
     }
 
