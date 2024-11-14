@@ -18,6 +18,10 @@ return new class extends Migration
                 ->constrained()
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
+
+            $table->string('type');
+            $table->string('status');
+            $table->string('qrcode')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

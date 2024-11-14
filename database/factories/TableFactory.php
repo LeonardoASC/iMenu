@@ -19,6 +19,9 @@ class TableFactory extends Factory
         return [
             'number' => $this->faker->randomNumber(2),
             'establishment_id' => $this->faker->numberBetween(1, 10),
+            'type' => $this->faker->randomElement(['common', 'vip']),
+            'status' => $this->faker->randomElement(['busy', 'free', 'reserved']),
+            'qrcode' => null
         ];
     }
 }

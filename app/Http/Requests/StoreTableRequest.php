@@ -21,6 +21,17 @@ class StoreTableRequest extends FormRequest
                     ->where('establishment_id', $this->establishment_id) // Limita a unicidade para o mesmo establishment_id
             ],
             'establishment_id' => 'required|integer|exists:establishments,id',
+            'type' => 'required|string',
+            'status' => 'required|string',
+            'qrcode' => 'required|string',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'establishment_id' => 'estabelecimento',
+            'qrcode' => 'código'
         ];
     }
 }
