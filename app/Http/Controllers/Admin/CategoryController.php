@@ -10,6 +10,7 @@ use App\Repositories\CategoryRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 
 class CategoryController extends Controller
@@ -26,8 +27,9 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = Category::paginate(5)->through(function ($category) {
+        $categories = Category::paginate(10)->through(function ($category) {
             return [
+                'id' => $category->id,
                 'image' => $category->image,
                 'name' => $category->name,
                 'status' => $category->status,
@@ -54,12 +56,12 @@ class CategoryController extends Controller
         $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('categories', 'public'); // Armazena em `storage/app/public/categories`
+            $data['image'] = $request->file('image')->store('categories', 'public'); 
         }
 
         $category = $this->categoryRepository->create($data);
 
-        return Redirect::route('categories.show', $category->id)->with('message', 'Categoria cadastrada com sucesso.');
+        return Redirect::route('category.show', $category->id)->with('message', 'Categoria cadastrada com sucesso.');
     }
 
     /**
@@ -67,6 +69,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
+        if ($category->image) {
+            $category->image = '/storage/' . $category->image;
+        }
         return Inertia::render('Admin/Category/Show', compact('category'));
     }
 
@@ -75,7 +80,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        return Inertia::render('Admin/Categories/Edit', compact('category'));
+        return Inertia::render('Admin/Category/Edit', compact('category'));
     }
 
     /**
@@ -85,9 +90,17 @@ class CategoryController extends Controller
     {
         $data = $request->validated();
 
-        $catregory = $this->categoryRepository->update($data, $category);
+        if ($request->hasFile('image')) {
+            if ($category->image) {
+                Storage::disk('public')->delete($category->image);
+            }
 
-        return Redirect::route('categories.show', $category->id)->with('message', 'Categoria atualizada com sucesso.');
+        $data['image'] = $request->file('image')->store('categories', 'public');
+    }
+
+        $category = $this->categoryRepository->update($data, $category);
+
+        return Redirect::route('category.show', $category->id)->with('message', 'Categoria atualizada com sucesso.');
     }
 
     /**
@@ -96,19 +109,18 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $this->categoryRepository->destroy($category);
-
-        return Redirect::route('categories.index')->with('message', 'Categoria desativada com sucesso.');
+        return Redirect::route('category.index')->with('message', 'Categoria desativada com sucesso.');
     }
 
     public function restore(Category $category)
     {
         $this->categoryRepository->restore($category);
-        return Redirect::route('categories.index')->with('message', 'Categoria reativada com sucesso.');
+        return Redirect::route('category.index')->with('message', 'Categoria reativada com sucesso.');
     }
 
     public function forceDelete(Category $category)
     {
         $this->categoryRepository->forceDelete($category);
-        return Redirect::route('categories.index')->with('message', 'Categoria excluída permanentemente.');
+        return Redirect::route('category.index')->with('message', 'Categoria excluída permanentemente.');
     }
 }

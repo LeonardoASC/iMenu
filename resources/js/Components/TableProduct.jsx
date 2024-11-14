@@ -35,29 +35,29 @@ const TABS = [
     },
 ];
 
-const TABLE_HEAD = ["Category", "Status", "created_at", ""];
+const TABLE_HEAD = ["Product", "Description", "Price", "Status", "created_at", ""];
 
-export function TableCategory({ categories }) {
-    const categoryData = categories.data || [];
+export function TableProduct({ products }) {
+    const productData = products.data || [];
 
     const { delete: forceDelete } = useForm();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+    const [selectedProductId, setSelectedProductId] = useState(null);
 
     const handleDelete = (id) => {
-        setSelectedCategoryId(id);
+        setSelectedProductId(id);
         setIsModalOpen(true);
     };
 
     const handleConfirmDelete = () => {
-        forceDelete(route("category.forceDelete", selectedCategoryId));
+        forceDelete(route("product.forceDelete", selectedProductId));
         setIsModalOpen(false);
     };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
-        setSelectedCategoryId(null);
+        setSelectedProductId(null);
     };
 
     return (
@@ -66,19 +66,19 @@ export function TableCategory({ categories }) {
                 <div className="mb-4 flex items-center justify-between gap-8 ">
                     <div>
                         <Typography variant="h5" color="blue-gray">
-                            Categories list
+                            products list
                         </Typography>
                         <Typography color="gray" className="mt-1 font-normal">
-                            See information about all Categories
+                            See information about all products
                         </Typography>
                     </div>
                     <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
                         <Button variant="outlined" size="sm">
                             view all
                         </Button>
-                        <Link href={route('category.create')}>
+                        <Link href={route('product.create')}>
                             <Button className="flex items-center gap-3" size="sm">
-                                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Category
+                                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Product
                             </Button>
                         </Link>
                     </div>
@@ -122,9 +122,9 @@ export function TableCategory({ categories }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {categoryData.map(
-                            ({ id, image, name, status, created_at }, index) => {
-                                const isLast = index === categoryData.length - 1;
+                        {productData.map(
+                            ({ id, name, description, price, status, image, created_at }, index) => {
+                                const isLast = index === productData.length - 1;
                                 const classes = isLast
                                     ? "p-4"
                                     : "p-4 border-b border-blue-gray-50";
@@ -144,6 +144,26 @@ export function TableCategory({ categories }) {
                                                     </Typography>
                                                 </div>
                                             </div>
+                                        </td>
+
+
+                                        <td className={classes}>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal"
+                                            >
+                                                {description}
+                                            </Typography>
+                                        </td>
+                                        <td className={classes}>
+                                            <Typography
+                                                variant="small"
+                                                color="blue-gray"
+                                                className="font-normal"
+                                            >
+                                                {price}$
+                                            </Typography>
                                         </td>
                                         <td className={classes}>
                                             <div className="w-max">
@@ -165,21 +185,21 @@ export function TableCategory({ categories }) {
                                             </Typography>
                                         </td>
                                         <td className={classes}>
-                                            <Tooltip content="Show Category">
-                                                <Link href={route('category.show', id)}>
+                                            <Tooltip content="Show Product">
+                                                <Link href={route('product.show', id)}>
                                                     <IconButton variant="text">
                                                         <EyeIcon className="h-4 w-4" />
                                                     </IconButton>
                                                 </Link>
                                             </Tooltip>
-                                            <Tooltip content="Edit Category">
-                                                <Link href={route('category.edit', id)}>
+                                            <Tooltip content="Edit Product">
+                                                <Link href={route('product.edit', id)}>
                                                     <IconButton variant="text">
                                                         <PencilIcon className="h-4 w-4" />
                                                     </IconButton>
                                                 </Link>
                                             </Tooltip>
-                                            <Tooltip content="Delete Category">
+                                            <Tooltip content="Delete Product">
                                                 <IconButton
                                                     variant="text"
                                                     onClick={() => handleDelete(id)}
@@ -197,7 +217,7 @@ export function TableCategory({ categories }) {
             </CardBody>
             <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4 ">
                 <Typography variant="small" color="blue-gray" className="font-normal">
-                    Page {categories.current_page} of {categories.last_page}
+                    Page {products.current_page} of {products.last_page}
                 </Typography>
                 <div className="flex gap-2">
                     <Button variant="outlined" size="sm">
