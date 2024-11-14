@@ -123,7 +123,7 @@ export function TableProduct({ products }) {
                     </thead>
                     <tbody>
                         {productData.map(
-                            ({ id, name, description, price, status, image, created_at }, index) => {
+                            ({ id, name, category, description, price, status, image, created_at }, index) => {
                                 const isLast = index === productData.length - 1;
                                 const classes = isLast
                                     ? "p-4"
@@ -141,6 +141,13 @@ export function TableProduct({ products }) {
                                                         className="font-normal"
                                                     >
                                                         {name}
+                                                    </Typography>
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal"
+                                                    >
+                                                        {category.name}
                                                     </Typography>
                                                 </div>
                                             </div>
