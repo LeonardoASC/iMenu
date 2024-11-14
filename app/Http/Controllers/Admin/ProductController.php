@@ -102,7 +102,9 @@ class ProductController extends Controller
             }
 
         $data['image'] = $request->file('image')->store('products', 'public');
-    }
+        } else {
+            unset($data['image']);
+        }
 
         $product = $this->productRepository->update($data, $product);
 

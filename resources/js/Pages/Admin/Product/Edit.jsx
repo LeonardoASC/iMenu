@@ -12,7 +12,7 @@ import React from 'react';
 import { router } from '@inertiajs/react'
 
 
-export default function Edit({ product, categories }) { 
+export default function Edit({ product, categories }) {
 
     const { data, setData, processing, errors } = useForm({
         name: product.name,
@@ -126,7 +126,13 @@ export default function Edit({ product, categories }) {
                                 {errors.category_id}
                             </Typography>
                         )}
-
+                        {product.image && (
+                            <img
+                                src={`/storage/${product.image}`}
+                                alt="product Image"
+                                className="h-32 w-32 object-cover"
+                            />
+                        )}
                         <Input
                             type="file"
                             label="Image"
