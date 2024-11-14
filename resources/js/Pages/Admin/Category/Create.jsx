@@ -4,8 +4,9 @@ import {
     Card,
     Typography,
 } from "@material-tailwind/react";
-import React, { useRef } from 'react';
+import React from 'react';
 import Form from './Partials/Form';
+import CardHeader from './Partials/CardHeader';
 
 export default function Create() {
 
@@ -14,19 +15,6 @@ export default function Create() {
         image: null,
         status: '',
     });
-
-    const fileInputRef = useRef(null);
-
-    const handleButtonClick = () => {
-        fileInputRef.current.click();
-    };
-
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        if (file) { setData('image', file)}
-    };
-
-    const handleStatusChange = (value) => {setData('status', value)};
 
     const submit = (e) => {
         e?.preventDefault();
@@ -38,25 +26,18 @@ export default function Create() {
     return (
         <AuthenticatedLayout>
             <Head title="Create Category" />
-
-            <Card shadow={false} className="bg-white p-4">
-                <Typography variant="h4" color="blue-gray">
-                    Create a Category
-                </Typography>
-                <Typography color="gray" className="mt-1 font-normal">
-                    Below you will need to provide image, name, and status.
-                </Typography>
+            <Card className="bg-white p-4 shadow-xl">
+                <CardHeader
+                    title="Create Category"
+                    description="Fill in the fields below to create a new category."
+                />
+                <hr className="mt-4" />
                 <Form
                     data={data}
                     setData={setData}
                     errors={errors}
                     processing={processing}
                     handleSubmit={submit}
-                    handleButtonClick={handleButtonClick}
-                    handleFileChange={handleFileChange}
-                    handleStatusChange={handleStatusChange}
-                    fileInputRef={fileInputRef}
-                    // category={category}
                 />
             </Card>
         </AuthenticatedLayout>

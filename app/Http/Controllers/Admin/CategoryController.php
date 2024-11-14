@@ -70,7 +70,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         if ($category->image) {
-            $category->image = '/storage/' . $category->image;
+            $category->image = $category->image;
         }
         return Inertia::render('Admin/Category/Show', compact('category'));
     }
@@ -102,7 +102,7 @@ class CategoryController extends Controller
 
         $category = $this->categoryRepository->update($data, $category);
 
-        return Redirect::route('category.show', $category->id)->with('message', 'Categoria atualizada com sucesso.');
+        return Redirect::route('category.index', $category->id)->with('message', 'Categoria atualizada com sucesso.');
     }
 
     /**

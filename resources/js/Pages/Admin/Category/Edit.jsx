@@ -2,10 +2,10 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
 import {
     Card,
-    Typography
 } from "@material-tailwind/react";
 import React from 'react';
 import Form from './Partials/Form';
+import CardHeader from './Partials/CardHeader';
 
 export default function Edit({ category }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -29,14 +29,13 @@ export default function Edit({ category }) {
     return (
         <AuthenticatedLayout>
             <Head title="Edit Category" />
-
-            <Card shadow={false} className="bg-white p-4">
-                <Typography variant="h4" color="blue-gray">
-                    Edit Category
-                </Typography>
-                <Typography color="gray" className="mt-1 font-normal">
-                    Update the fields below to edit the category.
-                </Typography>
+            <Card className="bg-white p-4 shadow-xl">
+                <CardHeader
+                    title="Edit Category"
+                    description="Fill in the fields below to edit a category."
+                    isEdit={true}
+                />
+                <hr className="mt-4" />
                 <Form
                     data={data}
                     setData={setData}
