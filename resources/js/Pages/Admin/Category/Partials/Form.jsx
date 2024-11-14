@@ -6,7 +6,7 @@ import {
     Select
 } from "@material-tailwind/react";
 
-export default function Form({ data, setData, errors, processing = false, handleSubmit, isShow = false, isEdit = false }) {
+export default function Form({ data, setData, errors, processing = false, handleSubmit, isShow = false, isEdit = false, category }) {
     return (
         <div>
             <form className="mt-8 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handleSubmit}>
@@ -25,6 +25,14 @@ export default function Form({ data, setData, errors, processing = false, handle
                     />
                     {errors?.name && <span className="text-red-500">{errors.name}</span>}
 
+                    {category.image && (
+                        <img
+                            src={`/storage/${category.image}`}
+                            alt="Category Image"
+                            className="h-32 w-32 object-cover"
+                        />
+                    )}
+                    
                     <input
                         type="file"
                         onChange={(e) => setData('image', e.target.files[0])}

@@ -96,7 +96,9 @@ class CategoryController extends Controller
             }
 
         $data['image'] = $request->file('image')->store('categories', 'public');
-    }
+        } else {
+            unset($data['image']);
+        }
 
         $category = $this->categoryRepository->update($data, $category);
 
