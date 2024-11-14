@@ -49,8 +49,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::where('status', 'Enable')->get();
-        return Inertia::render('Admin/Product/Create', ['categories' => $categories]);
+        $categoriesEnable = Category::where('status', 'Enable')->get();
+        return Inertia::render('Admin/Product/Create', ['categoriesEnable' => $categoriesEnable]);
     }
 
     /**
@@ -59,13 +59,14 @@ class ProductController extends Controller
     public function store(StoreProductRequest $request)
     {
         $data = $request->validated();
+        
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('products', 'public'); 
         }
         
         $product = $this->productRepository->create($data);
 
-        return Redirect::route('product.show', $product->id)->with('message', 'Produto cadastrada com sucesso.');
+        return Redirect::route('product.index', $product->id)->with('message', 'Produto cadastrada com sucesso.');
     }
 
     /**
@@ -73,11 +74,12 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        $categoriesEnable = Category::where('status', 'Enable')->get();
         $product->load('category');
         if ($product->image) {
-            $product->image = '/storage/' . $product->image;
+            $product->image = $product->image;
         }
-        return Inertia::render('Admin/Product/Show', compact('product'));
+        return Inertia::render('Admin/Product/Show', compact('product', 'categoriesEnable'));
     }
 
     /**
@@ -108,7 +110,7 @@ class ProductController extends Controller
 
         $product = $this->productRepository->update($data, $product);
 
-        return Redirect::route('product.show', $product->id)->with('message', 'Produto atualizada com sucesso.');
+        return Redirect::route('product.index', $product->id)->with('message', 'Produto atualizada com sucesso.');
     }
 
     /**

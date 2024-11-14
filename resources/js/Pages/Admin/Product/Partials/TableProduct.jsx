@@ -1,7 +1,7 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon, TrashIcon, EyeIcon } from "@heroicons/react/24/solid";
 import { Link, router, useForm } from "@inertiajs/react";
-import { ModalDelete } from "./ModalDelete";
+import { ModalDelete } from "../../../../Components/ModalDelete";
 import {
     Card,
     CardHeader,
