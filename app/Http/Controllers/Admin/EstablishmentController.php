@@ -40,8 +40,7 @@ class EstablishmentController extends Controller
     public function index(Request $request)
     {
         $establishments = $this->establishmentRepository->getAll();
-
-        return Inertia::render('Admin/Establishments/Index', compact('establishments'));
+        return Inertia::render('Admin/Establishment/Index', compact('establishments'));
     }
 
     /**
@@ -49,7 +48,7 @@ class EstablishmentController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Establishments/Create');
+        return Inertia::render('Admin/Establishment/Create');
     }
 
     /**
@@ -70,7 +69,7 @@ class EstablishmentController extends Controller
     public function show($id)
     {
         $establishment = $this->establishmentRepository->findById($id);
-        return Inertia::render('Admin/Establishments/Show', compact('establishment'));
+        return Inertia::render('Admin/Establishment/Show', compact('establishment'));
     }
 
     /**
@@ -79,7 +78,7 @@ class EstablishmentController extends Controller
     public function edit($id)
     {
         $establishment = $this->establishmentRepository->findById($id);
-        return Inertia::render('Admin/Establishments/Edit', compact('establishment'));
+        return Inertia::render('Admin/Establishment/Edit', compact('establishment'));
     }
 
     /**

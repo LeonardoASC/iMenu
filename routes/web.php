@@ -36,7 +36,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::prefix('admin')->group(function () {
-        Route::resource('/estabelecimentos', EstablishmentController::class)->names('admin.establishments')->parameters(['estabelecimentos' => 'establishment',]);
+        // Route::resource('/estabelecimentos', EstablishmentController::class)->names('admin.establishments')->parameters(['estabelecimentos' => 'establishment',]);
+        Route::resource('/establishment', EstablishmentController::class);
+        Route::delete('/establishment/{establishment}/force', [EstablishmentController::class, 'forceDelete'])->name('establishment.forceDelete');
 
         Route::resource('/category', CategoryController::class);
         Route::delete('/category/{category}/force', [CategoryController::class, 'forceDelete'])->name('category.forceDelete');
@@ -48,6 +50,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/order/{order}/force', [OrderController::class, 'forceDelete'])->name('order.forceDelete');
 
         Route::resource('/tables', TableController::class);
+        Route::delete('/tables/{table}/force', [TableController::class, 'forceDelete'])->name('tables.forceDelete');
 
         Route::put('cargos/{id}/permissoes', [RoleAndAbilityController::class, 'assignAbilitiesToRole'])->name('admin.roles.assignAbilitiesToRole');
         Route::resource('/cargos', RoleAndAbilityController::class)->names('admin.roles')->parameters(['cargos' => 'role',]);

@@ -18,7 +18,7 @@ class EstablishmentRepository extends BaseRepository
         return $this->model
             ->withTrashed()
             ->filter($request)
-            ->with(['users'])
+            // ->with(['users']) wtf ??? pq o estabelecimento teria relação com usuários?
             ->orderBy('id')
             ->paginate(15);
     }
