@@ -4,12 +4,13 @@ namespace App\Http\Requests;
 
 use App\Models\Establishment;
 use Illuminate\Foundation\Http\FormRequest;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class StoreEstablishmentRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return Bouncer::can('create-establishment');
     }
 
     /**

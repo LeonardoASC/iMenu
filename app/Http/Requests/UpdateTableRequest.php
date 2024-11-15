@@ -4,12 +4,13 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class UpdateTableRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return false;
+        return Bouncer::can('update-table');
     }
     public function rules(): array
     {

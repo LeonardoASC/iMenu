@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\EstablishmentController;
 use App\Http\Controllers\TableController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\RoleAndAbilityController;
 
 Route::get('/', function () {
     return Inertia::render('Public/Welcome');
@@ -41,9 +42,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::resource('/estabelecimentos', EstablishmentController::class)->names('establishments')->parameters(['estabelecimentos' => 'establishment',]);
+    Route::prefix('admin')->group(function () {
+        Route::resource('/estabelecimentos', EstablishmentController::class)->names('admin.establishments')->parameters(['estabelecimentos' => 'establishment',]);
 
-    Route::resource('/tables', TableController::class)->names('tables')->parameters(['mesas' => 'table',]);
+        Route::resource('/tables', TableController::class)->names('admin.tables')->parameters(['mesas' => 'table',]);
+
+        Route::put('cargos/{id}/permissoes', [RoleAndAbilityController::class, 'assignAbilitiesToRole'])->name('admin.roles.assignAbilitiesToRole');
+        Route::resource('/cargos', RoleAndAbilityController::class)->names('admin.roles')->parameters(['cargos' => 'role',]);
+    });
 });
 
 require __DIR__.'/auth.php';

@@ -6,11 +6,25 @@ use App\Models\Table;
 use App\Http\Requests\StoreTableRequest;
 use App\Http\Requests\UpdateTableRequest;
 use App\Repositories\TableRepository;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class TableController extends Controller
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('check.ability:view-table', only: ['index', 'show']),
+            new Middleware('check.ability:create-table', only: ['create', 'store']),
+            new Middleware('check.ability:update-table', only: ['edit', 'update']),
+            new Middleware('check.ability:delete-table', only: ['destroy', 'restore', 'forceDelete']),
+        ];
+    }
+
     private $tableRepository;
 
     public function __construct(TableRepository $repository) {

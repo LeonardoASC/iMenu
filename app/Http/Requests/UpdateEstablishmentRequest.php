@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\Establishment;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class UpdateEstablishmentRequest extends FormRequest
 {
@@ -12,7 +13,7 @@ class UpdateEstablishmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return Bouncer::can('update-establishment');
     }
 
     /**

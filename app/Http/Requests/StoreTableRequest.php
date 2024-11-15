@@ -4,12 +4,13 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Silber\Bouncer\BouncerFacade as Bouncer;
 
 class StoreTableRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        return Bouncer::can('create-table');
     }
     public function rules(): array
     {
