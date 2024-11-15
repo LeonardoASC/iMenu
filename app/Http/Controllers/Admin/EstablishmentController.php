@@ -8,11 +8,26 @@ use App\Http\Requests\StoreEstablishmentRequest;
 use App\Http\Requests\UpdateEstablishmentRequest;
 use App\Repositories\EstablishmentRepository;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class EstablishmentController extends Controller
 {
+    /**
+     * Get the middleware that should be assigned to the controller.
+     */
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('check.ability:view-establishment', only: ['index', 'show']),
+            new Middleware('check.ability:create-establishment', only: ['create', 'store']),
+            new Middleware('check.ability:update-establishment', only: ['edit', 'update']),
+            new Middleware('check.ability:delete-establishment', only: ['destroy', 'restore', 'forceDelete']),
+        ];
+    }
+
+
     private $establishmentRepository;
 
     public function __construct(EstablishmentRepository $repository) {

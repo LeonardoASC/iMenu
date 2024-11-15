@@ -15,8 +15,8 @@ class UserSeeder extends Seeder
     {
         $admin = User::create(
         [
-            'name' => 'Mateus',
-            'email' => 'mateus@email.com',
+            'name' => 'Mateus Admin',
+            'email' => 'admin@email.com',
             'email_verified_at' => now(),
             'password' => '$2y$12$zMsKaz6nqgSprY.0R.bEZuL5dvuUpA7EDxw1ec1HJ4EmmlaA.JIyO', // password
         ]);
@@ -28,6 +28,19 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
             'password' => bcrypt('123123123'),
         ]);
+
+        $waiter = User::create(
+        [
+                'name' => 'Mateus Admin',
+                'email' => 'garcon@email.com',
+                'email_verified_at' => now(),
+                'password' => bcrypt('password'),
+        ]);
+
+
+        $admin->assign('admin');
+        $admin1->assign('admin');
+        $waiter->assign('waiter');
 
         User::factory(10)->create();
     }
