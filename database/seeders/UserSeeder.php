@@ -38,9 +38,9 @@ class UserSeeder extends Seeder
         ]);
 
 
-        $admin->assignRole('admin');
-        $admin1->assignRole('admin');
-        $waiter->assignRole('waiter');
+        $admin->assign('admin');
+        $admin1->assign('admin');
+        $waiter->assign('waiter');
 
         User::factory(10)->create();
     }
