@@ -20,7 +20,7 @@ export default function Create({ categoriesEnable }) {
 
     const submit = (e) => {
         e?.preventDefault();
-        post('/product', {
+        post('/admin/product', {
             forceFormData: true,
         });
     };

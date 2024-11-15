@@ -146,6 +146,14 @@ export default function AuthenticatedLayout({ header, children }) {
                                         Orders
                                     </ListItem>
                                 </Link>
+                                <Link href={route('tables.index')}>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        </ListItemPrefix>
+                                        Tables
+                                    </ListItem>
+                                </Link>
                             </List>
                         </AccordionBody>
                     </Accordion>

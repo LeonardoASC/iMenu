@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Table;
 use App\Http\Requests\StoreTableRequest;
 use App\Http\Requests\UpdateTableRequest;
@@ -37,8 +38,8 @@ class TableController extends Controller
     public function index()
     {
         $tables = $this->tableRepository->getAll();
-
-        return Inertia::render('Admin/Tables/Index', compact('tables'));
+        // dd($tables);
+        return Inertia::render('Admin/Table/Index', compact('tables'));
     }
 
     /**
@@ -46,7 +47,7 @@ class TableController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admin/Tables/Create');
+        return Inertia::render('Admin/Table/Create');
     }
 
     /**
@@ -67,7 +68,7 @@ class TableController extends Controller
     public function show($id)
     {
         $table = $this->tableRepository->findById($id);
-        return Inertia::render('Admin/Tables/Show', compact('table'));
+        return Inertia::render('Admin/Table/Show', compact('table'));
     }
 
     /**
@@ -76,7 +77,7 @@ class TableController extends Controller
     public function edit($id)
     {
         $table = $this->tableRepository->findById($id);
-        return Inertia::render('Admin/Tables/Edit', compact('table'));
+        return Inertia::render('Admin/Table/Edit', compact('table'));
     }
 
     /**

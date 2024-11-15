@@ -17,7 +17,7 @@ export default function Edit({ category }) {
 
     const submit = (e) => {
         e?.preventDefault();
-        post(`/category/${category?.id}`, {
+        post(`/admin/category/${category?.id}`, {
             forceFormData: true,
         });
     };

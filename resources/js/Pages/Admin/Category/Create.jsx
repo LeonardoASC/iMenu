@@ -18,7 +18,7 @@ export default function Create() {
 
     const submit = (e) => {
         e?.preventDefault();
-        post('/category', {
+        post('/admin/category', {
             forceFormData: true,
         });
     };
