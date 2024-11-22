@@ -25,7 +25,7 @@ class StoreEstablishmentRequest extends FormRequest
             'address' => 'nullable|string|max:255|min:3',
             'phone' => 'nullable|string|max:11|min:10',
             'email' => 'nullable|string|email|max:255',
-            'logo_path' => 'nullable|string|max:255',
+            'logo_path' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 }

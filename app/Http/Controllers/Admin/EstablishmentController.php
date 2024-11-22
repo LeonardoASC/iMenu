@@ -60,7 +60,7 @@ class EstablishmentController extends Controller
 
         $establishment = $this->establishmentRepository->create($data);
 
-        return Redirect::route('establishments.show', $establishment->id)->with('message', 'Estabelecimento cadastrado com sucesso.');
+        return Redirect::route('establishment.index', $establishment->id)->with('message', 'Estabelecimento cadastrado com sucesso.');
     }
 
     /**
