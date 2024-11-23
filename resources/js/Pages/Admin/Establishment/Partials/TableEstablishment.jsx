@@ -35,7 +35,7 @@ const TABS = [
     },
 ];
 
-const TABLE_HEAD = ["Establishments","Address", "Phone", "E-mail", "created_at", ""];
+const TABLE_HEAD = ["Establishments", "Address", "Phone", "E-mail", "created_at", ""];
 
 export function TableEstablishment({ establishments }) {
     const establishmentsData = establishments.data || [];
@@ -66,7 +66,7 @@ export function TableEstablishment({ establishments }) {
                 <div className="mb-4 flex items-center justify-between gap-8 ">
                     <div>
                         <Typography variant="h5" color="blue-gray">
-                        Establishments list
+                            Establishments list
                         </Typography>
                         <Typography color="gray" className="mt-1 font-normal">
                             See information about all Establishments
@@ -133,7 +133,7 @@ export function TableEstablishment({ establishments }) {
                                     <tr key={name}>
                                         <td className={classes}>
                                             <div className="flex items-center gap-3">
-                                            <Avatar src={`/storage/${logo_path}`} alt={logo_path} size="sm" />
+                                                <Avatar src={`/storage/${logo_path}`} alt={logo_path} size="sm" />
                                                 <div className="flex flex-col">
                                                     <Typography
                                                         variant="small"
@@ -148,13 +148,15 @@ export function TableEstablishment({ establishments }) {
                                         <td className={classes}>
                                             <div className="flex items-center gap-3">
                                                 <div className="flex flex-col">
-                                                    <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal"
-                                                    >
-                                                        {address}
-                                                    </Typography>
+                                                    <Tooltip content={address}>
+                                                        <Typography
+                                                            variant="small"
+                                                            color="blue-gray"
+                                                            className="font-normal truncate max-w-[200px]"
+                                                        >
+                                                            {address}
+                                                        </Typography>
+                                                    </Tooltip>
                                                 </div>
                                             </div>
                                         </td>

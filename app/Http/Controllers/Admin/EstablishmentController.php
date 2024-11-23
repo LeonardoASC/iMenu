@@ -58,6 +58,10 @@ class EstablishmentController extends Controller
     {
         $data = $request->validated();
 
+        if ($request->hasFile('logo_path')) {
+            $data['logo_path'] = $request->file('logo_path')->store('establishment', 'public');
+        }
+
         $establishment = $this->establishmentRepository->create($data);
 
         return Redirect::route('establishment.index', $establishment->id)->with('message', 'Estabelecimento cadastrado com sucesso.');
