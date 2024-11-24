@@ -27,16 +27,7 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = Category::paginate(10)->through(function ($category) {
-            return [
-                'id' => $category->id,
-                'image' => $category->image,
-                'name' => $category->name,
-                'status' => $category->status,
-                'created_at' => $category->created_at->format('d-m-Y'),
-            ];
-        });
-
+        $categories = $this->categoryRepository->getAll();
         return Inertia::render('Admin/Category/Index', ['categories' => $categories]);
     }
 

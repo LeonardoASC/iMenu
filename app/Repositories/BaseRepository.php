@@ -20,7 +20,7 @@ class BaseRepository implements IBaseRepository
             ->withTrashed()
             ->filter($request)
             ->orderBy('id')
-            ->paginate(15);
+            ->paginate(10);
     }
 
     public function findById($id)

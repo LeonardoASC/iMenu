@@ -38,7 +38,6 @@ class TableController extends Controller
     public function index()
     {
         $tables = $this->tableRepository->getAll();
-        // dd($tables);
         return Inertia::render('Admin/Table/Index', compact('tables'));
     }
 

@@ -18,10 +18,21 @@ class EstablishmentRepository extends BaseRepository
         return $this->model
             ->withTrashed()
             ->filter($request)
-            // ->with(['users']) wtf ??? pq o estabelecimento teria relação com usuários?
             ->orderBy('id')
-            ->paginate(15);
+            ->paginate(10)
+            ->through(function ($establishment) {
+                return [
+                    'id' => $establishment->id,
+                    'name' => $establishment->name,
+                    'address' => $establishment->address,
+                    'phone' => $establishment->phone,
+                    'email' => $establishment->email,
+                    'created_at' => $establishment->created_at ? $establishment->created_at->format('d-m-Y') : null,
+                    'deleted_at' => $establishment->deleted_at,
+                ];
+            });
     }
+    
 
     public function findById($id)
     {

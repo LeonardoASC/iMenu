@@ -20,7 +20,22 @@ class TableRepository extends BaseRepository
             ->filter($request)
             ->with(['establishment'])
             ->orderBy('id')
-            ->paginate(15);
+            ->paginate(10)
+            ->through(function ($table) {
+                return [
+                    'id' => $table->id,
+                    'number' => $table->number,
+                    'establishment' => [
+                        'id' => $table->establishment->id,
+                        'name' => $table->establishment->name,
+                    ],
+                    'type' => $table->type,
+                    'status' => $table->status,
+                    'qrcode' => $table->qrcode,
+                    'created_at' => $table->created_at ? $table->created_at->format('d-m-Y') : null,
+                    'deleted_at' => $table->deleted_at,
+                ];
+            });
     }
 
     public function findById($id)

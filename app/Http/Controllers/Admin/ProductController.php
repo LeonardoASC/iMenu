@@ -26,21 +26,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $products = Product::with(['category'])->paginate(10)->through(function ($product) {
-            return [
-                'id' => $product->id,
-                'name' => $product->name,
-                'description' => $product->description,
-                'price' => $product->price,
-                'status' => $product->status,
-                'image' => $product->image,
-                'created_at' => $product->created_at->format('d-m-Y'),
-                'category' => [
-                    'id' => $product->category->id,
-                    'name' => $product->category->name,
-                ],
-            ];
-        });
+        $products = $this->productRepository->getAll($request);
         return Inertia::render('Admin/Product/Index', ['products' => $products]);
     }
 

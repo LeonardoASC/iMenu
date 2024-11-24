@@ -23,7 +23,16 @@ class CategoryRepository
             ->withTrashed()
             ->filter($request ? $request->only(['name']) : null)
             ->orderBy('name')
-            ->paginate(15);
+            ->paginate(10)
+            ->through(function ($category) {
+                return [
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'status' => $category->status,
+                    'created_at' => $category->created_at ? $category->created_at->format('d-m-Y') : null,
+                    'deleted_at' => $category->deleted_at,
+                ];
+            });
     }
 
     public function findById($id)

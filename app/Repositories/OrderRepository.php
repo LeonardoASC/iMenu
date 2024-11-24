@@ -24,7 +24,22 @@ class OrderRepository
             ->filter($request ? $request->only(['status']) : null)
             ->orderBy('status')
             ->orderBy('created_at', 'desc')
-            ->paginate(15);
+            ->paginate(10)
+            ->through(function ($order) {
+                    return [
+                        'id' => $order->id,
+                        'user' => [
+                            'id' => $order->user->id,
+                            'name' => $order->user->name,
+                            'email' => $order->user->email,
+                        ],
+                        'status' => $order->status,
+                        'notes' => $order->notes,
+                        // 'payment_method' => $order->payment_method,
+                        'total' => $order->total,
+                        'created_at' => $order->created_at->format('d-m-Y'),
+                    ];
+                });
     }
 
     public function findById($id)

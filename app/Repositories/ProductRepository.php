@@ -22,8 +22,24 @@ class ProductRepository
         return $this->model
             ->withTrashed()
             ->filter($request ? $request->only(['name']) : null)
+            ->with(['category'])
             ->orderBy('name')
-            ->paginate(15);
+            ->paginate(10)
+            ->through(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'description' => $product->description,
+                    'price' => $product->price,
+                    'status' => $product->status,
+                    'image' => $product->image,
+                    'created_at' => $product->created_at->format('d-m-Y'),
+                    'category' => [
+                        'id' => $product->category->id,
+                        'name' => $product->category->name,
+                    ],
+                ];
+            });
     }
 
     public function findById($id)
