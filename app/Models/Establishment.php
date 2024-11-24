@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Establishment extends Model
 {
     use HasFactory, SoftDeletes;
-
+    protected $table = 'establishments';
     protected $fillable = [
         'name',
         'address',
@@ -18,7 +18,7 @@ class Establishment extends Model
         'email',
         'logo_path',
     ];
-
+     
     public function scopeFilter($query, $request)
     {
         if(!$request) return;

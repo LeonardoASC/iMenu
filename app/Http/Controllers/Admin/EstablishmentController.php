@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Storage;
 
 class EstablishmentController extends Controller
 {
@@ -92,9 +93,19 @@ class EstablishmentController extends Controller
     {
         $data = $request->validated();
 
+        if ($request->hasFile('logo_path')) {
+            if ($establishment->logo_path) {
+                Storage::disk('public')->delete($establishment->logo_path);
+            }
+
+        $data['logo_path'] = $request->file('logo_path')->store('establishment', 'public');
+        } else {
+            unset($data['logo_path']);
+        }
+
         $establishment = $this->establishmentRepository->update($data, $establishment);
 
-        return Redirect::route('establishments.show', $establishment->id)->with('message', 'Estabelecimento atualizado com sucesso.');
+        return Redirect::route('establishment.index', $establishment->id)->with('message', 'Estabelecimento atualizado com sucesso.');
     }
 
     /**

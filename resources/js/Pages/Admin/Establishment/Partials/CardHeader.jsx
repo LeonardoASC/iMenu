@@ -15,9 +15,9 @@ export default function CardHeader({ title, description }) {
                     </Typography>
                 </div>
                 <div>
-                    <Link href={route('category.index')} className="w-full">
+                    <Link href={route('establishment.index')} className="w-full">
                         <Button fullWidth>
-                            Categorias
+                            Establishments
                         </Button>
                     </Link>
                 </div>

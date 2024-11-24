@@ -40,7 +40,6 @@ export default function Form({ data, setData, errors, processing = false, handle
                         placeholder="Ex: Eletrônicos"
                         autoComplete="name"
                         disabled={isShow}
-
                     />
                     {errors?.name && <span className="text-red-500">{errors.name}</span>}
                     {/* input de address */}

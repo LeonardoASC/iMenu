@@ -24,11 +24,12 @@ class UpdateEstablishmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|min:3|unique:'.Establishment::class.'name,'.$this->route('establishment')->id,
+            'name' => 'required|string|max:255|min:3|unique:establishments,name,' . $this->route('establishment')->id,
             'address' => 'nullable|string|max:255|min:3',
             'phone' => 'nullable|string|max:11|min:10',
             'email' => 'nullable|string|email|max:255',
-            'logo_path' => 'nullable|string|max:255',
+            'logo_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
+
 }

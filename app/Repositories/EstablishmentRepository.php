@@ -25,7 +25,7 @@ class EstablishmentRepository extends BaseRepository
 
     public function findById($id)
     {
-        return $this->model->withTrashed()->with(['users'])->findOrFail($id);
+        return $this->model->withTrashed()->findOrFail($id);
     }
 
 }

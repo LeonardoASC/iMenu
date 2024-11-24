@@ -21,7 +21,7 @@ class StoreEstablishmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255|min:3|unique:'.Establishment::class.',name',
+            'name' => 'required|string|max:255|min:3|unique:establishments,name',
             'address' => 'nullable|string|max:255|min:3',
             'phone' => 'nullable|string|max:11|min:10',
             'email' => 'required|string|email|max:255',
