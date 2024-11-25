@@ -20,7 +20,7 @@ class MenuController extends Controller
         // Retorna a página 'Menu' com a lista de produtos
         return Inertia::render('Menu', [
             // retorna a session para o usuario
-            'cpf' => session('cpf'),
+            'email' => session('email'),
             // 'products' => $products,
         ]);
     }

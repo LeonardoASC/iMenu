@@ -1,9 +1,10 @@
 import React from 'react';
 import { useForm } from '@inertiajs/react';
+import { InputCustomStyles } from '../../Components/InputCustomStyles/InputCustomStyles';
 
 const Welcome = () => {
     const { data, setData, post, processing, errors } = useForm({
-        cpf: '',
+        email: '',
     });
 
     const handleSubmit = (e) => {
@@ -21,7 +22,7 @@ const Welcome = () => {
                         className="mx-auto h-10 w-auto"
                     />
                     <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-                        Digite seu CPF para acessar o cardapio e gerar uma comanda
+                        Digite seu E-mail para acessar o cardapio e gerar uma comanda
                     </h2>
                 </div>
 
@@ -29,21 +30,21 @@ const Welcome = () => {
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <div className="flex items-center justify-between">
-                                <label htmlFor="cpf" className="block text-sm/6 font-bold text-gray-900">
-                                    Insira seu CPF:
+                                <label htmlFor="email" className="block text-sm/6 font-bold text-gray-900">
+                                    Insira seu E-mail:
                                 </label>
                             </div>
                             <div className="mt-2">
-                                <input
-                                    type="text"
-                                    id="cpf"
-                                    name="cpf"
-                                    value={data.cpf}
-                                    onChange={(e) => setData('cpf', e.target.value)}
+                                <InputCustomStyles
+                                    type="email"
+                                    placeholder="Email Address"
+                                    id="email"
+                                    name="email"
+                                    value={data.email}
+                                    onChange={(e) => setData('email', e.target.value)}
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
                                 />
-                                {errors.cpf && <div style={{ color: 'red' }}>{errors.cpf}</div>}
+                                {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
                             </div>
                         </div>
 
