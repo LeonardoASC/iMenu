@@ -31,6 +31,7 @@ class CategoryRepository
                     'name' => $category->name,
                     'status' => $category->status,
                     'created_at' => $category->created_at ? $category->created_at->format('d-m-Y') : null,
+                    'image' => $category->image,
                     'deleted_at' => $category->deleted_at,
                 ];
             });

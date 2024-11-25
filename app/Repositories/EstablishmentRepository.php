@@ -28,6 +28,7 @@ class EstablishmentRepository extends BaseRepository
                     'address' => $establishment->address,
                     'phone' => $establishment->phone,
                     'email' => $establishment->email,
+                    'logo_path' => $establishment->logo_path,
                     'created_at' => $establishment->created_at ? $establishment->created_at->format('d-m-Y') : null,
                     'deleted_at' => $establishment->deleted_at,
                 ];
