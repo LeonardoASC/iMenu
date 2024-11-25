@@ -60,12 +60,13 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $categoriesEnable = Category::where('status', 'Enable')->get();
-        $product->load('category');
+        $product->load(['category' => function ($query) {
+            $query->where('status', 'Enable');
+        }]);
         if ($product->image) {
             $product->image = $product->image;
         }
-        return Inertia::render('Admin/Product/Show', compact('product', 'categoriesEnable'));
+        return Inertia::render('Admin/Product/Show', compact('product'));
     }
 
     /**
