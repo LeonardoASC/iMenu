@@ -197,7 +197,7 @@ export function TableTable({ tables }) {
                                                 {created_at}
                                             </Typography>
                                         </td>
-                                        <td className={classes} style={{ opacity: 0.5, pointerEvents: 'none' }}>
+                                        <td className={classes}>
                                             <Tooltip content="Show tables">
                                                 <Link href={route('table.show', id)}>
                                                     <IconButton variant="text">
@@ -239,7 +239,7 @@ export function TableTable({ tables }) {
                         disabled={!tables.prev_page_url}
                         onClick={() => {
                             if (tables.prev_page_url) {
-                                router.visit(tables.prev_page_url); 
+                                router.visit(tables.prev_page_url);
                             }
                         }}
                     >
@@ -251,7 +251,7 @@ export function TableTable({ tables }) {
                         disabled={!tables.next_page_url}
                         onClick={() => {
                             if (tables.next_page_url) {
-                                router.visit(tables.next_page_url); 
+                                router.visit(tables.next_page_url);
                             }
                         }}
                     >

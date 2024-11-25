@@ -24,7 +24,7 @@ class StoreTableRequest extends FormRequest
             'establishment_id' => 'required|integer|exists:establishments,id',
             'type' => 'required|string',
             'status' => 'required|string',
-            'qrcode' => 'required|string',
+            'qrcode' => 'nullable|string',
         ];
     }
 

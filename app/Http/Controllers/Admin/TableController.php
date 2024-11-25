@@ -106,4 +106,10 @@ class TableController extends Controller
         $this->tableRepository->restore($table);
         return Redirect::route('table.index')->with('message', 'Mesa reativado com sucesso.');
     }
+
+    public function forceDelete(Table $table)
+    {
+        $this->tableRepository->forceDelete($table);
+        return Redirect::route('table.index')->with('message', 'Categoria excluída permanentemente.');
+    }
 }
