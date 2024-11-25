@@ -18,10 +18,8 @@ class MenuController extends Controller
         // $products = Product::all();
 
         // Retorna a página 'Menu' com a lista de produtos
-        return Inertia::render('Menu', [
-            // retorna a session para o usuario
-            'email' => session('email'),
-            // 'products' => $products,
+        return Inertia::render('Public/Menu/Index', ['email' => session('email'),
+        // 'products' => $products,
         ]);
     }
 
