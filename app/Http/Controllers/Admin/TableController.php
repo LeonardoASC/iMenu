@@ -58,7 +58,7 @@ class TableController extends Controller
 
         $table = $this->tableRepository->create($data);
 
-        return Redirect::route('tables.show', $table->id)->with('message', 'Mesa cadastrado com sucesso.');
+        return Redirect::route('table.index', $table->id)->with('message', 'Mesa cadastrado com sucesso.');
     }
 
     /**
@@ -88,7 +88,7 @@ class TableController extends Controller
 
         $table = $this->tableRepository->update($data, $table);
 
-        return Redirect::route('tables.show', $table->id)->with('message', 'Mesa atualizado com sucesso.');
+        return Redirect::route('table.index', $table->id)->with('message', 'Mesa atualizado com sucesso.');
     }
 
     /**
@@ -98,12 +98,12 @@ class TableController extends Controller
     {
         $this->tableRepository->destroy($table);
 
-        return Redirect::route('tables.index')->with('message', 'Mesa desativado com sucesso.');
+        return Redirect::route('table.index')->with('message', 'Mesa desativado com sucesso.');
     }
 
     public function restore(Table $table)
     {
         $this->tableRepository->restore($table);
-        return Redirect::route('tables.index')->with('message', 'Mesa reativado com sucesso.');
+        return Redirect::route('table.index')->with('message', 'Mesa reativado com sucesso.');
     }
 }

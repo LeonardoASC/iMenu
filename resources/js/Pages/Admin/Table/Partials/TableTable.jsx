@@ -51,7 +51,7 @@ export function TableTable({ tables }) {
     };
 
     const handleConfirmDelete = () => {
-        forceDelete(route("tables.forceDelete", selectedTablesId));
+        forceDelete(route("table.forceDelete", selectedTablesId));
         setIsModalOpen(false);
     };
 
@@ -76,7 +76,7 @@ export function TableTable({ tables }) {
                         <Button variant="outlined" size="sm">
                             view all
                         </Button>
-                        <Link href={route('tables.create')}>
+                        <Link href={route('table.create')}>
                             <Button className="flex items-center gap-3" size="sm">
                                 <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add tables
                             </Button>
@@ -199,14 +199,14 @@ export function TableTable({ tables }) {
                                         </td>
                                         <td className={classes} style={{ opacity: 0.5, pointerEvents: 'none' }}>
                                             <Tooltip content="Show tables">
-                                                <Link href={route('tables.show', id)}>
+                                                <Link href={route('table.show', id)}>
                                                     <IconButton variant="text">
                                                         <EyeIcon className="h-4 w-4" />
                                                     </IconButton>
                                                 </Link>
                                             </Tooltip>
                                             <Tooltip content="Edit tables">
-                                                <Link href={route('tables.edit', id)}>
+                                                <Link href={route('table.edit', id)}>
                                                     <IconButton variant="text">
                                                         <PencilIcon className="h-4 w-4" />
                                                     </IconButton>
