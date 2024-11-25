@@ -230,19 +230,38 @@ export function TableEstablishment({ establishments }) {
                     </tbody>
                 </table>
             </CardBody>
-            <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4 ">
+            <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
                     Page {establishments.current_page} of {establishments.last_page}
                 </Typography>
                 <div className="flex gap-2">
-                    <Button variant="outlined" size="sm">
+                    <Button
+                        variant="outlined"
+                        size="sm"
+                        disabled={!establishments.prev_page_url} // Desabilita se não houver página anterior
+                        onClick={() => {
+                            if (establishments.prev_page_url) {
+                                Inertia.visit(establishments.prev_page_url); // Navega para a página anterior
+                            }
+                        }}
+                    >
                         Previous
                     </Button>
-                    <Button variant="outlined" size="sm">
+                    <Button
+                        variant="outlined"
+                        size="sm"
+                        disabled={!establishments.next_page_url} // Desabilita se não houver próxima página
+                        onClick={() => {
+                            if (establishments.next_page_url) {
+                                Inertia.visit(establishments.next_page_url); // Navega para a próxima página
+                            }
+                        }}
+                    >
                         Next
                     </Button>
                 </div>
             </CardFooter>
+
             <ModalDelete
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}

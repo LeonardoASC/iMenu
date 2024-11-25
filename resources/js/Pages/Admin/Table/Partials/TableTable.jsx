@@ -130,7 +130,7 @@ export function TableTable({ tables }) {
                                     : "p-4 border-b border-blue-gray-50";
 
                                 return (
-                                    <tr key={name}>
+                                    <tr key={id}>
                                         <td className={classes}>
                                             <div className="flex items-center gap-3">
                                                 <div className="flex flex-col">
@@ -228,17 +228,36 @@ export function TableTable({ tables }) {
                     </tbody>
                 </table>
             </CardBody>
-            <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4 ">
+            <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
                 <Typography variant="small" color="blue-gray" className="font-normal">
                     Page {tables.current_page} of {tables.last_page}
                 </Typography>
                 <div className="flex gap-2">
-                    <Button variant="outlined" size="sm">
+                    <Button
+                        variant="outlined"
+                        size="sm"
+                        disabled={!tables.prev_page_url}
+                        onClick={() => {
+                            if (tables.prev_page_url) {
+                                router.visit(tables.prev_page_url); 
+                            }
+                        }}
+                    >
                         Previous
                     </Button>
-                    <Button variant="outlined" size="sm">
+                    <Button
+                        variant="outlined"
+                        size="sm"
+                        disabled={!tables.next_page_url}
+                        onClick={() => {
+                            if (tables.next_page_url) {
+                                router.visit(tables.next_page_url); 
+                            }
+                        }}
+                    >
                         Next
                     </Button>
+
                 </div>
             </CardFooter>
             <ModalDelete

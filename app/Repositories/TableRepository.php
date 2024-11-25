@@ -21,6 +21,7 @@ class TableRepository extends BaseRepository
             ->with(['establishment'])
             ->orderBy('id')
             ->paginate(10)
+            ->withQueryString()
             ->through(function ($table) {
                 return [
                     'id' => $table->id,
