@@ -242,10 +242,28 @@ export function TableOrder({ orders }) {
                     Page {orders.current_page} of {orders.last_page}
                 </Typography>
                 <div className="flex gap-2">
-                    <Button variant="outlined" size="sm">
+                    <Button
+                        variant="outlined"
+                        size="sm"
+                        disabled={!orders.prev_page_url}
+                        onClick={() => {
+                            if (orders.prev_page_url) {
+                                router.visit(orders.prev_page_url);
+                            }
+                        }}
+                    >
                         Previous
                     </Button>
-                    <Button variant="outlined" size="sm">
+                    <Button
+                        variant="outlined"
+                        size="sm"
+                        disabled={!orders.next_page_url}
+                        onClick={() => {
+                            if (orders.next_page_url) {
+                                router.visit(orders.next_page_url);
+                            }
+                        }}
+                    >
                         Next
                     </Button>
                 </div>

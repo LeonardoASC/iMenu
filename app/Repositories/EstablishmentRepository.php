@@ -20,6 +20,7 @@ class EstablishmentRepository extends BaseRepository
             ->filter($request)
             ->orderBy('id')
             ->paginate(10)
+            ->withQueryString()
             ->through(function ($establishment) {
                 return [
                     'id' => $establishment->id,
@@ -32,7 +33,7 @@ class EstablishmentRepository extends BaseRepository
                 ];
             });
     }
-    
+
 
     public function findById($id)
     {

@@ -238,10 +238,10 @@ export function TableEstablishment({ establishments }) {
                     <Button
                         variant="outlined"
                         size="sm"
-                        disabled={!establishments.prev_page_url} // Desabilita se não houver página anterior
+                        disabled={!establishments.prev_page_url}
                         onClick={() => {
                             if (establishments.prev_page_url) {
-                                Inertia.visit(establishments.prev_page_url); // Navega para a página anterior
+                                router.visit(establishments.prev_page_url);
                             }
                         }}
                     >
@@ -250,10 +250,10 @@ export function TableEstablishment({ establishments }) {
                     <Button
                         variant="outlined"
                         size="sm"
-                        disabled={!establishments.next_page_url} // Desabilita se não houver próxima página
+                        disabled={!establishments.next_page_url}
                         onClick={() => {
                             if (establishments.next_page_url) {
-                                Inertia.visit(establishments.next_page_url); // Navega para a próxima página
+                                router.visit(establishments.next_page_url);
                             }
                         }}
                     >

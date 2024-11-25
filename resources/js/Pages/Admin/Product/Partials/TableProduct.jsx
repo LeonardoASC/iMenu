@@ -227,10 +227,28 @@ export function TableProduct({ products }) {
                     Page {products.current_page} of {products.last_page}
                 </Typography>
                 <div className="flex gap-2">
-                    <Button variant="outlined" size="sm">
+                    <Button
+                        variant="outlined"
+                        size="sm"
+                        disabled={!products.prev_page_url}
+                        onClick={() => {
+                            if (products.prev_page_url) {
+                                router.visit(products.prev_page_url);
+                            }
+                        }}
+                    >
                         Previous
                     </Button>
-                    <Button variant="outlined" size="sm">
+                    <Button
+                        variant="outlined"
+                        size="sm"
+                        disabled={!products.next_page_url}
+                        onClick={() => {
+                            if (products.next_page_url) {
+                                router.visit(products.next_page_url);
+                            }
+                        }}
+                    >
                         Next
                     </Button>
                 </div>

@@ -257,7 +257,6 @@ export function TableTable({ tables }) {
                     >
                         Next
                     </Button>
-
                 </div>
             </CardFooter>
             <ModalDelete

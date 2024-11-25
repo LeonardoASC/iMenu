@@ -25,6 +25,7 @@ class ProductRepository
             ->with(['category'])
             ->orderBy('name')
             ->paginate(10)
+            ->withQueryString()
             ->through(function ($product) {
                 return [
                     'id' => $product->id,

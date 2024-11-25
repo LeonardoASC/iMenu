@@ -25,6 +25,7 @@ class OrderRepository
             ->orderBy('status')
             ->orderBy('created_at', 'desc')
             ->paginate(10)
+            ->withQueryString()
             ->through(function ($order) {
                     return [
                         'id' => $order->id,

@@ -200,10 +200,28 @@ export function TableCategory({ categories }) {
                     Page {categories.current_page} of {categories.last_page}
                 </Typography>
                 <div className="flex gap-2">
-                    <Button variant="outlined" size="sm">
+                    <Button
+                        variant="outlined"
+                        size="sm"
+                        disabled={!categories.prev_page_url}
+                        onClick={() => {
+                            if (categories.prev_page_url) {
+                                router.visit(categories.prev_page_url);
+                            }
+                        }}
+                    >
                         Previous
                     </Button>
-                    <Button variant="outlined" size="sm">
+                    <Button
+                        variant="outlined"
+                        size="sm"
+                        disabled={!categories.next_page_url}
+                        onClick={() => {
+                            if (categories.next_page_url) {
+                                router.visit(categories.next_page_url);
+                            }
+                        }}
+                    >
                         Next
                     </Button>
                 </div>

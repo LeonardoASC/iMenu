@@ -24,6 +24,7 @@ class CategoryRepository
             ->filter($request ? $request->only(['name']) : null)
             ->orderBy('name')
             ->paginate(10)
+            ->withQueryString()
             ->through(function ($category) {
                 return [
                     'id' => $category->id,
