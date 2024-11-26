@@ -38,31 +38,9 @@ class MenuController extends Controller
                 }),
             ];
         });
-        
-        $products = Product::with('category')
-            ->orderBy('category_id')
-            ->orderBy('name')
-            ->get()
-            ->map(function ($product) {
-                return [
-                    'id' => $product->id,
-                    'name' => $product->name,
-                    'description' => $product->description,
-                    'price' => $product->price,
-                    'status' => $product->status,
-                    'image' => $product->image,
-                    'created_at' => $product->created_at->format('d-m-Y'),
-                    'category' => [
-                        'id' => $product->category->id,
-                        'name' => $product->category->name,
-                        'status' => $product->category->status,
-                        'image' => $product->category->image,
-                    ],
-                ];
-            });
+
         return Inertia::render('Public/Menu/Index', [
             'email' => session('email'),
-            'products' => $products,
             'categories' => $categories,
         ]);
     }
