@@ -8,7 +8,7 @@ export default function Menu({ email, categories, products }) {
                 <h3 className="text-white font-bold">Olá,</h3>
                 <h1 className="text-2xl text-white font-bold mb-4">Seja Bem-Vindo(a)</h1>
                 <div className="w-full self-center">
-                    <Input label="Username" className="bg-white" />
+                    <Input label="Pesquisar..." className="bg-white" />
                 </div>
             </div>
 
@@ -47,7 +47,7 @@ export default function Menu({ email, categories, products }) {
                                 className="flex flex-col rounded-lg bg-white shadow-sm border border-slate-200 p-4 hover:shadow-md transition-all"
                             >
                                 <img
-                                    src={product.image} 
+                                    src={product.image}
                                     alt={product.name}
                                     className="w-full h-40 object-cover rounded-md mb-4"
                                 />

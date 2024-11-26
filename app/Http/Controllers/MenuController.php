@@ -18,6 +18,7 @@ class MenuController extends Controller
     {
         $categories = Category::with('products')
         ->orderBy('name')->where("status", "Enable")
+        ->has('products')
         ->get()
         ->map(function ($category) {
             return [

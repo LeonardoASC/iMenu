@@ -1,5 +1,5 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import { PencilIcon, UserPlusIcon, TrashIcon, EyeIcon } from "@heroicons/react/24/solid";
+import { PencilIcon, UserPlusIcon, TrashIcon, EyeIcon, InformationCircleIcon } from "@heroicons/react/24/solid";
 import { Link, router, useForm } from "@inertiajs/react";
 import { ModalDelete } from "../../../../Components/ModalDelete";
 import {
@@ -65,9 +65,21 @@ export function TableCategory({ categories }) {
             <CardHeader floated={false} shadow={false} className="rounded-none h-[15%] ">
                 <div className="mb-4 flex items-center justify-between gap-8 ">
                     <div>
-                        <Typography variant="h5" color="blue-gray">
-                            Categories list
-                        </Typography>
+                        <div className="flex items-center gap-2">
+                            <Typography variant="h5" color="blue-gray">
+                                Categories List
+                            </Typography>
+                            <Tooltip
+                            animate={{
+                                mount: { scale: 1, y: 0 },
+                                unmount: { scale: 0, y: 25 },
+                            }}
+                            content="Atenção!!! Ao desabilitar uma categoria, todos os produtos associados a ela ficaram indisponiveis para o cliente."
+                            placement="left"
+                            >
+                                <InformationCircleIcon className="h-5 w-5" />
+                            </Tooltip>
+                        </div>
                         <Typography color="gray" className="mt-1 font-normal">
                             See information about all Categories
                         </Typography>
