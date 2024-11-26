@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "@heroicons/react": "^2.1.5",
-        "@material-tailwind/react": "^2.1.10"
+        "@material-tailwind/react": "^2.1.10",
+        "use-debounce": "^10.0.4"
     }
 }
