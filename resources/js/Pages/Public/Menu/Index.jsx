@@ -73,7 +73,7 @@ export default function Menu({ email, categories }) {
 
                     ))}
                 </div>
-
+                    <div className="h-px w-full bg-gray-100 mb-2"/>
                 {filteredCategories.length > 0 ? (
                     filteredCategories.map((category) => (
                         <div key={category.id} className="mb-8">
@@ -102,8 +102,6 @@ export default function Menu({ email, categories }) {
                 ) : (
                     <p className="text-slate-600 text-center mt-4">Produto não encontrado</p>
                 )}
-
-
             </div>
         </main>
     );
