@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\RoleAndAbilityController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::get('/', function () {
     return Inertia::render('Public/Welcome');
@@ -54,6 +55,10 @@ Route::middleware('auth')->group(function () {
 
         Route::put('cargos/{id}/permissoes', [RoleAndAbilityController::class, 'assignAbilitiesToRole'])->name('admin.roles.assignAbilitiesToRole');
         Route::resource('/cargos', RoleAndAbilityController::class)->names('admin.roles')->parameters(['cargos' => 'role',]);
+
+        Route::post('/usuarios/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
+        Route::post('/usuarios/{id}/force-delete', [UserController::class, 'forceDelete'])->name('users.force-delete');
+        Route::resource('/usuarios', UserController::class)->names('users')->parameters(['usuarios' => 'user',]);
     });
 });
 
