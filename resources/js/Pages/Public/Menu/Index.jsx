@@ -34,7 +34,7 @@ export default function Menu({ email, categories }) {
                 <h1 className="text-2xl text-white font-bold mb-4">Seja Bem-Vindo(a)</h1>
             </div>
 
-            <div className="absolute top-[20%] left-1/2 transform -translate-x-1/2 -translate-y-1/2  rounded-lg z-10 shadow w-[90%]">
+            <div className="absolute to[20%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg z-10 shadow w-[90%] ">
                 <Input
                     label="Pesquisar..."
                     className="bg-white"
@@ -55,7 +55,7 @@ export default function Menu({ email, categories }) {
                         <ArrowRightIcon className="h-5 w-5" />
                     )}
                 </div>
-                <div className="relative flex overflow-x-auto space-x-4 p-4">
+                <div className="relative flex overflow-x-auto space-x-4 p-4 mb-2">
                     {categories.map((category) => (
                         <button
                             key={category.id}
@@ -72,47 +72,43 @@ export default function Menu({ email, categories }) {
                         </button>
                     ))}
                 </div>
-                <div className="h-px w-full bg-gray-100 mb-4" />
+                {/* <div className="h-px w-full bg-gray-100 mb-4" /> */}
                 {filteredCategories.length > 0 ? (
                     filteredCategories.map((category) => (
                         <div key={category.id} className="mb-8">
-                            <div className="flex items-center gap-4 mb-4 ">
-                                <h2 className="text-xl font-semibold text-slate-800 text-red-600">{category.name}</h2>
+                            <div className="flex items-center gap-4 mb-2 p-1">
+                                <img
+                                    src={category.image}
+                                    alt={category.name}
+                                    class="relative inline-block h-10 w-10 !rounded-full object-cover object-center"
+                                />
+                                <h2 className="text-xl font-semibold text-slate-800 text-gray-600">{category.name}</h2>
+                                <div className="h-px flex-grow bg-gray-400 " />
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {category.products.map((product) => (
-                                    <div
-                                        key={product.id}
-                                        className="flex flex-col rounded-xl bg-white shadow-sm border border-slate-200  hover:shadow-md transition-all"
-                                    >
-                                        <img
-                                            src={product.image}
-                                            alt={product.name}
-                                            className="w-full h-40 object-cover rounded-t-xl"
-                                        />
-                                        {/* <div className="px-4 py-4">
-                                        <h3 className="text-lg font-bold text-slate-800">{product.name}</h3>
-                                        <p className="text-slate-600 text-sm mb-2">{product.description}</p>
-                                        <p className="text-slate-800 font-semibold">Preço: R$ {product.price}</p>
-                                        </div> */}
-                                        <div class="p-8">
-                                            <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Preço: R$ {product.price}</div>
-                                            <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">{product.description}</a>
-                                            <p class="mt-2 text-slate-500">{product.description}</p>
+                                    <div className="w-full flex max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+                                        <div className="w-1/3 h-full">
+                                            <img
+                                                className="w-full h-full object-cover rounded-s-xl"
+                                                src={product.image}
+                                                alt={product.name}
+                                            />
+                                        </div>
+                                        <div className="flex items-center h-full w-2/3 ">
+                                            <div className="w-full">
+                                                <div className="p-2">
+                                                    <p className="mt-1 text-lg leading-tight font-medium text-black line-clamp-1 hover:underline">
+                                                        {product.name}
+                                                    </p>
+                                                    <p className="mt-1 text-sm text-slate-500 line-clamp-2">{product.description}</p>
+                                                    <div className="mt-2 uppercase tracking-wide text-sm font-semibold text-indigo-500 line-clamp-1 ">
+                                                        Preço: R$ {product.price}
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    // <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
-                                    //     <div class="md:flex">
-                                    //         <div class="md:shrink-0">
-                                    //             <img class="h-48 w-full object-cover md:h-full md:w-48" src={product.image} alt="Modern building architecture" />
-                                    //         </div>
-                                    //         <div class="p-8">
-                                    //             <div class="uppercase tracking-wide text-sm text-indigo-500 font-semibold">Preço: R$ {product.price}</div>
-                                    //             <a href="#" class="block mt-1 text-lg leading-tight font-medium text-black hover:underline">{product.description}</a>
-                                    //             <p class="mt-2 text-slate-500">{product.description}</p>
-                                    //         </div>
-                                    //     </div>
-                                    // </div>
                                 ))}
                             </div>
                         </div>
