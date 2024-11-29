@@ -59,7 +59,7 @@ export default function Menu({ email, categories }) {
                         <ArrowRightIcon className="h-5 w-5" />
                     )}
                 </div>
-                <div className="relative flex overflow-x-auto space-x-4 p-4 mb-2">
+                <div className="relative flex overflow-x-auto gap-4 p-4 mb-2 sm:justify-center sm:flex-wrap">
                     {categories.map((category) => (
                         <button
                             key={category.id}
