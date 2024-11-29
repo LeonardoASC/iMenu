@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Input } from '@material-tailwind/react';
 import { ArrowRightIcon } from "@heroicons/react/24/solid";
 import { useDebounce } from 'use-debounce';
+import { router } from '@inertiajs/react';
 
 export default function Menu({ email, categories }) {
 
@@ -25,6 +26,9 @@ export default function Menu({ email, categories }) {
             .filter((category) => category.products.length > 0);
     }, [debouncedSearchQuery, categories, selectedCategoryId]);
 
+    const handleProductClick = (product) => {
+        router.get(`/menu/${product}`);
+    };
 
     return (
         <main className=" mx-auto bg-[#f9f9f9] h-screen">
@@ -80,14 +84,18 @@ export default function Menu({ email, categories }) {
                                 <img
                                     src={category.image}
                                     alt={category.name}
-                                    class="relative inline-block h-10 w-10 !rounded-full object-cover object-center"
+                                    className="relative inline-block h-10 w-10 !rounded-full object-cover object-center"
                                 />
                                 <h2 className="text-xl font-semibold text-slate-800 text-gray-600">{category.name}</h2>
                                 <div className="h-px flex-grow bg-gray-400 " />
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {category.products.map((product) => (
-                                    <div className="w-full flex max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl">
+                                    <div key={product.id} className="w-full flex max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl"
+                                        onClick={() => handleProductClick(product.id)}
+                                    // onClick={() => console.log(product.id)}
+
+                                    >
                                         <div className="w-1/3 h-full">
                                             <img
                                                 className="w-full h-full object-cover rounded-s-xl"

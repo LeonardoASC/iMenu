@@ -23,7 +23,9 @@ Route::get('login', function () {
 
 Route::post('/create-session', [SessionController::class, 'create'])->name('create-session');
 
-Route::resource('/menu', MenuController::class);
+
+Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+Route::get('/menu/{product}', [MenuController::class, 'showProduct'])->name('menu.showProduct');
 
 
 Route::get('/dashboard', function () {
