@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import { Input } from '@material-tailwind/react';
-import { ArrowRightIcon } from "@heroicons/react/24/solid";
+import { Badge, IconButton, Input } from '@material-tailwind/react';
+import { ArrowRightIcon, HomeIcon, MagnifyingGlassIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { useDebounce } from 'use-debounce';
 import { router } from '@inertiajs/react';
 
@@ -32,18 +32,28 @@ export default function Menu({ email, categories }) {
 
     return (
         <main className=" mx-auto bg-[#f9f9f9] h-screen">
-            <div className="flex flex-col justify-center w-full h-[20%] px-4 bg-[#ce3246]">
-                {/* {email && <p className="text-white mb-4 text-center ">Email da comanda: {email}</p>} */}
-                {/* <h3 className="text-white font-bold">Olá, {email}</h3> */}
-                <h1 className="text-2xl text-white font-bold mb-4">Seja Bem-Vindo(a)</h1>
+            <div className="flex flex-row items-center justify-between w-full h-[20%] px-4 bg-[#ce3246]">
+                <h1 className="text-2xl text-white font-bold">Seja Bem-Vindo(a)</h1>
+                {/* icone de carrinho */}
+                <div className="flex flex-col items-center">
+                    <Badge content="5" color="white">
+                        {/* <IconButton> */}
+                        <ShoppingCartIcon className="h-8 w-8" color="white" />
+                        {/* </IconButton> */}
+                    </Badge>
+                    <p className="text-white text-sm">Meus pedidos</p>
+                </div>
             </div>
 
-            <div className="absolute to[20%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg z-10 shadow w-[90%] ">
+
+
+            <div className="absolute to[20%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg z-10 shadow w-[90%]">
                 <Input
-                    label="Pesquisar..."
-                    className="bg-white"
+                    icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                    label="Pesquise aqui o que voce quer comer :)"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
+                    className="bg-white"
                 />
             </div>
 
@@ -64,7 +74,7 @@ export default function Menu({ email, categories }) {
                         <button
                             key={category.id}
                             onClick={() => setSelectedCategoryId(category.id)}
-                            className={`flex-shrink-0 flex flex-col items-center justify-center w-40 h-40 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-all ${selectedCategoryId === category.id ? 'bg-[#ce3246] text-white' : 'bg-white text-slate-800'
+                            className={`flex-shrink-0 flex flex-col items-center justify-center w-36 h-36 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-all ${selectedCategoryId === category.id ? 'bg-[#ce3246] text-white' : 'bg-white text-slate-800'
                                 }`}
                         >
                             <img

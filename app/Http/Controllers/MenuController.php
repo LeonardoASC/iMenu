@@ -75,9 +75,9 @@ class MenuController extends Controller
      */
     public function showProduct(Product $product)
     {
-        return Inertia::render('Public/Menu/Show', [
-            'product' => $product,
-        ]);
+        $product = Product::with('category')->findOrFail($product->id);
+        // dd($product);  
+        return Inertia::render('Public/Menu/Show', compact('product'));
     }
 
     /**
