@@ -25,7 +25,7 @@ class UserRepository extends BaseRepository
     {
         return $this->model
             ->withTrashed()
-            ->with(['roles.abilities',])
+            ->with(['roles',])
             ->filter($request ? $request->only(['search', 'role']) : null)
             ->orderBy('name')
             ->paginate(15);

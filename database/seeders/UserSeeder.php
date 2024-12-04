@@ -38,6 +38,7 @@ class UserSeeder extends Seeder
                 'name' => 'Joao Garçom',
                 'email' => 'garcon@email.com',
                 'email_verified_at' => now(),
+                'phone' => '11999999999',
                 'password' => bcrypt('password'),
         ]);
 
