@@ -6,8 +6,10 @@ import {
     Select
 } from "@material-tailwind/react";
 import { Link } from '@inertiajs/react';
+import { InputPhone } from '@/Components/InputPhone';
+import SelectInput from '@/Components/SelectInput';
 
-export default function Form({ data, setData, errors, processing = false, handleSubmit, isShow = false, isEdit = false, table }) {
+export default function Form({ data, setData, errors, processing = false, handleSubmit, isShow = false, isEdit = false, user, roles=[] }) {
 
     const [imageName, setImageName] = useState('');
     const fileInputRef = useRef(null);
@@ -29,117 +31,107 @@ export default function Form({ data, setData, errors, processing = false, handle
             <form className="mt-4 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handleSubmit}>
                 <div className="mb-1 flex flex-col gap-6">
                     <Input
-                        id="establishment_id"
-                        name="establishment_id"
-                        label="Establishment ID"
-                        value={data?.establishment_id}
-                        onChange={(e) => setData('establishment_id', e?.target?.value)}
+                        id="name"
+                        name="name"
+                        label="Nome"
+                        value={data?.name}
+                        onChange={(e) => setData('name', e?.target?.value)}
                         required={!isEdit}
-                        error={errors?.establishment_id}
+                        error={errors?.name}
                         size="lg"
-                        placeholder="Ex: Eletrônicos"
-                        autoComplete="establishment_id"
+                        autoComplete="name"
                         disabled={isShow}
                     />
-                    {errors?.establishment_id && <span className="text-red-500">{errors.establishment_id}</span>}
+                    {errors?.name && <span className="text-red-500 text-xs">{errors.name}</span>}
                     <Input
-                        id="number"
-                        name="number"
-                        label="Number of table"
-                        value={data?.number}
-                        onChange={(e) => setData('number', e?.target?.value)}
+                        id="last_name"
+                        name="last_name"
+                        label="Sobrenome"
+                        value={data?.last_name}
+                        onChange={(e) => setData('last_name', e?.target?.value)}
                         required={!isEdit}
-                        error={errors?.number}
+                        error={errors?.last_name}
                         size="lg"
-                        placeholder="Ex: Eletrônicos"
-                        autoComplete="number"
+                        autoComplete="last_name"
                         disabled={isShow}
                     />
-                    {errors?.number && <span classnumber="text-red-500">{errors.number}</span>}
-
-                    <Select
-                        label="Select type"
+                    {errors?.last_name && <span className="text-red-500 text-xs">{errors.last_name}</span>}
+                    <Input
+                        id="email"
+                        name="email"
+                        label="Email"
+                        type='email'
+                        value={data?.email}
+                        onChange={(e) => setData('email', e?.target?.value)}
                         required={!isEdit}
-                        value={data.type || 'common'}
-                        onChange={(value) => setData('type', value)}
+                        error={errors?.email}
+                        size="lg"
+                        autoComplete="email"
                         disabled={isShow}
-                    >
-                        <Option value="common">Common</Option>
-                        <Option value="vip">Vip</Option>
-                    </Select>
-                    {errors?.type && <span className="text-red-500">{errors.type}</span>}
+                    />
+                    {errors?.email && <span className="text-red-500 text-xs">{errors.email}</span>}
 
-                    <Select
-                        label="Select status"
+                    <InputPhone
+                        id="phone"
+                        name="phone"
+                        label="Telefone"
+                        value={data?.phone}
+                        onChange={(e) => setData('phone', e?.target?.value)}
                         required={!isEdit}
-                        value={data.status || 'free'}
-                        onChange={(value) => setData('status', value)}
+                        error={errors?.phone}
+                        size="lg"
+                        autoComplete="phone"
                         disabled={isShow}
-                    >
-                        <Option value="free">Free</Option>
-                        <Option value="busy">Busy</Option>
-                        <Option value="reserved">Reserved</Option>
-                    </Select>
-                    {errors?.status && <span className="text-red-500">{errors.status}</span>}
+                    />
+                    {errors?.phone && <span className="text-red-500 text-xs">{errors.phone}</span>}
 
                     <Input
-                        id="qrcode"
-                        name="qrcode"
-                        label="Qrcode of table"
-                        value={data?.qrcode}
-                        onChange={(e) => setData('qrcode', e?.target?.value)}
+                        id="password"
+                        name="password"
+                        label="Senha"
+                        type='password'
+                        placeholder='Senha'
+                        value={data?.password}
+                        onChange={(e) => setData('password', e?.target?.value)}
                         required={!isEdit}
-                        error={errors?.qrcode}
+                        error={errors?.password}
                         size="lg"
-                        placeholder="Ex: Eletrônicos"
-                        autoComplete="qrcode"
+                        autoComplete="password"
                         disabled={isShow}
                     />
-                    {errors?.qrcode && <span classqrcode="text-red-500">{errors.qrcode}</span>}
+                    {errors?.password && <span className="text-red-500 text-xs">{errors.password}</span>}
 
-                    {/* {!isShow && (
-                        <div className="relative flex w-full max-w-[24rem]">
-                            <Input
-                                type="text"
+                    <Input
+                        id="password_confirmation"
+                        name="password_confirmation"
+                        label="Confirmar senha"
+                        type='password'
+                        placeholder='Confirmar senha'
+                        value={data?.password_confirmation}
+                        onChange={(e) => setData('password_confirmation', e?.target?.value)}
+                        required={!isEdit}
+                        error={errors?.password_confirmation}
+                        size="lg"
+                        autoComplete="password_confirmation"
+                        disabled={isShow}
+                    />
+                    {errors?.password_confirmation && <span className="text-red-500 text-xs">{errors.password_confirmation}</span>}
 
-                                value={imageName ? imageName : 'Selecionar imagem'}
-                                onChange={(e) => setImageName(e.target.value)}
-                                className="pr-20"
-                                containerProps={{
-                                    className: "min-w-0",
-                                }}
-                                readOnly
-                            />
-                            <Button
-                                size="sm"
-                                color="blue-gray"
-                                className="!absolute right-1 top-1 rounded"
-                                onClick={handleButtonClick}
-                            >
-                                Selecionar imagem
-                            </Button>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                ref={fileInputRef}
-                                style={{ display: 'none' }}
-                                onChange={handleFileChange}
-                                required={!isEdit}
-                            />
-                        </div>
-                    )}
-                    {errors?.image && <span className="text-red-500">{errors.image}</span>}
-
-                    {table?.image && (
-                        <div className="border-2 border-gray-500 p-2 rounded-lg border-dotted">
-                            <img
-                                // src={`/storage/${table.image}`}
-                                src={imageName ? URL.createObjectURL(data.image) : `/storage/${table.image}`}
-                                alt="table Image"
-                                className="h-32 w-32 rounded-3xl object-cover"
-                            />
-                        </div>
-                    )} */}
+                    <SelectInput
+                        label="Cargo"
+                        id="role"
+                        name="role"
+                        fieldLabel='title'
+                        fieldValue='name'
+                        dataOptions={roles}
+                        onChange={(e) => setData('role', e)}
+                        error={errors && errors?.role}
+                        required
+                        size="lg"
+                        autoComplete="roles"
+                        disabled={isShow}
+                    />
+                    {errors?.roles && <span className="text-red-500 text-xs">{errors.roles}</span>}
                 </div>
 
                 <div className="mt-4 flex gap-2">
@@ -147,15 +139,15 @@ export default function Form({ data, setData, errors, processing = false, handle
                         className=""
                         onClick={() => window.history.back()}
                     >
-                        Back
+                        Voltar
                     </Button>
                     {!isShow && (
                         <Button className="" type="submit" disabled={processing} fullWidth>
-                            {isEdit ? 'Update' : 'Create'}
+                            {isEdit ? 'Salvar' : 'Cadastrar'}
                         </Button>
                     )}
                     {isShow && (
-                        <Link href={route('table.edit', table.id)} className="w-full">
+                        <Link href={route('admin.users.edit', user.id)} className="w-full">
                             <Button fullWidth>
                                 Editar
                             </Button>

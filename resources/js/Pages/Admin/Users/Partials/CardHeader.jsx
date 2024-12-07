@@ -14,13 +14,6 @@ export default function CardHeader({ title, description }) {
                         {description}
                     </Typography>
                 </div>
-                <div>
-                    <Link href={route('table.index')} className="w-full">
-                        <Button fullWidth>
-                            Tables
-                        </Button>
-                    </Link>
-                </div>
             </div>
         </>
     );
