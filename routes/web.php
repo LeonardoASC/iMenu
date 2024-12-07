@@ -56,9 +56,9 @@ Route::middleware('auth')->group(function () {
         Route::put('cargos/{id}/permissoes', [RoleAndAbilityController::class, 'assignAbilitiesToRole'])->name('admin.roles.assignAbilitiesToRole');
         Route::resource('/cargos', RoleAndAbilityController::class)->names('admin.roles')->parameters(['cargos' => 'role',]);
 
-        Route::post('/usuarios/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
-        Route::post('/usuarios/{id}/force-delete', [UserController::class, 'forceDelete'])->name('users.force-delete');
-        Route::resource('/usuarios', UserController::class)->names('users')->parameters(['usuarios' => 'user',]);
+        Route::post('/usuarios/{id}/restore', [UserController::class, 'restore'])->name('admin.users.restore');
+        Route::post('/usuarios/{id}/force-delete', [UserController::class, 'forceDelete'])->name('admin.users.force-delete');
+        Route::resource('/usuarios', UserController::class)->names('admin.users')->parameters(['usuarios' => 'user',]);
     });
 });
 

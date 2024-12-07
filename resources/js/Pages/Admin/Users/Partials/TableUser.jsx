@@ -77,7 +77,7 @@ export function TableUser({ users }) {
                         <Button variant="outlined" size="sm">
                             visualizar todos
                         </Button>
-                        <Link href={route('table.create')}>
+                        <Link href={route('admin.users.create')}>
                             <Button className="flex items-center gap-3" size="sm">
                                 <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Cadastrar
                             </Button>
