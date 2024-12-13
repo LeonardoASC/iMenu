@@ -29,23 +29,26 @@ export default function Menu({ email, categories }) {
     const handleProductClick = (product) => {
         router.get(`/menu/${product}`);
     };
+    const handleOrderClick = () => {
+        router.get(`/order/userorder`);
+    };
 
     return (
         <main className=" mx-auto bg-[#f9f9f9] h-screen">
             <div className="flex flex-row items-center justify-between w-full h-[20%] px-4 bg-[#ce3246]">
-                <h1 className="text-2xl text-white font-bold">Seja Bem-Vindo(a)</h1>
+                <h1 className="text-lg sm:text-2xl text-white font-bold">Seja Bem-Vindo(a)</h1>
                 {/* icone de carrinho */}
-                <div className="flex flex-col items-center">
+                <button className="flex flex-col items-center"
+                    onClick={() => handleOrderClick()}
+                >
                     <Badge content="5" color="white">
                         {/* <IconButton> */}
                         <ShoppingCartIcon className="h-8 w-8" color="white" />
                         {/* </IconButton> */}
                     </Badge>
                     <p className="text-white text-sm">Meus pedidos</p>
-                </div>
+                </button>
             </div>
-
-
 
             <div className="absolute to[20%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg z-10 shadow w-[90%]">
                 <Input
@@ -69,7 +72,7 @@ export default function Menu({ email, categories }) {
                         <ArrowRightIcon className="h-5 w-5" />
                     )}
                 </div>
-                <div className="relative flex overflow-x-auto gap-4 p-4 mb-2 sm:justify-center sm:flex-wrap">
+                <div className="relative flex overflow-x-auto gap-4 p-4 mb-2 md:justify-center md:flex-wrap">
                     {categories.map((category) => (
                         <button
                             key={category.id}
@@ -86,26 +89,23 @@ export default function Menu({ email, categories }) {
                         </button>
                     ))}
                 </div>
-                {/* <div className="h-px w-full bg-gray-100 mb-4" /> */}
+
                 {filteredCategories.length > 0 ? (
                     filteredCategories.map((category) => (
-                        <div key={category.id} className="mb-8">
+                        <div key={category.id} className="mb-5 sm:mb-8">
                             <div className="flex items-center gap-4 mb-2 p-1">
                                 <img
                                     src={category.image}
                                     alt={category.name}
                                     className="relative inline-block h-10 w-10 !rounded-full object-cover object-center"
                                 />
-                                <h2 className="text-xl font-semibold text-slate-800 text-gray-600">{category.name}</h2>
+                                <h2 className="text-lg sm:text-xl font-semibold text-slate-800 text-gray-600">{category.name}</h2>
                                 <div className="h-px flex-grow bg-gray-400 " />
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                 {category.products.map((product) => (
                                     <div key={product.id} className="w-full flex max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl"
-                                        onClick={() => handleProductClick(product.id)}
-                                    // onClick={() => console.log(product.id)}
-
-                                    >
+                                        onClick={() => handleProductClick(product.id)}>
                                         <div className="w-1/3 h-full">
                                             <img
                                                 className="w-full h-full object-cover rounded-s-xl"
@@ -116,10 +116,10 @@ export default function Menu({ email, categories }) {
                                         <div className="flex items-center h-full w-2/3 ">
                                             <div className="w-full">
                                                 <div className="p-2">
-                                                    <p className="mt-1 text-lg leading-tight font-medium text-black line-clamp-1 hover:underline">
+                                                    <p className="mt-1 sm:text-lg leading-tight font-medium text-black line-clamp-1 hover:underline">
                                                         {product.name}
                                                     </p>
-                                                    <p className="mt-1 text-sm text-slate-500 line-clamp-2">{product.description}</p>
+                                                    <p className="mt-1 text-xs sm:text-sm text-slate-500 line-clamp-2">{product.description}</p>
                                                     <div className="mt-2 uppercase tracking-wide text-sm font-semibold text-indigo-500 line-clamp-1 ">
                                                         Preço: R$ {product.price}
                                                     </div>

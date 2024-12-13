@@ -21,7 +21,7 @@ const Welcome = () => {
                         src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=600"
                         className="mx-auto h-10 w-auto"
                     />
-                    <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+                    <h2 className="mt-10 text-center text-lg sm:text-2xl font-bold tracking-tight text-gray-900">
                         Digite seu E-mail para acessar o cardapio e gerar uma comanda
                     </h2>
                 </div>
