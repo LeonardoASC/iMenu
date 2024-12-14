@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 
 export default function Show({ product }) {
     const [rated, setRated] = useState(4);
-    const [quantityProduct, setQuantityProduct] = React.useState(0);
+    const [quantityProduct, setQuantityProduct] = useState(0);
     return (
         <div className="h-screen bg-red-500">
             <div className="h-1/2 bg-blue-200">
@@ -46,7 +46,7 @@ export default function Show({ product }) {
                     <Typography color="blue-gray" className="font-medium text-blue-gray-500">
                         {rated}.0
                     </Typography>
-                    <Rating quantityProduct={4} onChange={(quantityProduct) => setRated(quantityProduct)} />
+                    <Rating value={4} onChange={(quantityProduct) => setRated(quantityProduct)} />
 
                 </div>
                 <div className="w-full h-px bg-gray-100 my-4" />
