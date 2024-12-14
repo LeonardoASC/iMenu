@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->enum('status', ['preparing', 'delivered', 'canceled'])->default('preparing');
+            $table->enum('status', ["open", "closed", "cancelled"])->default('open');
             $table->text('notes')->nullable();
             $table->decimal('total', 10, 2)->default(0);
             // $table->enum('payment_method', ['cash', 'credit_card', 'debit_card'])->default('cash');

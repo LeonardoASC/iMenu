@@ -23,6 +23,8 @@ class OrderSeeder extends Seeder
                 $order->products()->attach($product->id, [
                     'quantity' => rand(1, 5),
                     'price' => $product->price,
+                    // 'status' => 'preparing',
+                    'status' => \Illuminate\Support\Arr::random(['preparing', 'ready', 'delivered']),
                 ]);
             }
         });
