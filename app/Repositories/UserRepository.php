@@ -24,7 +24,11 @@ class UserRepository extends BaseRepository
     public function getAll($request = null)
     {
         return $this->model
-            ->withTrashed()
+            ->when($request, function ($query, $request) {
+                if(!data_get($request, 'deleted_at')) return $query->withTrashed();
+                else if($request['deleted_at'] === 'true') return $query->onlyTrashed();
+                else return $query;
+            })
             ->with(['roles',])
             ->filter($request ? $request->only(['search', 'role']) : null)
             ->orderBy('name')

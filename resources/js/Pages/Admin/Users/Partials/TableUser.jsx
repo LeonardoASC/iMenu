@@ -1,5 +1,6 @@
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { PencilIcon, UserPlusIcon, TrashIcon, EyeIcon } from "@heroicons/react/24/solid";
+import { FaTrashRestore } from "react-icons/fa";
 import { Link, router, useForm } from "@inertiajs/react";
 import { ModalDelete } from "../../../../Components/ModalDelete";
 import {
@@ -18,8 +19,9 @@ import {
     IconButton,
     Tooltip,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import moment from "moment";
+import { ModalRestore } from "@/Components/ModalRestore";
 
 const TABS = [
     {
@@ -36,31 +38,78 @@ const TABS = [
     },
 ];
 
-const TABLE_HEAD = ["Nome", "Email", "Telefone", "Cargo", "Cadastrado em", ""];
+const TABLE_HEAD = ["Nome", "Cargo", "Email", "Telefone", "Status", ""];
 
 export function TableUser({ users }) {
     const tableData = users.data || [];
 
-    const { delete: forceDelete } = useForm();
+    const deletedAtParam = new URLSearchParams(window.location.search).get('deleted_at')
 
+    const { post, delete: deleteMethod } = useForm();
+
+    const [currentTab, setCurrentTab] = useState(!deletedAtParam ? 'all' : deletedAtParam === 'false' ? 'Enable' : 'Disable');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedTablesId, setSelectedTablesId] = useState(null);
+    const [selectedTableName, setSelectedTableName] = useState(null);
+    const [isSoftDelete, setIsSoftDelete] = useState(false);
+    const [isOpenModalRestore, setIsOpenModalRestore] = useState(false);
 
-    const handleDelete = (id) => {
+    const handleDelete = (id, deletedAt, name) => {
         setSelectedTablesId(id);
         setIsModalOpen(true);
+        setSelectedTableName(name);
+        setIsSoftDelete(deletedAt == null);
+    };
+
+    const handleRestore = (id, name) => {
+        setSelectedTablesId(id);
+        setIsOpenModalRestore(true);
+        setSelectedTableName(name);
     };
 
     const handleConfirmDelete = () => {
-        forceDelete(route("table.forceDelete", selectedTablesId));
-        setIsModalOpen(false);
+        if(isSoftDelete) deleteMethod(route("admin.users.destroy", selectedTablesId));
+        else deleteMethod(route("admin.users.forceDelete", selectedTablesId));
+        setCurrentTab('all')
+        handleCloseModal();
+    };
+
+    const handleConfirmRestore = () => {
+        post(route("admin.users.restore", selectedTablesId));
+        setCurrentTab('all')
+        handleCloseModal();
     };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
         setSelectedTablesId(null);
+        setSelectedTableName(null);
+        setIsSoftDelete(false);
+        setIsOpenModalRestore(false);
     };
-    console.log('tableData', tableData);
+
+    const handleTabSwitch = (tab) => {
+        switch (tab) {
+            case "all":
+                router.get(route('admin.users.index'));
+                break;
+            case "Enable":
+                router.get(route('admin.users.index'), { deleted_at: false })
+                break;
+            case "Disable":
+                router.get(route('admin.users.index'), { deleted_at: true })
+                break;
+        }
+    };
+
+    useEffect(() => {
+        setCurrentTab(!deletedAtParam ? 'all' : deletedAtParam === 'false' ? 'Enable' : 'Disable')
+    }, [deletedAtParam]);
+
+    useEffect(() => {
+        console.log('currentTab', currentTab)
+    }, [currentTab]);
+
     return (
         <Card className="w-full max-h-full">
             <CardHeader floated={false} shadow={false} className="rounded-none min-h-fit">
@@ -85,10 +134,10 @@ export function TableUser({ users }) {
                     </div>
                 </div>
                 <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-                    <Tabs value="all" className="w-full md:w-max">
+                    <Tabs value={currentTab || 'all'} className="w-full md:w-max">
                         <TabsHeader>
                             {TABS.map(({ label, value }) => (
-                                <Tab key={value} value={value}>
+                                <Tab key={value} value={value} onClick={() => handleTabSwitch(value)}>
                                     &nbsp;&nbsp;{label}&nbsp;&nbsp;
                                 </Tab>
                             ))}
@@ -124,7 +173,7 @@ export function TableUser({ users }) {
                     </thead>
                     <tbody>
                         {tableData.map(
-                            ({ id, name, last_name, email, phone, roles, status, created_at }, index) => {
+                            ({ id, name, last_name, email, phone, roles, created_at, deleted_at }, index) => {
                                 const isLast = index === tableData.length - 1;
                                 const classes = isLast
                                     ? "p-4"
@@ -143,6 +192,16 @@ export function TableUser({ users }) {
                                                         {name} {last_name}
                                                     </Typography>
                                                 </div>
+                                            </div>
+                                        </td>
+                                        <td className={classes}>
+                                            <div className="w-max">
+                                                <Chip
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    value={roles[0]?.name === 'admin' ? 'Administrador' : roles[0]?.name === 'waiter' ? 'Garçom' : 'Sem cargo'}
+                                                    color={roles[0]?.name === 'admin' ? 'blue' : roles[0]?.name === 'waiter' ? 'purple' : 'gray'}
+                                                />
                                             </div>
                                         </td>
                                         <td className={classes}>
@@ -172,24 +231,8 @@ export function TableUser({ users }) {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className={classes}>
-                                            <div className="w-max">
-                                                <Chip
-                                                    variant="ghost"
-                                                    size="sm"
-                                                    value={roles[0]?.name === 'admin' ? 'Administrador' : roles[0]?.name === 'waiter' ? 'Garçom' : 'Sem cargo'}
-                                                    color={roles[0]?.name === 'admin' ? 'yellow' : roles[0]?.name === 'waiter' ? 'green' : 'red'}
-                                                />
-                                                {/* <Typography
-                                                        variant="small"
-                                                        color="blue-gray"
-                                                        className="font-normal"
-                                                    >
-                                                    {roles[0]?.title ?? 'Sem cargo'}
-                                                </Typography> */}
-                                            </div>
-                                        </td>
-                                        <td className={classes}>
+
+                                        {/* <td className={classes}>
                                             <Typography
                                                 variant="small"
                                                 color="blue-gray"
@@ -197,6 +240,18 @@ export function TableUser({ users }) {
                                             >
                                                 {moment(created_at).format('DD/MM/YYYY')}
                                             </Typography>
+                                        </td> */}
+                                        <td className={classes}>
+                                            <div className="flex items-center gap-3">
+                                                <div className="flex flex-col">
+                                                    <Chip
+                                                        variant="ghost"
+                                                        size="sm"
+                                                        value={deleted_at ? 'Desativado' : 'Ativo'}
+                                                        color={deleted_at ? 'red' : 'green'}
+                                                    />
+                                                </div>
+                                            </div>
                                         </td>
                                         <td className={classes}>
                                             <Tooltip content="Visualizar">
@@ -206,17 +261,28 @@ export function TableUser({ users }) {
                                                     </IconButton>
                                                 </Link>
                                             </Tooltip>
-                                            <Tooltip content="Editar">
-                                                <Link href={route('table.edit', id)}>
-                                                    <IconButton variant="text">
-                                                        <PencilIcon className="h-4 w-4" />
+                                            {!deleted_at
+                                                ? <Tooltip content="Editar">
+                                                    <Link href={route('table.edit', id)}>
+                                                        <IconButton variant="text">
+                                                            <PencilIcon className="h-4 w-4" />
+                                                        </IconButton>
+                                                    </Link>
+                                                </Tooltip>
+                                                :
+                                                <Tooltip content="Reativar">
+                                                    <IconButton
+                                                        variant="text"
+                                                        onClick={() => handleRestore(id, `${name} ${last_name}`)}
+                                                    >
+                                                        <FaTrashRestore className="h-3.5 w-3.5" />
                                                     </IconButton>
-                                                </Link>
-                                            </Tooltip>
-                                            <Tooltip content="Excluir">
+                                                </Tooltip>
+                                            }
+                                            <Tooltip content={deleted_at ? 'Desativar' : 'Excluir'}>
                                                 <IconButton
                                                     variant="text"
-                                                    onClick={() => handleDelete(id)}
+                                                    onClick={() => handleDelete(id, deleted_at, `${name} ${last_name}`)}
                                                 >
                                                     <TrashIcon className="h-4 w-4" />
                                                 </IconButton>
@@ -264,6 +330,14 @@ export function TableUser({ users }) {
                 isOpen={isModalOpen}
                 onClose={handleCloseModal}
                 onConfirm={handleConfirmDelete}
+                name={selectedTableName}
+                softDelete={isSoftDelete}
+            />
+            <ModalRestore
+                isOpen={isOpenModalRestore}
+                onClose={handleCloseModal}
+                onConfirm={handleConfirmRestore}
+                name={selectedTableName}
             />
         </Card>
     );

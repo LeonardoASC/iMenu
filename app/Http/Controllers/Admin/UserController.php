@@ -91,14 +91,16 @@ class UserController extends Controller
         return Redirect::route('admin.users.index')->with('message', 'Usuário excluído com sucesso.');
     }
 
-    public function restore(User $user)
+    public function restore($id)
     {
+        $user = $this->userRepository->findById($id);
         $this->userRepository->restore($user);
         return Redirect::route('admin.users.index')->with('message', 'Usuário recuperado com sucesso.');
     }
 
-    public function forceDelete(User $user)
+    public function forceDelete($id)
     {
+        $user = $this->userRepository->findById($id);
         $this->userRepository->forceDelete($user);
         return Redirect::route('admin.users.index')->with('message', 'Usuário excluído permanentemente.');
     }

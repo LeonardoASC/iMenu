@@ -57,7 +57,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/cargos', RoleAndAbilityController::class)->names('admin.roles')->parameters(['cargos' => 'role',]);
 
         Route::post('/usuarios/{id}/restore', [UserController::class, 'restore'])->name('admin.users.restore');
-        Route::post('/usuarios/{id}/force-delete', [UserController::class, 'forceDelete'])->name('admin.users.force-delete');
+        Route::delete('/usuarios/{id}/force', [UserController::class, 'forceDelete'])->name('admin.users.forceDelete');
         Route::resource('/usuarios', UserController::class)->names('admin.users')->parameters(['usuarios' => 'user',]);
     });
 });

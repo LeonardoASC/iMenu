@@ -6,21 +6,18 @@ import {
     DialogBody,
     DialogFooter,
 } from "@material-tailwind/react";
-import { TrashIcon } from "@heroicons/react/24/solid";
+import { FaTrashRestore } from "react-icons/fa";
 
-export function ModalDelete({ isOpen, softDelete = false, onClose, name, onConfirm }) {
+export function ModalRestore({ isOpen, onClose, name, onConfirm }) {
     return (
         <Dialog open={isOpen} handler={onClose}>
             <DialogHeader className="gap-2">
-                <div className="bg-red-100 rounded-full p-2"><TrashIcon className="h-5 w-5 text-red-500" /></div>
-                {softDelete ? "Desativar Registro" : "Excluir Registro"}
+                <div className="bg-green-100 rounded-full p-2.5"><FaTrashRestore className="h-4 w-4 text-green-700" /></div>
+                Reativar Registro
             </DialogHeader>
             <DialogBody>
                 <div className="py-2 flex flex-col gap-2">
-                    {softDelete
-                        ? "Tem certeza de que deseja desativar este registro?"
-                        : "Tem certeza de que deseja excluir este registro? Esta ação não pode ser desfeita."
-                    }
+                    <p>Tem certeza de que deseja reativar este registro?</p>
                     {name && <p className="font-bold">{name}</p>}
                 </div>
             </DialogBody>
