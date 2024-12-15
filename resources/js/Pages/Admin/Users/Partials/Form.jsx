@@ -135,12 +135,10 @@ export default function Form({ data, setData, errors, processing = false, handle
                 </div>
 
                 <div className="mt-4 flex gap-2">
-                    <Button
-                        className=""
-                        onClick={() => window.history.back()}
-                    >
-                        Voltar
-                    </Button>
+
+                    <Link href={route('admin.users.index')}>
+                        <Button>Voltar</Button>
+                    </Link>
                     {!isShow && (
                         <Button className="" type="submit" disabled={processing} fullWidth>
                             {isEdit ? 'Salvar' : 'Cadastrar'}
