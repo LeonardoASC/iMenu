@@ -22,7 +22,6 @@ class OrderRepository
         return $this->model
             ->withTrashed()
             ->filter($request ? $request->only(['status']) : null)
-            ->orderBy('status')
             ->orderBy('created_at', 'desc')
             ->paginate(10)
             ->withQueryString()
