@@ -81,7 +81,7 @@ class OrderController extends Controller
         $orders = Order::with(['products' => function ($query) {
             $query->select('products.id', 'products.name', 'products.price')
                   ->withPivot('quantity', 'price');
-        }] )->where('user_id', 1)->get();
+        }] )->where('user_id', 8)->get();
         return Inertia::render('Public/Menu/UserOrder', compact('orders'));
     }
 
