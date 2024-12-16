@@ -76,13 +76,37 @@ class OrderController extends Controller
     {
         //
     }
+
+    // public function userOrder()
+    // {
+    //     $orders = Order::with(['products' => function ($query) {
+    //         $query->select('products.id', 'products.name', 'products.price')
+    //               ->withPivot('quantity', 'price');
+    //     }] )->where('user_id', 8)->get();
+    //     dd($orders->toArray());
+    //     return Inertia::render('Public/Menu/UserOrder', compact('orders'));
+    // }
+
     public function userOrder()
     {
-        $orders = Order::with(['products' => function ($query) {
+        $openOrders = Order::with(['products' => function ($query) {
             $query->select('products.id', 'products.name', 'products.price')
-                  ->withPivot('quantity', 'price');
-        }] )->where('user_id', 8)->get();
-        return Inertia::render('Public/Menu/UserOrder', compact('orders'));
+                ->withPivot('quantity', 'price');
+        }])->where('user_id', 8)
+        ->where('status', 'open')
+        ->get();
+
+        $otherOrders = Order::with(['products' => function ($query) {
+            $query->select('products.id', 'products.name', 'products.price')
+                ->withPivot('quantity', 'price');
+        }])->where('user_id', 8)
+        ->where('status', '!=', 'open')
+        ->get();
+
+        return Inertia::render('Public/Menu/UserOrder', [
+            'openOrders' => $openOrders,
+            'otherOrders' => $otherOrders,
+        ]);
     }
 
 }
