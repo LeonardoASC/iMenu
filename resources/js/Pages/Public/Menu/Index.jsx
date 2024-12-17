@@ -3,6 +3,7 @@ import { Badge, IconButton, Input } from '@material-tailwind/react';
 import { ArrowRightIcon, HomeIcon, MagnifyingGlassIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { useDebounce } from 'use-debounce';
 import { router } from '@inertiajs/react';
+import { NavigationBar } from '@/Components/NavigationBar';
 
 export default function Menu({ email, categories }) {
 
@@ -34,7 +35,7 @@ export default function Menu({ email, categories }) {
     };
 
     return (
-        <main className=" mx-auto bg-[#f9f9f9] h-screen">
+        <main className=" mx-auto bg-[#f9f9f9] h-screen ">
             <div className="flex flex-row items-center justify-between w-full h-[20%] px-4 bg-[#ce3246]">
                 <h1 className="text-lg sm:text-2xl text-white font-bold">Seja Bem-Vindo(a)</h1>
                 {/* icone de carrinho */}
@@ -60,7 +61,7 @@ export default function Menu({ email, categories }) {
                 />
             </div>
 
-            <div className="p-4 mt-6 bg-[#f9f9f9]">
+            <div className="p-4 mt-6 bg-[#f9f9f9] ">
                 <div className="flex flex-row justify-between items-center">
                     <h1 className="text-xl font-bold text-slate-800 ">Categorias</h1>
                     {selectedCategoryId && (
@@ -135,6 +136,15 @@ export default function Menu({ email, categories }) {
                     <p className="text-slate-600 text-center mt-4">Produto não encontrado</p>
                 )}
             </div>
+            <div className="w-full h-40 text-center bg-[#f9f9f9] ">
+                <button
+                    className=" text-blue-500 hover:bg-blue-700"
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
+                    Voltar ao Topo
+                </button>
+            </div>
+            <NavigationBar />
         </main>
     );
 }
