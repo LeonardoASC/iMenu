@@ -1,20 +1,21 @@
 import { Card, CardHeader, CardBody, List, Button } from '@material-tailwind/react';
 import React, { useState } from 'react';
 import { ArrowLeftCircleIcon, ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/solid";
+import { NavigationBar } from '@/Components/NavigationBar';
 export default function UserOrder({ openOrders, otherOrders }) {
     const [showOldOrders, setShowOldOrders] = useState(false);
 
     return (
         <div className="h-screen w-full flex">
-            <div className="w-1/2">
+            {/* <div className="w-1/2">
                 <div className="w-full flex justify-start p-4 bg-black">
                     <button className="text-blue-600 flex items-center" onClick={() => window.history.back()}>
                         <ArrowLeftCircleIcon className="h-6 w-6 mr-2" />
                         Voltar
                     </button>
                 </div>
-            </div>
-            <div className="h-screen w-1/2 flex flex-col justify-end bg-gray-100 items-center">
+            </div> */}
+            <div className="h-screen w-full flex flex-col justify-end bg-gray-100 items-center pb-24">
 
                 <div className="overflow-y-auto p-4 space-y-4 w-full flex flex-col items-center">
                     {otherOrders.length > 1 &&
@@ -177,6 +178,7 @@ export default function UserOrder({ openOrders, otherOrders }) {
                 </div>
 
             </div >
+            <NavigationBar />
         </div >
     );
 }

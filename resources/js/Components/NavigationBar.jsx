@@ -1,13 +1,15 @@
 import React from 'react';
-import { Navbar, Typography } from "@material-tailwind/react";
+import { ListItem, ListItemPrefix, Navbar, Typography } from "@material-tailwind/react";
+import { Link } from '@inertiajs/react';
+import { ChevronRightIcon } from '@heroicons/react/24/solid';
 
 export function NavigationBar() {
     return (
-        <div className="w-full flex justify-center">
-            <Navbar  className="fixed bottom-5 w-[90%] bg-white text-black z-50">
+        <div className="w-full flex justify-center fixed">
+            <Navbar className="fixed bottom-5 w-[90%] bg-white text-black z-50">
                 <ul className="flex justify-around">
                     <li>
-                        <Typography as="a" href="#home" className="hover:bg-gray-700  rounded">
+                        <Typography as="a" href={route('menu.index')} className="hover:bg-gray-700  rounded">
                             Home
                         </Typography>
                     </li>
@@ -17,7 +19,7 @@ export function NavigationBar() {
                         </Typography>
                     </li>
                     <li>
-                        <Typography as="a" href="#comanda" className="hover:bg-gray-700  rounded">
+                        <Typography as="a" href={route('order.userOrder')} className="hover:bg-gray-700  rounded">
                             Comanda
                         </Typography>
                     </li>
