@@ -44,6 +44,7 @@ export function TableUser({ users }) {
     const tableData = users.data || [];
 
     const deletedAtParam = new URLSearchParams(window.location.search).get('deleted_at')
+    const searchParam = new URLSearchParams(window.location.search).get('search')
 
     const { post, delete: deleteMethod } = useForm();
 
@@ -53,6 +54,7 @@ export function TableUser({ users }) {
     const [selectedTableName, setSelectedTableName] = useState(null);
     const [isSoftDelete, setIsSoftDelete] = useState(false);
     const [isOpenModalRestore, setIsOpenModalRestore] = useState(false);
+    const [search, setSearch] = useState(searchParam || '');
 
     const handleDelete = (id, deletedAt, name) => {
         setSelectedTablesId(id);
@@ -102,13 +104,14 @@ export function TableUser({ users }) {
         }
     };
 
+    const handleSearch = (e) => {
+        e.preventDefault();
+        router.get(route('admin.users.index'), { search: search });
+    };
+
     useEffect(() => {
         setCurrentTab(!deletedAtParam ? 'all' : deletedAtParam === 'false' ? 'Enable' : 'Disable')
     }, [deletedAtParam]);
-
-    useEffect(() => {
-        console.log('currentTab', currentTab)
-    }, [currentTab]);
 
     return (
         <Card className="w-full max-h-full">
@@ -143,12 +146,14 @@ export function TableUser({ users }) {
                             ))}
                         </TabsHeader>
                     </Tabs>
-                    <div className="w-full md:w-72">
+                    <form onSubmit={(e) => handleSearch(e)} className="w-full md:w-72">
                         <Input
                             label="Pesquisar"
                             icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+                            onChange={(e) => setSearch(e.target.value)}
+                            value={search  || ''}
                         />
-                    </div>
+                    </form>
                 </div>
             </CardHeader>
             <CardBody className="mt-2 px-0 overflow-y-auto">
