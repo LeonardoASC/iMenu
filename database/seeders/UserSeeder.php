@@ -15,25 +15,30 @@ class UserSeeder extends Seeder
     {
         $admin = User::create(
         [
-            'name' => 'Mateus Admin',
+            'name' => 'Mateus',
+            'last_name' => 'Admin',
             'email' => 'admin@email.com',
+            'phone' => '11999999999',
             'email_verified_at' => now(),
-            'password' => '$2y$12$zMsKaz6nqgSprY.0R.bEZuL5dvuUpA7EDxw1ec1HJ4EmmlaA.JIyO', // password
+            'password' => bcrypt('password'),
         ]);
 
         $admin1 = User::create(
         [
             'name' => 'leonardo',
+            'last_name' => 'chaves',
             'email' => 'leonardoaschaves@gmail.com',
+            'phone' => '11999999999',
             'email_verified_at' => now(),
             'password' => bcrypt('123123123'),
         ]);
 
         $waiter = User::create(
         [
-                'name' => 'Mateus Admin',
+                'name' => 'Joao Garçom',
                 'email' => 'garcon@email.com',
                 'email_verified_at' => now(),
+                'phone' => '11999999999',
                 'password' => bcrypt('password'),
         ]);
 
