@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Repositories\OrderRepository;
@@ -76,4 +77,39 @@ class OrderController extends Controller
     {
         //
     }
+
+    public function userOrder()
+    {
+        $orders  = OrderProduct::where('status', 'preparing')
+        ->whereHas('order', function ($query) {
+            $query->where('user_id', 1);
+        })->with('order')->with('product')->get();
+
+            // dd($orders->toarray());
+
+        return Inertia::render('Public/Menu/UserOrder', compact('orders'));
+    }
+
+    // public function userOrder()
+    // {
+    //     $openOrders = Order::with(['products' => function ($query) {
+    //         $query->select('products.id', 'products.name', 'products.price')
+    //             ->withPivot('quantity', 'price');
+    //     }])->where('user_id', 8)
+    //     ->where('status', 'open')
+    //     ->get();
+
+    //     $otherOrders = Order::with(['products' => function ($query) {
+    //         $query->select('products.id', 'products.name', 'products.price')
+    //             ->withPivot('quantity', 'price');
+    //     }])->where('user_id', 8)
+    //     ->where('status', '!=', 'open')
+    //     ->get();
+
+    //     return Inertia::render('Public/Menu/UserOrder', [
+    //         'openOrders' => $openOrders,
+    //         'otherOrders' => $otherOrders,
+    //     ]);
+    // }
+
 }

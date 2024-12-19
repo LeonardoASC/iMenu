@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\RoleAndAbilityController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\OrderProductController;
 
 Route::get('/', function () {
     return Inertia::render('Public/Welcome');
@@ -24,8 +25,10 @@ Route::get('login', function () {
 
 Route::post('/create-session', [SessionController::class, 'create'])->name('create-session');
 
-Route::resource('/menu', MenuController::class);
 
+Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
+Route::get('/menu/{product}', [MenuController::class, 'showProduct'])->name('menu.showProduct');
+Route::get('/order/userorder', [OrderController::class, 'userOrder'])->name('order.userOrder');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Profile/Dashboard');
@@ -49,6 +52,9 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('/order', OrderController::class);
         Route::delete('/order/{order}/force', [OrderController::class, 'forceDelete'])->name('order.forceDelete');
+
+        Route::resource('orderProduct', OrderProductController::class);
+        Route::get('/orderProduct/{id}/products', [OrderProductController::class, 'orderProducts'])->name('orderProduct.orderProducts');
 
         Route::resource('/table', TableController::class);
         Route::delete('/table/{table}/force', [TableController::class, 'forceDelete'])->name('table.forceDelete');

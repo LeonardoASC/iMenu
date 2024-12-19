@@ -69,6 +69,16 @@ class MenuController extends Controller
     {
         //
     }
+    
+    /**
+     * Display the specified resource.
+     */
+    public function showProduct(Product $product)
+    {
+        $product = Product::with('category')->findOrFail($product->id);
+        // dd($product);  
+        return Inertia::render('Public/Menu/Show', compact('product'));
+    }
 
     /**
      * Show the form for editing the specified resource.

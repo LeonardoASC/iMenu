@@ -163,8 +163,8 @@ export function TableOrder({ orders }) {
                                                 <Chip
                                                     variant="ghost"
                                                     size="sm"
-                                                    value={status === 'preparing' ? 'preparing' : status === 'delivered' ? 'delivered' : 'canceled'}
-                                                    color={status === 'preparing' ? 'yellow' : status === 'delivered' ? 'green' : 'red'}
+                                                    value={status === 'open' ? 'open' : status === 'closed' ? 'closed' : 'cancelled'}
+                                                    color={status === 'open' ? 'yellow' : status === 'closed' ? 'green' : 'red'}
 
                                                 />
                                             </div>
@@ -206,9 +206,9 @@ export function TableOrder({ orders }) {
                                                 {created_at}
                                             </Typography>
                                         </td>
-                                        <td className={classes} style={{ opacity: 0.5, pointerEvents: 'none' }}>
+                                        <td className={classes} >
                                             <Tooltip content="Show order">
-                                                <Link href={route('order.show', id)}>
+                                                <Link href={route('orderProduct.orderProducts', id)}>
                                                     <IconButton variant="text">
                                                         <EyeIcon className="h-4 w-4" />
                                                     </IconButton>

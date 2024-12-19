@@ -18,6 +18,7 @@ return new class extends Migration
             // $table->foreignId('table_id')->constrained()->onDelete('cascade');
             $table->integer('quantity')->default(1);
             $table->decimal('price', 10, 2);
+            $table->enum('status', ["preparing", "ready", "delivered"])->default('preparing');
             $table->timestamps();
             $table->softDeletes();
         });
