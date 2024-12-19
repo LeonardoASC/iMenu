@@ -112,7 +112,7 @@ export function TableUser({ users }) {
     useEffect(() => {
         setCurrentTab(!deletedAtParam ? 'all' : deletedAtParam === 'false' ? 'Enable' : 'Disable')
     }, [deletedAtParam]);
-
+    console.log('users', users);
     return (
         <Card className="w-full max-h-full">
             <CardHeader floated={false} shadow={false} className="rounded-none min-h-fit">
@@ -260,7 +260,7 @@ export function TableUser({ users }) {
                                         </td>
                                         <td className={classes}>
                                             <Tooltip content="Visualizar">
-                                                <Link href={route('table.show', id)}>
+                                                <Link href={route('admin.users.show', id)}>
                                                     <IconButton variant="text">
                                                         <EyeIcon className="h-4 w-4" />
                                                     </IconButton>
@@ -268,7 +268,7 @@ export function TableUser({ users }) {
                                             </Tooltip>
                                             {!deleted_at
                                                 ? <Tooltip content="Editar">
-                                                    <Link href={route('table.edit', id)}>
+                                                    <Link href={route('admin.users.edit', id)}>
                                                         <IconButton variant="text">
                                                             <PencilIcon className="h-4 w-4" />
                                                         </IconButton>

@@ -37,7 +37,7 @@ class UserRepository extends BaseRepository
 
     public function findById($id)
     {
-        return $this->model->withTrashed()->with(['roles.abilities',])->findOrFail($id);
+        return $this->model->withTrashed()->with(['roles',])->findOrFail($id);
     }
 
     public function create($data)

@@ -55,10 +55,11 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show($id)
     {
-        $user->load(['roles']);
-        return Inertia::render('Admin/Users/Show', compact('user'));
+        $user = $this->userRepository->findById($id);
+        $roles = $this->userRepository->getRoles();
+        return Inertia::render('Admin/Users/Show', compact('user', 'roles'));
     }
 
     /**
