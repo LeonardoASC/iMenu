@@ -30,25 +30,12 @@ export default function Menu({ email, categories }) {
     const handleProductClick = (product) => {
         router.get(`/menu/${product}`);
     };
-    const handleOrderClick = () => {
-        router.get(`/order/userorder`);
-    };
+
 
     return (
         <main className=" mx-auto bg-[#f9f9f9] h-screen ">
             <div className="flex flex-row items-center justify-between w-full h-[20%] px-4 bg-[#ce3246]">
                 <h1 className="text-lg sm:text-2xl text-white font-bold">Seja Bem-Vindo(a)</h1>
-                {/* icone de carrinho */}
-                <button className="flex flex-col items-center"
-                    onClick={() => handleOrderClick()}
-                >
-                    <Badge content="5" color="white">
-                        {/* <IconButton> */}
-                        <ShoppingCartIcon className="h-8 w-8" color="white" />
-                        {/* </IconButton> */}
-                    </Badge>
-                    <p className="text-white text-sm">Meus pedidos</p>
-                </button>
             </div>
 
             <div className="absolute to[20%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg z-10 shadow w-[90%]">
@@ -62,31 +49,30 @@ export default function Menu({ email, categories }) {
             </div>
 
             <div className="p-4 mt-6 bg-[#f9f9f9] ">
-                <div className="flex flex-row justify-between items-center">
-                    <h1 className="text-xl font-bold text-slate-800 ">Categorias</h1>
+                <div className="flex flex-row justify-between items-center mb-2">
+                    <h1 className="font-bold text-slate-800 ">Categorias</h1>
                     {selectedCategoryId && (
-                        <button
-                            onClick={() => setSelectedCategoryId(null)}><span className="text-sm font-medium underline">Limpar Filtros</span>
+                        <button onClick={() => setSelectedCategoryId(null)}>
+                            <span className="text-sm font-medium underline">Limpar Filtros</span>
                         </button>
                     )}
                     {!selectedCategoryId && (
                         <ArrowRightIcon className="h-5 w-5" />
                     )}
                 </div>
-                <div className="relative flex overflow-x-auto gap-4 p-4 mb-2 md:justify-center md:flex-wrap">
+                <div className="relative flex overflow-x-auto gap-1 py-2 md:justify-center md:flex-wrap">
                     {categories.map((category) => (
                         <button
                             key={category.id}
                             onClick={() => setSelectedCategoryId(category.id)}
-                            className={`flex-shrink-0 flex flex-col items-center justify-center w-36 h-36 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-all ${selectedCategoryId === category.id ? 'bg-[#ce3246] text-white' : 'bg-white text-slate-800'
-                                }`}
+                            className={`flex-shrink-0 flex flex-col items-center justify-center p-4 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-all ${selectedCategoryId === category.id ? 'bg-[#ce3246] text-white' : 'bg-white text-slate-800'}`}
                         >
                             <img
-                                src={`/storage/${category.image}`}
+                                src={category.image}
                                 alt={category.name}
-                                className="w-12 h-12 mb-2"
+                                className="w-6 h-6 rounded-full absolute top-0 bg-black md:sticky"
                             />
-                            <span className="text-sm font-medium">{category.name}</span>
+                                <span className={`px-2 text-start ${selectedCategoryId === category.id ? 'text-white text-sm font-bold' : 'text-gray-600 text-xs'}`}>{category.name}</span>
                         </button>
                     ))}
                 </div>
