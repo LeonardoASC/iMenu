@@ -14,12 +14,12 @@ export function NavigationBar() {
                         </Typography>
                     </li>
                     <li>
-                        <Typography as="a" href="#pedidos" className="hover:bg-gray-700  rounded">
+                        <Typography as="a" href={route('order.userOrder')} className="hover:bg-gray-700  rounded">
                             Pedidos
                         </Typography>
                     </li>
                     <li>
-                        <Typography as="a" href={route('order.userOrder')} className="hover:bg-gray-700  rounded">
+                        <Typography as="a" href={route('menu.command')} className="hover:bg-gray-700  rounded">
                             Comanda
                         </Typography>
                     </li>

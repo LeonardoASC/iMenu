@@ -1,9 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { Badge, IconButton, Input } from '@material-tailwind/react';
-import { ArrowRightIcon, HomeIcon, MagnifyingGlassIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
+import { ArrowRightIcon, ChatBubbleBottomCenterIcon, HomeIcon, MagnifyingGlassIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { useDebounce } from 'use-debounce';
 import { router } from '@inertiajs/react';
 import { NavigationBar } from '@/Components/NavigationBar';
+import { IoChatboxOutline } from "react-icons/io5";
 
 export default function Menu({ email, categories }) {
 
@@ -30,12 +31,24 @@ export default function Menu({ email, categories }) {
     const handleProductClick = (product) => {
         router.get(`/menu/${product}`);
     };
+    const handleChatClick = () => {
+        router.get(`/chat`);
+    };
 
 
     return (
         <main className=" mx-auto bg-[#f9f9f9] h-screen ">
             <div className="flex flex-row items-center justify-between w-full h-[20%] px-4 bg-[#ce3246]">
                 <h1 className="text-lg sm:text-2xl text-white font-bold">Seja Bem-Vindo(a)</h1>
+                <button className="flex flex-col items-center"
+                    onClick={() => handleChatClick()}
+                >
+                    <Badge content="5" color="white">
+                        <IoChatboxOutline color="white"  className="h-8 w-8"/>
+                        {/* </IconButton> */}
+                    </Badge>
+                    <p className="text-white text-sm">Conversar</p>
+                </button>
             </div>
 
             <div className="absolute to[20%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg z-10 shadow w-[90%]">
@@ -48,9 +61,10 @@ export default function Menu({ email, categories }) {
                 />
             </div>
 
-            <div className="p-4 mt-6 bg-[#f9f9f9] ">
-                <div className="flex flex-row justify-between items-center mb-2">
+            <div className="mt-6 bg-[#f9f9f9]">
+                <div className="flex flex-row justify-between items-center mb-2 p-2">
                     <h1 className="font-bold text-slate-800 ">Categorias</h1>
+
                     {selectedCategoryId && (
                         <button onClick={() => setSelectedCategoryId(null)}>
                             <span className="text-sm font-medium underline">Limpar Filtros</span>
@@ -60,7 +74,7 @@ export default function Menu({ email, categories }) {
                         <ArrowRightIcon className="h-5 w-5" />
                     )}
                 </div>
-                <div className="relative flex overflow-x-auto gap-1 py-2 md:justify-center md:flex-wrap">
+                <div className="flex bg-[#f9f9f9] overflow-x-auto gap-1 p-2 sticky top-0 md:justify-center md:flex-wrap">
                     {categories.map((category) => (
                         <button
                             key={category.id}
@@ -72,19 +86,19 @@ export default function Menu({ email, categories }) {
                                 alt={category.name}
                                 className="w-6 h-6 rounded-full absolute top-0 bg-black md:sticky"
                             />
-                                <span className={`px-2 text-start ${selectedCategoryId === category.id ? 'text-white text-sm font-bold' : 'text-gray-600 text-xs'}`}>{category.name}</span>
+                            <span className={`px-2 text-start ${selectedCategoryId === category.id ? 'text-white text-sm font-bold' : 'text-gray-600 text-xs'}`}>{category.name}</span>
                         </button>
                     ))}
                 </div>
 
                 {filteredCategories.length > 0 ? (
                     filteredCategories.map((category) => (
-                        <div key={category.id} className="mb-5 sm:mb-8">
+                        <div key={category.id} className="mb-5 px-4 sm:mb-8">
                             <div className="flex items-center gap-4 mb-2 p-1">
                                 <img
                                     src={category.image}
                                     alt={category.name}
-                                    className="relative inline-block h-10 w-10 !rounded-full object-cover object-center"
+                                    className="inline-block h-10 w-10 !rounded-full object-cover object-center"
                                 />
                                 <h2 className="text-lg sm:text-xl font-semibold text-slate-800 text-gray-600">{category.name}</h2>
                                 <div className="h-px flex-grow bg-gray-400 " />

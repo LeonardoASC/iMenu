@@ -85,9 +85,18 @@ class OrderController extends Controller
             $query->where('user_id', 1);
         })->with('order')->with('product')->get();
 
-            // dd($orders->toarray());
 
         return Inertia::render('Public/Menu/UserOrder', compact('orders'));
+    }
+
+    public function command()
+    {
+        $orders = Order::all();
+        return Inertia::render('Public/Menu/Command', compact('orders'));
+    }
+
+    public function chat(){
+        return Inertia::render('Public/Chat/Index');
     }
 
     // public function userOrder()

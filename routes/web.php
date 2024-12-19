@@ -29,6 +29,9 @@ Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
 Route::get('/menu/{product}', [MenuController::class, 'showProduct'])->name('menu.showProduct');
 Route::get('/order/userorder', [OrderController::class, 'userOrder'])->name('order.userOrder');
 
+Route::get('/command', [OrderController::Class, 'command'])->name('menu.command');
+Route::get('/chat', [OrderController::Class, 'chat'])->name('chat');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Profile/Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

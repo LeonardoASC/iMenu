@@ -14,17 +14,17 @@ import {
 export default function UserOrder({ orders }) {
 
     return (
-        <div className="h-screen w-full bg-gray-100">
-            <div className="w-full text-center bg-white p-2 rounded-b-xl">Estamos preparando o seu pedido</div>
+        <div className="h-full w-full bg-gray-100">
+            <div className="w-full text-center bg-white p-2 rounded-b-xl shadow">Estamos preparando o seu pedido</div>
             <div className="p-6">
                 <div className="space-y-6">
                     {orders && orders.map(orderProduct => (
                         <Card key={orderProduct.id} className="shadow-lg">
                             <CardHeader floated={false} className="bg-blue-500 text-white flex flex-col md:flex-row items-start md:items-center justify-between p-4">
                                 <div>
-                                    <Typography variant="h5" className="text-white">
+                                    {/* <Typography variant="h5" className="text-white">
                                         Pedido #{orderProduct.id}
-                                    </Typography>
+                                    </Typography> */}
                                     <Typography className="text-white">
                                         {orderProduct.product.name}
                                     </Typography>
