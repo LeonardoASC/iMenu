@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\TableController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\RoleAndAbilityController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\OrderProductController;
 
 Route::get('/', function () {
@@ -63,6 +64,10 @@ Route::middleware('auth')->group(function () {
 
         Route::put('cargos/{id}/permissoes', [RoleAndAbilityController::class, 'assignAbilitiesToRole'])->name('admin.roles.assignAbilitiesToRole');
         Route::resource('/cargos', RoleAndAbilityController::class)->names('admin.roles')->parameters(['cargos' => 'role',]);
+
+        Route::post('/usuarios/{id}/restore', [UserController::class, 'restore'])->name('admin.users.restore');
+        Route::delete('/usuarios/{id}/force', [UserController::class, 'forceDelete'])->name('admin.users.forceDelete');
+        Route::resource('/usuarios', UserController::class)->names('admin.users')->parameters(['usuarios' => 'user',]);
     });
 });
 

@@ -162,6 +162,14 @@ export default function AuthenticatedLayout({ header, children }) {
                                         Establishments
                                     </ListItem>
                                 </Link>
+                                <Link href={route('admin.users.index')}>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        </ListItemPrefix>
+                                        Usuários
+                                    </ListItem>
+                                </Link>
                             </List>
                         </AccordionBody>
                     </Accordion>

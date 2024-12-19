@@ -1,15 +1,15 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { usePage } from '@inertiajs/react';
-import { TableTable } from './Partials/TableTable';
+import { TableUser } from './Partials/TableUser';
 
 export default function Index() {
-    const { tables } = usePage().props;
+    const { users } = usePage().props;
 
     return (
         <AuthenticatedLayout>
-            <Head title="Mesas" />
-            <TableTable tables={tables} />
+            <Head title="Usuários" />
+            <TableUser users={users} />
         </AuthenticatedLayout>
     );
 }

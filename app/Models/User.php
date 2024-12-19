@@ -21,7 +21,9 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'last_name',
         'email',
+        'phone',
         'password',
     ];
 
@@ -51,5 +53,20 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function scopeFilter($query, $request)
+    {
+        if (!$request) return;
+        return $query
+            ->when(data_get($request, 'search'), function ($query, $search) {
+                $query->orWhere('name', 'like', '%' . $search . '%');
+                $query->orWhere('last_name', 'like', '%' . $search . '%');
+                $query->orWhere('email', 'like', '%' . $search . '%');
+                return $query;
+            })
+            ->when($request['role'] ?? false, function ($query, $role) {
+                $query->whereRelation('roles', 'name', $role);
+            });
     }
 }
