@@ -112,7 +112,7 @@ export function TableUser({ users }) {
     useEffect(() => {
         setCurrentTab(!deletedAtParam ? 'all' : deletedAtParam === 'false' ? 'Enable' : 'Disable')
     }, [deletedAtParam]);
-    console.log('users', users);
+
     return (
         <Card className="w-full max-h-full">
             <CardHeader floated={false} shadow={false} className="rounded-none min-h-fit">
@@ -284,7 +284,7 @@ export function TableUser({ users }) {
                                                     </IconButton>
                                                 </Tooltip>
                                             }
-                                            <Tooltip content={deleted_at ? 'Desativar' : 'Excluir'}>
+                                            <Tooltip content={deleted_at === null ? 'Desativar' : 'Excluir'}>
                                                 <IconButton
                                                     variant="text"
                                                     onClick={() => handleDelete(id, deleted_at, `${name} ${last_name}`)}
