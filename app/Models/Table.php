@@ -49,5 +49,11 @@ class Table extends Model
         return $this->belongsTo(Establishment::class);
     }
 
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+
 
 }

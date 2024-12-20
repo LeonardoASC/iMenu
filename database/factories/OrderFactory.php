@@ -19,6 +19,7 @@ class OrderFactory extends Factory
     {
         return [
             'user_id' => $this->faker->numberBetween(1, 10),
+            'table_id' => $this->faker->numberBetween(1, 10),
             'status' => $this->faker->randomElement(['open', 'closed', 'cancelled']),
             'notes' => $this->faker->text,
             'total' => $this->faker->randomFloat(2, 0, 1000),

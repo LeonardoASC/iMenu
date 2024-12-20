@@ -28,6 +28,14 @@ class OrderRepository
             ->through(function ($order) {
                     return [
                         'id' => $order->id,
+                        'table' => [
+                            'id' => $order->table->id,
+                            'number' => $order->table->number,
+                            'establishment' => [
+                                'id' => $order->table->establishment->id,
+                                'name' => $order->table->establishment->name,
+                            ],
+                        ],
                         'user' => [
                             'id' => $order->user->id,
                             'name' => $order->user->name,

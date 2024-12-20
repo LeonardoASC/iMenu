@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('table_id')->nullable()->constrained('tables')->onDelete('set null');
             $table->enum('status', ["open", "closed", "cancelled"])->default('open');
             $table->text('notes')->nullable();
             $table->decimal('total', 10, 2)->default(0);

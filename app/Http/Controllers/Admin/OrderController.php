@@ -27,6 +27,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $orders = $this->orderRepository->getAll($request);
+        // dd($orders->toarray());
         return Inertia::render('Admin/Order/Index', ['orders' => $orders]);
     }
 

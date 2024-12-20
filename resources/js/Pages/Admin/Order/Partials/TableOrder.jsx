@@ -35,7 +35,7 @@ const TABS = [
     },
 ];
 
-const TABLE_HEAD = ["Orders", "Cliente", "Status", "Notes", "Total", "created_at", ""];
+const TABLE_HEAD = ["Orders", "Estabelecimento", "Cliente", "Status", "Notes", "Total", "created_at", ""];
 
 export function TableOrder({ orders }) {
     const orderData = orders.data || [];
@@ -123,17 +123,15 @@ export function TableOrder({ orders }) {
                     </thead>
                     <tbody>
                         {orderData.map(
-                            ({ id, user, status, notes, total, created_at }, index) => {
+                            ({ id, table, user, status, notes, total, created_at }, index) => {
                                 const isLast = index === orderData.length - 1;
                                 const classes = isLast
                                     ? "p-4"
                                     : "p-4 border-b border-blue-gray-50";
-
                                 return (
                                     <tr key={id}>
                                         <td className={classes}>
                                             <div className="flex items-center gap-3">
-                                                {/* <Avatar src={`/storage/${image}`} alt={name} size="sm" /> */}
                                                 <div className="flex flex-col">
                                                     <Typography
                                                         variant="small"
@@ -141,6 +139,20 @@ export function TableOrder({ orders }) {
                                                         className="font-normal"
                                                     >
                                                         {id}°
+                                                    </Typography>
+                                                    Table: {table.id}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className={classes}>
+                                            <div className="flex items-center gap-3">
+                                                <div className="flex flex-col">
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal"
+                                                    >
+                                                      {table.establishment.name}
                                                     </Typography>
                                                 </div>
                                             </div>
