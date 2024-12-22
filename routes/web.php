@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
         Route::resource('/table', TableController::class);
         Route::delete('/table/{table}/force', [TableController::class, 'forceDelete'])->name('table.forceDelete');
 
+        Route::get('cargos/{id}/permissoes', [RoleAndAbilityController::class, 'editAbilities'])->name('admin.roles.editAbilities');
         Route::put('cargos/{id}/permissoes', [RoleAndAbilityController::class, 'assignAbilitiesToRole'])->name('admin.roles.assignAbilitiesToRole');
         Route::resource('/cargos', RoleAndAbilityController::class)->names('admin.roles')->parameters(['cargos' => 'role',]);
 

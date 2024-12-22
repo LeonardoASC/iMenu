@@ -18,10 +18,10 @@ class RoleAndAbilityController extends Controller implements HasMiddleware
         return [
             new Middleware('check.ability:view-roles', only: ['index']),
             new Middleware('check.ability:create-roles', only: ['create', 'store']),
-            new Middleware('check.ability:update-roles', only: ['edit', 'update']),
+            new Middleware('check.ability:update-roles', only: ['edit', 'update', 'show', 'assignAbilitiesToRole']),
             new Middleware('check.ability:delete-roles', only: ['destroy']),
 
-            new Middleware('check.ability:update-abilities', only: ['show', 'assignAbilitiesToRole']),
+            // new Middleware('check.ability:update-roles', only: ['show', 'assignAbilitiesToRole']),
         ];
     }
 
@@ -74,7 +74,25 @@ class RoleAndAbilityController extends Controller implements HasMiddleware
 
     public function edit($role)
     {
-        return abort(404);
+        $roleResult = $this->roleAndAbilityRepository->getRoleById($role);
+
+        if ($roleResult->name == 'admin') {
+            abort(403, 'Você não tem permissão para acessar essa página.');
+        }
+
+        return Inertia::render('Admin/Role/Edit', ['role' => $roleResult]);
+    }
+
+    public function editAbilities($role)
+    {
+        $roleResult = $this->roleAndAbilityRepository->getRoleById($role);
+        $abilities = $this->roleAndAbilityRepository->getAllAbilities();
+
+        if ($roleResult->name == 'admin') {
+            abort(403, 'Você não tem permissão para acessar essa página.');
+        }
+
+        return Inertia::render('Admin/Role/EditAbilities', ['role' => $roleResult, 'abilities' => $abilities]);
     }
 
     public function update(StoreRoleRequest $request, $role)
@@ -103,9 +121,9 @@ class RoleAndAbilityController extends Controller implements HasMiddleware
         ]);
 
         $abilities = $request->get('abilities');
-        $roleResult = $this->roleAndAbilityRepository->assignAbilitiesToRole($id, $abilities);
+        $this->roleAndAbilityRepository->assignAbilitiesToRole($id, $abilities);
 
-        return Redirect::route('admin.roles.show', $roleResult->id)->with('message', 'Permissão atualizada com sucesso.');
+        return Redirect::route('admin.roles.index')->with('message', 'Permissão atualizada com sucesso.');
     }
 
     public function destroy($role)
