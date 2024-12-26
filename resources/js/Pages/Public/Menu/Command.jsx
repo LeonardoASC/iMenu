@@ -4,6 +4,8 @@ import {
     IconButton,
     Button
 } from "@material-tailwind/react";
+import { router } from "@inertiajs/react";
+import { BsArrowBarLeft } from "react-icons/bs";
 
 export default function Command() {
     const items = [
@@ -77,6 +79,10 @@ export default function Command() {
     const delivery = 5.0;
     const total = subtotal + taxes + delivery;
 
+     const handleMenuClick = () => {
+            router.get(`/menu`);
+        };
+
     return (
         <div className="flex flex-col h-screen bg-gray-100">
             <div className="flex items-center w-full p-2 bg-white shadow rounded-b-xl">
@@ -84,7 +90,9 @@ export default function Command() {
                     variant="text"
                     size="sm"
                     onClick={() => window.history.back()}
-                >←</IconButton>
+                >
+                    <BsArrowBarLeft className="w-5 h-5" />
+                </IconButton>
                 <div className="flex-1 text-center">
                     <p>Comanda</p>
                 </div>
@@ -146,9 +154,10 @@ export default function Command() {
                     size="sm"
                     color="orange"
                     className="mt-4"
-                    onClick={() => alert("Adicionar mais itens")}
+                    onClick={() => handleMenuClick()}
+
                 >
-                    + Add more items
+                    + Cardapio
                 </Button>
             </div>
 

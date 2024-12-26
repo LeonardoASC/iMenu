@@ -9,13 +9,27 @@ import {
     TableHead,
     TableRow,
     TableCell,
-    TableBody
+    TableBody,
+    IconButton
 } from "@material-tailwind/react";
+import { BsArrowBarLeft } from 'react-icons/bs';
 export default function UserOrder({ orders }) {
 
     return (
-        <div className="h-full w-full bg-gray-100">
-            <div className="w-full text-center bg-white p-2 rounded-b-xl shadow">Estamos preparando o seu pedido</div>
+        <div className="h-screen w-full bg-gray-100">
+            {/* <div className="w-full text-center bg-white p-2 rounded-b-xl shadow">Estamos preparando o seu pedido</div> */}
+            <div className="flex items-center w-full p-2 bg-white shadow rounded-b-xl">
+                <IconButton
+                    variant="text"
+                    size="sm"
+                    onClick={() => window.history.back()}
+                >
+                    <BsArrowBarLeft className="w-5 h-5" />
+                </IconButton>
+                <div className="flex-1 text-center">
+                    <p>Estamos preparando o seu pedido</p>
+                </div>
+            </div>
             <div className="p-6">
                 <div className="space-y-6">
                     {orders && orders.map(orderProduct => (
