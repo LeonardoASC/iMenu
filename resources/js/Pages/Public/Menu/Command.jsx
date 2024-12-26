@@ -133,30 +133,8 @@ export default function Command() {
                                 <Typography variant="small" className="text-gray-500">
                                     ${item.price.toFixed(2)}
                                 </Typography>
-                                {/* <div className="flex items-center space-x-2 mt-2">
-                                    <Button
-                                        variant="outlined"
-                                        size="sm"
-                                        className="px-2 py-1"
-                                        onClick={() => alert("Diminuir quantidade")}
-                                    >
-                                        -
-                                    </Button>
-                                    <Typography variant="small" className="w-6 text-center">
-                                        {item.quantity}
-                                    </Typography>
-                                    <Button
-                                        variant="outlined"
-                                        size="sm"
-                                        className="px-2 py-1"
-                                        onClick={() => alert("Aumentar quantidade")}
-                                    >
-                                        +
-                                    </Button>
-                                </div> */}
                             </div>
                             <AlertItemModal />
-
                         </div>
                     ))}
                 </div>
