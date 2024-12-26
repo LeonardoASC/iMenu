@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Typography,
     IconButton,
@@ -6,8 +6,22 @@ import {
 } from "@material-tailwind/react";
 import { router } from "@inertiajs/react";
 import { BsArrowBarLeft } from "react-icons/bs";
+import { FiAlertOctagon } from "react-icons/fi";
+import { AlertItemModal } from "../../../Components/AlertItemModal"
 
 export default function Command() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = (id) => {
+
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+
+        setIsModalOpen(false);
+    };
+
     const items = [
         {
             id: 1,
@@ -79,9 +93,13 @@ export default function Command() {
     const delivery = 5.0;
     const total = subtotal + taxes + delivery;
 
-     const handleMenuClick = () => {
-            router.get(`/menu`);
-        };
+    const handleMenuClick = () => {
+        router.get(`/menu`);
+    };
+
+    const handleAlertItem = () => {
+
+    }
 
     return (
         <div className="flex flex-col h-screen bg-gray-100">
@@ -115,7 +133,7 @@ export default function Command() {
                                 <Typography variant="small" className="text-gray-500">
                                     ${item.price.toFixed(2)}
                                 </Typography>
-                                <div className="flex items-center space-x-2 mt-2">
+                                {/* <div className="flex items-center space-x-2 mt-2">
                                     <Button
                                         variant="outlined"
                                         size="sm"
@@ -135,16 +153,10 @@ export default function Command() {
                                     >
                                         +
                                     </Button>
-                                </div>
+                                </div> */}
                             </div>
-                            <IconButton
-                                variant="text"
-                                size="sm"
-                                color="gray"
-                                onClick={() => alert("Remover item")}
-                            >
-                                ✕
-                            </IconButton>
+                            <AlertItemModal />
+
                         </div>
                     ))}
                 </div>
@@ -165,19 +177,19 @@ export default function Command() {
                 <div className="space-y-2">
                     <div className="flex justify-between text-gray-700">
                         <Typography variant="small">Sub total</Typography>
-                        <Typography variant="small">${subtotal.toFixed(2)}</Typography>
+                        <Typography variant="small">R${subtotal.toFixed(2)}</Typography>
                     </div>
                     <div className="flex justify-between text-gray-700">
-                        <Typography variant="small">Taxes & Fees</Typography>
-                        <Typography variant="small">${taxes.toFixed(2)}</Typography>
+                        <Typography variant="small">Taxa de serviço</Typography>
+                        <Typography variant="small">R${taxes.toFixed(2)}</Typography>
                     </div>
                     <div className="flex justify-between text-gray-700">
-                        <Typography variant="small">Delivery Fee</Typography>
-                        <Typography variant="small">${delivery.toFixed(2)}</Typography>
+                        <Typography variant="small">Couvert artístico</Typography>
+                        <Typography variant="small">R${delivery.toFixed(2)}</Typography>
                     </div>
                     <div className="flex justify-between text-gray-900 font-semibold">
                         <Typography variant="h6">Total</Typography>
-                        <Typography variant="h6">${total.toFixed(2)}</Typography>
+                        <Typography variant="h6">R${total.toFixed(2)}</Typography>
                     </div>
                 </div>
 
@@ -189,6 +201,7 @@ export default function Command() {
                     Finalizar Comanda
                 </Button>
             </div>
+
         </div>
     );
 }
