@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     Typography,
     IconButton,
@@ -6,100 +6,13 @@ import {
 } from "@material-tailwind/react";
 import { router } from "@inertiajs/react";
 import { BsArrowBarLeft } from "react-icons/bs";
-import { FiAlertOctagon } from "react-icons/fi";
 import { AlertItemModal } from "../../../Components/AlertItemModal"
 
-export default function Command() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const handleOpenModal = (id) => {
-
-        setIsModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-
-        setIsModalOpen(false);
-    };
-
-    const items = [
-        {
-            id: 1,
-            name: "Cheese Hot Hamburger",
-            price: 18.99,
-            quantity: 2,
-            image: "https://via.placeholder.com/80x80?text=Hamburger",
-        },
-        {
-            id: 2,
-            name: "Italian Hot Pizza",
-            price: 13.99,
-            quantity: 2,
-            image: "https://via.placeholder.com/80x80?text=Pizza",
-        },
-        {
-            id: 3,
-            name: "Italian Hot Pizza",
-            price: 13.99,
-            quantity: 2,
-            image: "https://via.placeholder.com/80x80?text=Pizza",
-        },
-        {
-            id: 4,
-            name: "Italian Hot Pizza",
-            price: 13.99,
-            quantity: 2,
-            image: "https://via.placeholder.com/80x80?text=Pizza",
-        },
-        {
-            id: 5,
-            name: "Italian Hot Pizza",
-            price: 13.99,
-            quantity: 2,
-            image: "https://via.placeholder.com/80x80?text=Pizza",
-        },
-        {
-            id: 6,
-            name: "Italian Hot Pizza",
-            price: 13.99,
-            quantity: 2,
-            image: "https://via.placeholder.com/80x80?text=Pizza",
-        },
-        {
-            id: 7,
-            name: "Italian Hot Pizza",
-            price: 13.99,
-            quantity: 2,
-            image: "https://via.placeholder.com/80x80?text=Pizza",
-        },
-        {
-            id: 8,
-            name: "Italian Hot Pizza",
-            price: 13.99,
-            quantity: 2,
-            image: "https://via.placeholder.com/80x80?text=Pizza",
-        },
-        {
-            id: 9,
-            name: "Italian Hot Pizza",
-            price: 13.99,
-            quantity: 2,
-            image: "https://via.placeholder.com/80x80?text=Pizza",
-        },
-    ];
-
-    const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    const taxes = 10.0;
-    const delivery = 5.0;
-    const total = subtotal + taxes + delivery;
+export default function Command({ orders, taxes, delivery, total, subtotal }) {
 
     const handleMenuClick = () => {
         router.get(`/menu`);
     };
-
-    const handleAlertItem = () => {
-
-    }
 
     return (
         <div className="flex flex-col h-screen bg-gray-100">
@@ -119,25 +32,34 @@ export default function Command() {
 
             <div className="flex-1 overflow-auto p-4">
                 <div className="space-y-4">
-                    {items.map((item) => (
-                        <div key={item.id} className="flex items-center bg-white rounded-lg p-3 shadow-sm">
-                            <img
-                                src={item.image}
-                                alt={item.name}
-                                className="w-16 h-16 rounded-md object-cover mr-4"
-                            />
-                            <div className="flex-1">
-                                <Typography variant="h6" className="font-medium text-gray-800">
-                                    {item.name}
-                                </Typography>
-                                <Typography variant="small" className="text-gray-500">
-                                    ${item.price.toFixed(2)}
-                                </Typography>
-                            </div>
-                            <AlertItemModal />
+                    {orders.map((order) => (
+                        <div key={order.id} className="space-y-4">
+                            {order.products.map((product) => (
+                                <div
+                                    key={product.id}
+                                    className="flex items-center bg-white rounded-lg p-3 shadow-sm"
+                                >
+                                    <img
+                                        src={product.image}
+                                        alt={product.name}
+                                        className="w-16 h-16 rounded-md object-cover mr-4"
+                                    />
+                                    <div className="flex-1">
+                                        <Typography variant="h6" className="font-medium text-gray-800">
+                                            {product.name} - ({product.pivot.quantity}x)
+                                        </Typography>
+
+                                        <Typography variant="small" className="text-gray-500">
+                                        ${parseFloat(product.pivot.price).toFixed(2)}
+                                        </Typography>
+                                    </div>
+                                    <AlertItemModal />
+                                </div>
+                            ))}
                         </div>
                     ))}
                 </div>
+
 
                 <Button
                     variant="text"

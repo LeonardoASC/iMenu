@@ -92,34 +92,62 @@ class OrderController extends Controller
 
     public function command()
     {
-        $orders = Order::all();
-        return Inertia::render('Public/Menu/Command', compact('orders'));
+        $orders = $this->getOrdersWithProducts(1, 'open');
+        $totals = $this->calculateOrderTotals($orders);
+    
+        return Inertia::render('Public/Menu/Command', [
+            'orders' => $orders,
+            'subtotal' => $totals['subtotal'],
+            'taxes' => $totals['taxes'],
+            'delivery' => $totals['delivery'],
+            'total' => $totals['total'],
+        ]);
+    }
+    
+    /**
+     * Recupera as ordens do usuário com status e carrega os produtos.
+     *
+     * @param int $userId
+     * @param string $status
+     * @return \Illuminate\Support\Collection
+     */
+    protected function getOrdersWithProducts(int $userId, string $status)
+    {
+        return Order::where('status', $status)
+            ->where('user_id', $userId)
+            ->with(['products' => function ($query) {
+                $query->withPivot('quantity', 'price', 'status');
+            }])->get();
+    }
+    
+    /**
+     * Calcula os valores totais das ordens.
+     *
+     * @param \Illuminate\Support\Collection $orders
+     * @return array
+     */
+    protected function calculateOrderTotals($orders)
+    {
+        $subtotal = $orders->sum(function ($order) {
+            return $order->products->sum(function ($product) {
+                return (float) $product->pivot->price * $product->pivot->quantity;
+            });
+        });
+    
+        $taxes = 10.0; 
+        $delivery = 5.0; 
+    
+        return [
+            'subtotal' => $subtotal,
+            'taxes' => $taxes,
+            'delivery' => $delivery,
+            'total' => $subtotal + $taxes + $delivery,
+        ];
     }
 
     public function chat(){
         return Inertia::render('Public/Chat/Index');
     }
 
-    // public function userOrder()
-    // {
-    //     $openOrders = Order::with(['products' => function ($query) {
-    //         $query->select('products.id', 'products.name', 'products.price')
-    //             ->withPivot('quantity', 'price');
-    //     }])->where('user_id', 8)
-    //     ->where('status', 'open')
-    //     ->get();
-
-    //     $otherOrders = Order::with(['products' => function ($query) {
-    //         $query->select('products.id', 'products.name', 'products.price')
-    //             ->withPivot('quantity', 'price');
-    //     }])->where('user_id', 8)
-    //     ->where('status', '!=', 'open')
-    //     ->get();
-
-    //     return Inertia::render('Public/Menu/UserOrder', [
-    //         'openOrders' => $openOrders,
-    //         'otherOrders' => $otherOrders,
-    //     ]);
-    // }
 
 }
