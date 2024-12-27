@@ -32,33 +32,51 @@ export default function Command({ orders, taxes, delivery, total, subtotal }) {
 
             <div className="flex-1 overflow-auto p-4">
                 <div className="space-y-4">
-                    {orders.map((order) => (
-                        <div key={order.id} className="space-y-4">
-                            {order.products.map((product) => (
-                                <div
-                                    key={product.id}
-                                    className="flex items-center bg-white rounded-lg p-3 shadow-sm"
-                                >
-                                    <img
-                                        src={product.image}
-                                        alt={product.name}
-                                        className="w-16 h-16 rounded-md object-cover mr-4"
-                                    />
-                                    <div className="flex-1">
-                                        <Typography variant="h6" className="font-medium text-gray-800">
-                                            {product.name} - ({product.pivot.quantity}x)
-                                        </Typography>
+                    {orders.some((order) =>
+                        order.products.some((product) => product.pivot.status === 'delivered')
+                    ) ? (
+                        orders.map((order) => (
+                            <div key={order.id} className="space-y-4">
+                                {order.products
+                                    .filter((product) => product.pivot.status === 'delivered')
+                                    .map((product) => (
+                                        <div
+                                            key={product.id}
+                                            className="flex items-center bg-white rounded-lg p-3 shadow-sm"
+                                        >
+                                            <img
+                                                src={product.image}
+                                                alt={product.name}
+                                                className="w-16 h-16 rounded-md object-cover mr-4"
+                                            />
 
-                                        <Typography variant="small" className="text-gray-500">
-                                        ${parseFloat(product.pivot.price).toFixed(2)}
-                                        </Typography>
-                                    </div>
-                                    <AlertItemModal />
-                                </div>
-                            ))}
+                                            <div className="flex-1">
+                                                <Typography variant="h6" className="font-medium text-gray-800">
+                                                    {product.name} -  ({product.pivot.quantity}x)
+                                                </Typography>
+                                                <div className="flex justify-between">
+                                                    <Typography variant="small" className="text-gray-500">
+                                                        R${product.pivot.price} un.
+                                                    </Typography>
+                                                    <Typography variant="small" className="text-gray-500">
+                                                        Total: R$ {(product.pivot.price * product.pivot.quantity).toFixed(2)}
+                                                    </Typography>
+                                                </div>
+                                            </div>
+                                            <AlertItemModal />
+                                        </div>
+                                    ))}
+                            </div>
+                        ))
+                    ) : (
+                        <div className="w-full flex items-center justify-center">
+                            <Typography variant="small" color="blue-gray" className="self-center bg">
+                                Ainda não há pedidos entregues por aqui.
+                            </Typography>
                         </div>
-                    ))}
+                    )}
                 </div>
+
 
 
                 <Button

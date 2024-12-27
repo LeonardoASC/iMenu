@@ -79,13 +79,17 @@ class OrderController extends Controller
         //
     }
 
-    public function userOrder()
+    public function userOrder(Request $request)
     {
-        $orders  = OrderProduct::where('status', 'preparing')
-        ->whereHas('order', function ($query) {
-            $query->where('user_id', 1);
-        })->with('order')->with('product')->get();
-
+        $orders = OrderProduct::query()
+            ->when($request->status, function ($query, $status) {
+                $query->where('status', $status);
+            })
+            ->whereHas('order', function ($query) {
+                $query->where('user_id', 1);
+            })
+            ->with('order', 'product')
+            ->get();
 
         return Inertia::render('Public/Menu/UserOrder', compact('orders'));
     }
@@ -94,7 +98,7 @@ class OrderController extends Controller
     {
         $orders = $this->getOrdersWithProducts(1, 'open');
         $totals = $this->calculateOrderTotals($orders);
-    
+
         return Inertia::render('Public/Menu/Command', [
             'orders' => $orders,
             'subtotal' => $totals['subtotal'],
@@ -103,7 +107,7 @@ class OrderController extends Controller
             'total' => $totals['total'],
         ]);
     }
-    
+
     /**
      * Recupera as ordens do usuário com status e carrega os produtos.
      *
@@ -116,10 +120,10 @@ class OrderController extends Controller
         return Order::where('status', $status)
             ->where('user_id', $userId)
             ->with(['products' => function ($query) {
-                $query->withPivot('quantity', 'price', 'status');
+                $query->wherePivot('status', 'delivered')->withPivot('quantity', 'price', 'status');
             }])->get();
     }
-    
+
     /**
      * Calcula os valores totais das ordens.
      *
@@ -133,10 +137,10 @@ class OrderController extends Controller
                 return (float) $product->pivot->price * $product->pivot->quantity;
             });
         });
-    
-        $taxes = 10.0; 
-        $delivery = 5.0; 
-    
+
+        $taxes = 10.0;
+        $delivery = 5.0;
+
         return [
             'subtotal' => $subtotal,
             'taxes' => $taxes,

@@ -11,11 +11,13 @@ import {
 import { BsArrowBarLeft } from 'react-icons/bs';
 import { AlertItemModal } from '@/Components/AlertItemModal';
 export default function UserOrder({ orders }) {
-    const [activeTab, setActiveTab] = useState("solicitados");
+    const [activeTab, setActiveTab] = useState("preparing");
 
     const ordersPreparing = orders.filter(order => order.status == 'preparing');
+    const ordersReady = orders.filter(order => order.status == 'ready');
     const ordersDelivered = orders.filter(order => order.status == 'delivered');
-    const displayedOrders = activeTab === "solicitados" ? ordersPreparing : ordersDelivered;
+
+    const displayedOrders = activeTab === "preparing" ? ordersPreparing : (activeTab === "ready" ? ordersReady : ordersDelivered);
 
     return (
         <div className="h-screen w-full bg-gray-100">
@@ -34,22 +36,31 @@ export default function UserOrder({ orders }) {
             </div>
             <div className="flex space-x-4 m-4">
                 <button
-                    onClick={() => setActiveTab("solicitados")}
-                    className={`pb-2 ${activeTab === "solicitados"
+                    onClick={() => setActiveTab("preparing")}
+                    className={`pb-2 ${activeTab === "preparing"
                         ? "border-b-2 border-black text-black"
                         : "text-gray-400"
                         }`}
                 >
-                    Solicitados
+                    Em Preparo
                 </button>
                 <button
-                    onClick={() => setActiveTab("entregues")}
-                    className={`pb-2 ${activeTab === "entregues"
+                    onClick={() => setActiveTab("ready")}
+                    className={`pb-2 ${activeTab === "ready"
                         ? "border-b-2 border-black text-black"
                         : "text-gray-400"
                         }`}
                 >
-                    Entregues
+                    Pronto
+                </button>
+                <button
+                    onClick={() => setActiveTab("delivered")}
+                    className={`pb-2 ${activeTab === "delivered"
+                        ? "border-b-2 border-black text-black"
+                        : "text-gray-400"
+                        }`}
+                >
+                    Entregue
                 </button>
             </div>
             <div className="p-6">
@@ -59,7 +70,7 @@ export default function UserOrder({ orders }) {
                             <Card key={orderProduct.id} className="shadow-lg">
                                 <div className="space-y-4">
                                     <div className="flex items-center bg-white rounded-lg p-3 shadow-sm">
-                                        <div className="flex flex-col mr-4">
+                                        <div className="flex flex-col items-center mr-4">
                                             <img
                                                 src={orderProduct.product.image}
                                                 alt={orderProduct.name}
@@ -103,7 +114,7 @@ export default function UserOrder({ orders }) {
                     ) : (
                         <div className="w-full flex items-center justify-center">
                             <Typography variant="small" color="blue-gray" className="self-center bg">
-                                {activeTab == "solicitados" ? "Nenhum pedido solicitado ate o momento." : "Nenhum pedido entregue ate o momento."}
+                                {activeTab == "preparing" ? "Nenhum pedido solicitado ate o momento." : ( activeTab == "preparing" ? "Nenhum pedido entregue ate o momento.": "Nenhum pedido entregue ate o momento.")}
                             </Typography>
                         </div>
                     )}
