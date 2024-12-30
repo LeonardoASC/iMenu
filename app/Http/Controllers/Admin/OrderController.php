@@ -86,7 +86,7 @@ class OrderController extends Controller
                 $query->where('status', $status);
             })
             ->whereHas('order', function ($query) {
-                $query->where('user_id', 1);
+                $query->where('user_id', 1)->where('status', 'open');
             })
             ->with('order', 'product')
             ->get();
