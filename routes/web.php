@@ -29,6 +29,8 @@ Route::post('/create-session', [SessionController::class, 'create'])->name('crea
 Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
 Route::get('/menu/{product}', [MenuController::class, 'showProduct'])->name('menu.showProduct');
 Route::get('/order/userorder', [OrderController::class, 'userOrder'])->name('order.userOrder');
+Route::post('/user/orderProduct', [OrderProductController::class, 'createUserOrder'])->name('user.orderProduct.create');
+
 
 Route::get('/command', [OrderController::Class, 'command'])->name('menu.command');
 Route::put('/finishcomand/{id}', [OrderController::class, 'finishcomand'])->name('order.finishcomand');

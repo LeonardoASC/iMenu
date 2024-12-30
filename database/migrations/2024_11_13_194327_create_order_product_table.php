@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('quantity')->default(1);
             $table->decimal('price', 10, 2);
             $table->enum('status', ["preparing", "ready", "delivered"])->default('preparing');
+            $table->text('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

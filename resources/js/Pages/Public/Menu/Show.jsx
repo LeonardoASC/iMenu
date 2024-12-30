@@ -1,11 +1,35 @@
 import { ArrowLeftIcon, HeartIcon } from '@heroicons/react/24/solid';
 import { router } from '@inertiajs/react';
-import { IconButton, Rating, Textarea, Typography } from '@material-tailwind/react';
+import { Button, Dialog, DialogBody, DialogFooter, DialogHeader, IconButton, Rating, Textarea, Typography } from '@material-tailwind/react';
 import React, { useState } from 'react';
 
 export default function Show({ product }) {
     const [rated, setRated] = useState(4);
     const [quantityProduct, setQuantityProduct] = useState(0);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const handleOpenModal = () => setIsModalOpen(!isModalOpen);
+
+    const handleMakeOrder = () => {
+        const orderData = {
+            product_id: product.id,
+            quantity: quantityProduct,
+            price: product.price,
+        };
+
+        router.post('/user/orderProduct', orderData, {
+            onSuccess: () => {
+                alert('Produto adicionado ao pedido com sucesso!');
+                setQuantityProduct(0);
+            },
+            onError: (errors) => {
+                console.error('Erro:', errors);
+                alert('Erro ao adicionar o produto ao pedido. Tente novamente.');
+            },
+        });
+    };
+
+
     return (
         <div className="h-screen bg-red-500">
             <div className="h-1/2 bg-blue-200">
@@ -40,8 +64,8 @@ export default function Show({ product }) {
                 <p className="mt-2 font-bold">Descrição</p>
                 <p className="text-lg text-blue-gray-500">{product.description}</p>
                 <Typography color="blue-gray" className="font-medium text-blue-gray-500 text-center">
-                        134 Avaliações
-                    </Typography>
+                    134 Avaliações
+                </Typography>
                 <div className="flex items-center gap-2 font-bold text-blue-gray-500 w-full justify-center">
                     <Typography color="blue-gray" className="font-medium text-blue-gray-500">
                         {rated}.0
@@ -102,11 +126,30 @@ export default function Show({ product }) {
                 <button
                     disabled={quantityProduct === 0}
                     className={`px-4 py-2 ${quantityProduct === 0 ? 'bg-gray-400' : 'bg-green-700'} text-white rounded`}
-                    onClick={() => console.log('Pedido realizado!')}>
+                    onClick={handleOpenModal}>
                     Realizar Pedido
                 </button>
-
             </div>
+            <Dialog open={isModalOpen} handler={handleOpenModal}>
+                <DialogHeader>Confirmar Pedido</DialogHeader>
+                <DialogBody divider>
+                    Tem certeza de que deseja realizar este pedido?
+                    <br />
+                    Produto: <strong>{product.name}</strong>
+                    <br />
+                    Quantidade: <strong>{quantityProduct}</strong>
+                    <br />
+                    Total: <strong>R${(product.price * quantityProduct).toFixed(2)}</strong>
+                </DialogBody>
+                <DialogFooter>
+                    <Button variant="text" color="red" onClick={handleOpenModal} className="mr-2">
+                        Cancelar
+                    </Button>
+                    <Button variant="gradient" color="green" onClick={handleMakeOrder}>
+                        Confirmar
+                    </Button>
+                </DialogFooter>
+            </Dialog>
         </div>
     );
 }

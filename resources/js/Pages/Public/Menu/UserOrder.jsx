@@ -95,7 +95,7 @@ export default function UserOrder({ orders }) {
                                             <Popover>
                                                 <PopoverHandler>
                                                     <Typography variant="small" className="text-gray-500">
-                                                        Minha Observação: {orderProduct.order.notes.slice(0, 30)}...
+                                                        Minha Observação: {orderProduct.order.notes?.slice(0, 30) || 'Sem observações'}...
                                                     </Typography>
                                                 </PopoverHandler>
                                                 <PopoverContent>
@@ -114,7 +114,7 @@ export default function UserOrder({ orders }) {
                     ) : (
                         <div className="w-full flex items-center justify-center">
                             <Typography variant="small" color="blue-gray" className="self-center bg">
-                                {activeTab == "preparing" ? "Nenhum pedido solicitado ate o momento." : ( activeTab == "preparing" ? "Nenhum pedido entregue ate o momento.": "Nenhum pedido entregue ate o momento.")}
+                                {activeTab == "preparing" ? "Nenhum pedido solicitado ate o momento." : (activeTab == "preparing" ? "Nenhum pedido entregue ate o momento." : "Nenhum pedido entregue ate o momento.")}
                             </Typography>
                         </div>
                     )}
