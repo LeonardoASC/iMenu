@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
+use App\Models\User;
 use Inertia\Inertia;
 
 class SessionController extends Controller
@@ -12,9 +14,25 @@ class SessionController extends Controller
         $request->validate([
             'email' => 'required|email',
         ]);
-
-        session(['email' => $request->input('email')]);
-
+    
+        $email = $request->input('email');
+        session(['email' => $email]);
+    
+        $myuser = User::firstOrCreate(
+            ['email' => $email], 
+            ['name' => 'Cliente Anônimo'] 
+        );
+    
+        $order = Order::create([
+            'user_id' => $myuser->id, 
+            'table_id' => 1,
+            'status' => 'open',
+            'total' => null,
+        ]);
+    
+        session(['order_id' => $order->id]);
+    
         return redirect()->route('menu.index');
     }
+    
 }

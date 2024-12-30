@@ -6,13 +6,18 @@ import {
 } from "@material-tailwind/react";
 import { router } from "@inertiajs/react";
 import { BsArrowBarLeft } from "react-icons/bs";
-import { AlertItemModal } from "../../../Components/AlertItemModal"
+import { AlertItemModal } from "../../../Components/AlertItemModal";
+import { TbAlertOctagonFilled } from "react-icons/tb";
 
 export default function Command({ orders, taxes, delivery, total, subtotal }) {
 
     const handleMenuClick = () => {
         router.get(`/menu`);
     };
+
+    const handleFinishComand = (id) => {
+        router.put(`/finishcomand/${id}`)
+    }
 
     return (
         <div className="flex flex-col h-screen bg-gray-100">
@@ -110,14 +115,22 @@ export default function Command({ orders, taxes, delivery, total, subtotal }) {
                         <Typography variant="h6">R${total.toFixed(2)}</Typography>
                     </div>
                 </div>
+                <div className="flex gap-2 mt-4">
+                    <Button
+                        className="p-2"
+                        color="red"
+                        onClick={() => alert("cancelar comanda")}
+                    >
+                        <TbAlertOctagonFilled className="w-5 h-5" />
+                    </Button>
+                    <Button
+                        className="w-full bg-green-700"
+                        onClick={() => handleFinishComand(orders[0]?.id)}
+                    >
+                        Finalizar Comanda
+                    </Button>
 
-                <Button
-                    className="w-full mt-4"
-                    color="blue"
-                    onClick={() => alert("Finalizar Comanda")}
-                >
-                    Finalizar Comanda
-                </Button>
+                </div>
             </div>
 
         </div>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('table_id')->nullable()->constrained('tables')->onDelete('set null');
             $table->enum('status', ["open", "closed", "cancelled"])->default('open');
             $table->text('notes')->nullable();
-            $table->decimal('total', 10, 2)->default(0);
+            $table->decimal('total', 10, 2)->nullable();
             // $table->enum('payment_method', ['cash', 'credit_card', 'debit_card'])->default('cash');
             $table->timestamps();
             $table->softDeletes();

@@ -149,6 +149,22 @@ class OrderController extends Controller
         ];
     }
 
+    public function finishcomand($id)
+    {
+        session()->flush();
+        $order = Order::find($id);
+    
+        if (!$order) {
+            return Redirect::to('/')->with('error', 'Comanda não encontrada');
+        }
+
+        $order->status = 'closed';
+        $order->save();
+
+        return Redirect::to('/')->with('success', 'Comanda finalizada com sucesso');
+    }
+    
+
     public function chat(){
         return Inertia::render('Public/Chat/Index');
     }

@@ -101,7 +101,7 @@ export default function Show({ product }) {
 
                 <button
                     disabled={quantityProduct === 0}
-                    className={`px-4 py-2 ${quantityProduct === 0 ? 'bg-gray-400' : 'bg-[#ce3246]'} text-white rounded`}
+                    className={`px-4 py-2 ${quantityProduct === 0 ? 'bg-gray-400' : 'bg-green-700'} text-white rounded`}
                     onClick={() => console.log('Pedido realizado!')}>
                     Realizar Pedido
                 </button>

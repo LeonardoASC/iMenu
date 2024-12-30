@@ -31,6 +31,8 @@ Route::get('/menu/{product}', [MenuController::class, 'showProduct'])->name('men
 Route::get('/order/userorder', [OrderController::class, 'userOrder'])->name('order.userOrder');
 
 Route::get('/command', [OrderController::Class, 'command'])->name('menu.command');
+Route::put('/finishcomand/{id}', [OrderController::class, 'finishcomand'])->name('order.finishcomand');
+
 Route::get('/chat', [OrderController::Class, 'chat'])->name('chat');
 
 Route::get('/dashboard', function () {
