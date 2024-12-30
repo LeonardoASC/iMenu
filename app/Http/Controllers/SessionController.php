@@ -14,25 +14,26 @@ class SessionController extends Controller
         $request->validate([
             'email' => 'required|email',
         ]);
-    
+
         $email = $request->input('email');
         session(['email' => $email]);
-    
+
         $myuser = User::firstOrCreate(
-            ['email' => $email], 
-            ['name' => 'Cliente Anônimo'] 
+            ['email' => $email],
+            ['name' => 'Cliente Anônimo']
         );
-    
-        $order = Order::create([
-            'user_id' => $myuser->id, 
-            'table_id' => 1,
-            'status' => 'open',
-            'total' => null,
-        ]);
-    
+        session(['user_id' => $myuser->id ]);
+
+        $order = Order::firstOrCreate(
+            ['user_id' => $myuser->id, 'status' => 'open'],
+            [
+                'table_id' => 1,
+                'total' => null,
+            ]
+        );
         session(['order_id' => $order->id]);
-    
+
         return redirect()->route('menu.index');
     }
-    
+
 }

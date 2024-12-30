@@ -6,7 +6,7 @@ import { router } from '@inertiajs/react';
 import { NavigationBar } from '@/Components/NavigationBar';
 import { IoChatboxOutline } from "react-icons/io5";
 
-export default function Menu({ email, categories }) {
+export default function Menu({ email, order_id, categories }) {
 
     const [searchQuery, setSearchQuery] = useState('');
     const [debouncedSearchQuery] = useDebounce(searchQuery, 300);
@@ -39,12 +39,15 @@ export default function Menu({ email, categories }) {
     return (
         <main className=" mx-auto bg-[#f9f9f9] h-screen ">
             <div className="flex flex-row items-center justify-between w-full h-[20%] px-4 bg-[#ce3246]">
-                <h1 className="text-lg sm:text-2xl text-white font-bold">Seja Bem-Vindo(a)</h1>
+                <div>
+                    <h1 className="text-lg sm:text-2xl text-white font-bold">Seja Bem-Vindo(a)</h1>
+                    <p className="text-white">{email}</p>
+                </div>
                 <button className="flex flex-col items-center"
                     onClick={() => handleChatClick()}
                 >
                     <Badge content="5" color="white">
-                        <IoChatboxOutline color="white"  className="h-8 w-8"/>
+                        <IoChatboxOutline color="white" className="h-8 w-8" />
                         {/* </IconButton> */}
                     </Badge>
                     <p className="text-white text-sm">Conversar</p>
@@ -52,6 +55,7 @@ export default function Menu({ email, categories }) {
             </div>
 
             <div className="absolute to[20%] left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg z-10 shadow w-[90%]">
+
                 <Input
                     icon={<MagnifyingGlassIcon className="h-5 w-5" />}
                     label="Pesquise aqui o que voce quer comer :)"

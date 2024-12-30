@@ -42,6 +42,7 @@ class MenuController extends Controller
 
         return Inertia::render('Public/Menu/Index', [
             'email' => session('email'),
+            'order_id' => session('order_id'),
             'categories' => $categories,
         ]);
     }
@@ -69,14 +70,14 @@ class MenuController extends Controller
     {
         //
     }
-    
+
     /**
      * Display the specified resource.
      */
     public function showProduct(Product $product)
     {
         $product = Product::with('category')->findOrFail($product->id);
-        // dd($product);  
+        // dd($product);
         return Inertia::render('Public/Menu/Show', compact('product'));
     }
 

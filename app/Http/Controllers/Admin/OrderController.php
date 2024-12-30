@@ -81,12 +81,13 @@ class OrderController extends Controller
 
     public function userOrder(Request $request)
     {
+        $userId = session('user_id');
         $orders = OrderProduct::query()
             ->when($request->status, function ($query, $status) {
                 $query->where('status', $status);
             })
-            ->whereHas('order', function ($query) {
-                $query->where('user_id', 1)->where('status', 'open');
+            ->whereHas('order', function ($query) use ($userId) {
+                $query->where('user_id', $userId)->where('status', 'open');
             })
             ->with('order', 'product')
             ->get();
@@ -96,7 +97,8 @@ class OrderController extends Controller
 
     public function command()
     {
-        $orders = $this->getOrdersWithProducts(1, 'open');
+        $userId = session('user_id');
+        $orders = $this->getOrdersWithProducts($userId, 'open');
         $totals = $this->calculateOrderTotals($orders);
 
         return Inertia::render('Public/Menu/Command', [
@@ -153,7 +155,7 @@ class OrderController extends Controller
     {
         session()->flush();
         $order = Order::find($id);
-    
+
         if (!$order) {
             return Redirect::to('/')->with('error', 'Comanda não encontrada');
         }
@@ -163,7 +165,7 @@ class OrderController extends Controller
 
         return Redirect::to('/')->with('success', 'Comanda finalizada com sucesso');
     }
-    
+
 
     public function chat(){
         return Inertia::render('Public/Chat/Index');
