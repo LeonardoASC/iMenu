@@ -140,8 +140,8 @@ class OrderController extends Controller
             });
         });
 
-        $taxes = 10.0;
-        $delivery = 5.0;
+        $taxes = $subtotal > 0 ? 10.0 : 0.0;
+        $delivery = $subtotal > 0 ? 15.0 : 0.0;
 
         return [
             'subtotal' => $subtotal,

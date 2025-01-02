@@ -115,22 +115,35 @@ export default function Command({ orders, taxes, delivery, total, subtotal }) {
                         <Typography variant="h6">R${total.toFixed(2)}</Typography>
                     </div>
                 </div>
-                <div className="flex gap-2 mt-4">
-                    <Button
-                        className="p-2"
-                        color="red"
-                        onClick={() => alert("cancelar comanda")}
-                    >
-                        <TbAlertOctagonFilled className="w-5 h-5" />
-                    </Button>
-                    <Button
-                        className="w-full bg-green-700"
-                        onClick={() => handleFinishComand(orders[0]?.id)}
-                    >
-                        Finalizar Comanda
-                    </Button>
-
+                <div>
+                    {subtotal > 0 ? (
+                        <div className="flex gap-2 mt-4">
+                            <Button
+                                className="p-2"
+                                color="red"
+                                onClick={() => alert("cancelar comanda")}
+                            >
+                                <TbAlertOctagonFilled className="w-5 h-5" />
+                            </Button>
+                            <Button
+                                className="w-full bg-green-700"
+                                onClick={() => handleFinishComand(orders[0]?.id)}
+                            >
+                                Finalizar Comanda
+                            </Button>
+                        </div>
+                    ) : (
+                        <div className="flex gap-2 mt-4">
+                            <Button
+                                className="w-full bg-blue-700"
+                                onClick={() => navigateToHomePage()}
+                            >
+                                Ir para Página Inicial
+                            </Button>
+                        </div>
+                    )}
                 </div>
+
             </div>
 
         </div>
