@@ -25,18 +25,13 @@ const Welcome = () => {
         <>
             {!sessionEmail && (
                 <div className="flex flex-col min-h-screen w-full relative">
-
-                    {/* HERO SECTION */}
                     <div
                         className="relative flex items-center justify-center h-[600px] bg-cover bg-center bg-no-repeat"
                         style={{
                             backgroundImage: 'url("https://source.unsplash.com/1600x900/?restaurant,food")',
                         }}
                     >
-                        {/* Overlay escuro por trás (opcional) */}
                         <div className="absolute inset-0 bg-yellow-900 bg-opacity-50"></div>
-
-                        {/* Conteúdo Hero com Glass Effect */}
                         <div className="relative z-10 text-center flex flex-col items-center px-4">
                             <div className=" bg-white/10 backdrop-blur-md rounded-xl p-8 max-w-lg mx-auto shadow-xl">
                                 <img
@@ -60,7 +55,6 @@ const Welcome = () => {
                         </div>
                     </div>
 
-                    {/* SEÇÃO DE DESTAQUES */}
                     <section className="bg-white py-12 px-4">
                         <div className="max-w-7xl mx-auto">
                             <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8">
@@ -88,7 +82,7 @@ const Welcome = () => {
                                         Navegue e escolha seus pratos preferidos de forma rápida e intuitiva.
                                     </p>
                                 </div>
-                                {/* Card 2 */}
+
                                 <div className="flex flex-col items-center text-center">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +103,7 @@ const Welcome = () => {
                                         Tenha um sistema moderno que facilita sua experiência gastronômica.
                                     </p>
                                 </div>
-                                {/* Card 3 */}
+
                                 <div className="flex flex-col items-center text-center">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -134,7 +128,6 @@ const Welcome = () => {
                         </div>
                     </section>
 
-                    {/* TESTIMONIAL */}
                     <section className="bg-gray-50 py-12 px-4">
                         <div className="max-w-3xl mx-auto text-center">
                             <h2 className="text-2xl sm:text-3xl font-bold mb-4">
@@ -144,7 +137,6 @@ const Welcome = () => {
                                 “Fiquei impressionado com a facilidade de montar minha comanda e a agilidade no atendimento. Recomendo demais!”
                             </p>
                             <div className="flex justify-center items-center mb-2">
-                                {/* Estrelas de avaliação (exemplo) */}
                                 {Array.from({ length: 5 }).map((_, index) => (
                                     <svg
                                         key={index}
@@ -167,7 +159,6 @@ const Welcome = () => {
                         </div>
                     </section>
 
-                    {/* FORMULÁRIO DE E-MAIL */}
                     <section id="cadastro" className="bg-white py-12 px-4">
                         <div className="max-w-xl mx-auto">
                             <h2 className="text-2xl sm:text-3xl font-bold text-center mb-6">
@@ -214,7 +205,6 @@ const Welcome = () => {
                         </div>
                     </section>
 
-                    {/* RODAPÉ */}
                     <footer className="bg-gray-900 text-gray-200 py-6 px-4 mt-auto">
                         <div className="max-w-7xl mx-auto flex flex-col items-center sm:flex-row sm:justify-between">
                             <p className="mb-4 sm:mb-0">

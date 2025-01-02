@@ -3,7 +3,7 @@ import { Badge, IconButton, Input } from '@material-tailwind/react';
 import { ArrowRightIcon, ChatBubbleBottomCenterIcon, HomeIcon, MagnifyingGlassIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
 import { useDebounce } from 'use-debounce';
 import { router } from '@inertiajs/react';
-import { NavigationBar } from '@/Components/NavigationBar';
+import { NavigationBar } from '@/Components/TabBar/NavigationBar';
 import { IoChatboxOutline } from "react-icons/io5";
 
 export default function Menu({ email, order_id, categories }) {

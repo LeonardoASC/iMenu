@@ -136,9 +136,9 @@ export default function Command({ orders, taxes, delivery, total, subtotal }) {
                         <div className="flex gap-2 mt-4">
                             <Button
                                 className="w-full bg-blue-700"
-                                onClick={() => navigateToHomePage()}
+                                onClick={() => handleMenuClick()}
                             >
-                                Ir para Página Inicial
+                                😍 Ver o cardapio 😍
                             </Button>
                         </div>
                     )}

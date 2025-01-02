@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavigationBar } from '@/Components/NavigationBar';
+import { NavigationBar } from '@/Components/TabBar/NavigationBar';
 import {
     Card,
     Typography,

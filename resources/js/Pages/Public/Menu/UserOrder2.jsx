@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardBody, List, Button } from '@material-tailwind/react';
 import React, { useState } from 'react';
 import { ArrowLeftCircleIcon, ArrowLeftStartOnRectangleIcon } from "@heroicons/react/24/solid";
-import { NavigationBar } from '@/Components/NavigationBar';
+import { NavigationBar } from '@/Components/TabBar/NavigationBar';
 export default function UserOrder({ openOrders, otherOrders }) {
     const [showOldOrders, setShowOldOrders] = useState(false);
 
