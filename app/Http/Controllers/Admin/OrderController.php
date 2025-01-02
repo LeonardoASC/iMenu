@@ -82,24 +82,16 @@ class OrderController extends Controller
     public function userOrder(Request $request)
     {
         $userId = session('user_id');
-        $orders = OrderProduct::query()
-            ->when($request->status, function ($query, $status) {
-                $query->where('status', $status);
-            })
-            ->whereHas('order', function ($query) use ($userId) {
-                $query->where('user_id', $userId)->where('status', 'open');
-            })
-            ->with('order', 'product')
-            ->get();
-
+        $orders = $this->orderRepository->getUserOrders($userId, $request->status);
         return Inertia::render('Public/Menu/UserOrder', compact('orders'));
     }
 
     public function command()
     {
         $userId = session('user_id');
-        $orders = $this->getOrdersWithProducts($userId, 'open');
-        $totals = $this->calculateOrderTotals($orders);
+
+        $orders = $this->orderRepository->getUserOrdersWithProducts($userId, 'open');
+        $totals = $this->orderRepository->calculateOrderTotals($orders);
 
         return Inertia::render('Public/Menu/Command', [
             'orders' => $orders,
@@ -110,58 +102,15 @@ class OrderController extends Controller
         ]);
     }
 
-    /**
-     * Recupera as ordens do usuário com status e carrega os produtos.
-     *
-     * @param int $userId
-     * @param string $status
-     * @return \Illuminate\Support\Collection
-     */
-    protected function getOrdersWithProducts(int $userId, string $status)
-    {
-        return Order::where('status', $status)
-            ->where('user_id', $userId)
-            ->with(['products' => function ($query) {
-                $query->wherePivot('status', 'delivered')->withPivot('quantity', 'price', 'status');
-            }])->get();
-    }
-
-    /**
-     * Calcula os valores totais das ordens.
-     *
-     * @param \Illuminate\Support\Collection $orders
-     * @return array
-     */
-    protected function calculateOrderTotals($orders)
-    {
-        $subtotal = $orders->sum(function ($order) {
-            return $order->products->sum(function ($product) {
-                return (float) $product->pivot->price * $product->pivot->quantity;
-            });
-        });
-
-        $taxes = $subtotal > 0 ? 10.0 : 0.0;
-        $delivery = $subtotal > 0 ? 15.0 : 0.0;
-
-        return [
-            'subtotal' => $subtotal,
-            'taxes' => $taxes,
-            'delivery' => $delivery,
-            'total' => $subtotal + $taxes + $delivery,
-        ];
-    }
 
     public function finishcomand($id)
     {
         session()->flush();
-        $order = Order::find($id);
+        $order = $this->orderRepository->finishComand($id);
 
         if (!$order) {
             return Redirect::to('/')->with('error', 'Comanda não encontrada');
         }
-
-        $order->status = 'closed';
-        $order->save();
 
         return Redirect::to('/')->with('success', 'Comanda finalizada com sucesso');
     }
