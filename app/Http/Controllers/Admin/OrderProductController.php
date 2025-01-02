@@ -4,44 +4,39 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreOrderProductRequest;
+use App\Http\Requests\UpdateOrderProductRequest;
+use App\Repositories\OrderProductRepository;
 use App\Models\OrderProduct;
 use App\Models\Order;
 use Inertia\Inertia;
 
+
 class OrderProductController extends Controller
 {
-    public function index()
-    {
-        $orderProducts = OrderProduct::with(['order', 'product'])->get();
 
-        return inertia('Admin/OrderProduct/Index', compact('orderProducts'));
+    protected $orderProductRepository;
+
+    public function __construct(OrderProductRepository $orderProductRepository)
+    {
+        $this->orderProductRepository = $orderProductRepository;
     }
 
-    public function createUserOrder(Request $request)
+    public function index()
     {
-        // Validação dos dados recebidos
-        $request->validate([
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1',
-            'price' => 'required|numeric|min:0',
-            'status'
-        ]);
+        $orderProducts = $this->orderProductRepository->getAllWithRelations();
+        return Inertia::render('Admin/OrderProduct/Index', compact('orderProducts'));
+    }
 
-        // Obtém o ID da comanda ativa da sessão
+    public function createUserOrder(StoreOrderProductRequest $request)
+    {
         $orderId = session('order_id');
 
         if (!$orderId) {
             return response()->json(['message' => 'Nenhuma comanda ativa.'], 400);
         }
 
-        // Criação do registro na tabela order_product
-        $orderProduct = OrderProduct::create([
-            'order_id' => $orderId,
-            'product_id' => $request->product_id,
-            'quantity' => $request->quantity,
-            'price' => $request->price,
-            'status' => 'preparing',
-        ]);
+        $this->orderProductRepository->createUserOrder($orderId, $request->validated());
 
         return redirect()->route('menu.index')->with('message', 'Produto adicionado ao pedido com sucesso!');
     }
