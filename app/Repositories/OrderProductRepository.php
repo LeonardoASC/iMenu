@@ -22,8 +22,18 @@ class OrderProductRepository
     {
         $data['order_id'] = $orderId;
         $data['status']   = $data['status'] ?? 'preparing';
+        $data['quantity'] = $data['quantity'] ?? 1;
+        $data['notes']    = $data['notes'] ?? null;
 
         return $this->model->create($data);
+    }
+
+    public function getByOrderId(int $orderId)
+    {
+        return $this->model
+            ->where('order_id', $orderId)
+            ->with(['product', 'order.user'])
+            ->get();
     }
 
 }

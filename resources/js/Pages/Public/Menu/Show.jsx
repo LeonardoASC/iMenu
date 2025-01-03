@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 export default function Show({ product }) {
     const [rated, setRated] = useState(4);
     const [quantityProduct, setQuantityProduct] = useState(0);
+    const [notes, setNotes] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpenModal = () => setIsModalOpen(!isModalOpen);
@@ -15,6 +16,7 @@ export default function Show({ product }) {
             product_id: product.id,
             quantity: quantityProduct,
             price: product.price,
+            notes,
         };
 
         router.post('/user/orderProduct', orderData, {
@@ -76,7 +78,10 @@ export default function Show({ product }) {
                 <div className="w-full h-px bg-gray-100 my-4" />
                 <div className="w-full ">
                     <Typography className="font-semibold">Voce tem alguma observação sobre este pedido?</Typography>
-                    <Textarea label="Observação" />
+                    <Textarea label="Ex: sem cebola, sem pimenta, etc."
+                        value={notes}
+                        onChange={(e) => setNotes(e.target.value)}
+                    />
                 </div>
             </div>
             <div className="flex items-center justify-between fixed w-full bottom-0 bg-white p-4 drop-shadow-md z-20"
@@ -131,21 +136,44 @@ export default function Show({ product }) {
                 </button>
             </div>
             <Dialog open={isModalOpen} handler={handleOpenModal}>
-                <DialogHeader>Confirmar Pedido</DialogHeader>
-                <DialogBody divider>
-                    Tem certeza de que deseja realizar este pedido?
-                    <br />
-                    Produto: <strong>{product.name}</strong>
-                    <br />
-                    Quantidade: <strong>{quantityProduct}</strong>
-                    <br />
-                    Total: <strong>R${(product.price * quantityProduct).toFixed(2)}</strong>
+                <DialogHeader>Confirme o seu Pedido</DialogHeader>
+                <DialogBody divider className="space-y-4">
+                    <p>Tem certeza de que deseja realizar este pedido?</p>
+                    <dl className="space-y-2">
+                        <div className="flex">
+                            <dt className="font-semibold w-1/3">Produto:</dt>
+                            <dd className="flex-1 break-words">{product.name}</dd>
+                        </div>
+                        <div className="flex">
+                            <dt className="font-semibold w-1/3">Quantidade:</dt>
+                            <dd className="flex-1 break-words">{quantityProduct}</dd>
+                        </div>
+                        <div className="flex">
+                            <dt className="font-semibold w-1/3">Observação:</dt>
+                            <dd className="flex-1 break-words w-1/2">
+                                {notes ? notes : 'Sem observações'}
+                            </dd>
+                        </div>
+                        <div className="flex">
+                            <dt className="font-semibold w-1/3">Total:</dt>
+                            <dd className="flex-1 ">R${(product.price * quantityProduct).toFixed(2)}</dd>
+                        </div>
+                    </dl>
                 </DialogBody>
                 <DialogFooter>
-                    <Button variant="text" color="red" onClick={handleOpenModal} className="mr-2">
+                    <Button
+                        variant="text"
+                        color="red"
+                        onClick={handleOpenModal}
+                        className="mr-2"
+                    >
                         Cancelar
                     </Button>
-                    <Button variant="gradient" color="green" onClick={handleMakeOrder}>
+                    <Button
+                        variant="gradient"
+                        color="green"
+                        onClick={handleMakeOrder}
+                    >
                         Confirmar
                     </Button>
                 </DialogFooter>

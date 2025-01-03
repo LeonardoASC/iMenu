@@ -43,11 +43,8 @@ class OrderProductController extends Controller
 
     public function orderProducts($id)
     {
-        $orderProducts = OrderProduct::where('order_id', $id)->with(['product', 'order.user'])->get();
-        // dd($orderProducts->toArray());
+        $orderProducts = $this->orderProductRepository->getByOrderId($id);
         return Inertia::render('Admin/OrderProduct/Index', compact('orderProducts'));
     }
-
-
 
 }

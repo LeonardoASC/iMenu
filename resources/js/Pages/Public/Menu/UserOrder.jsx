@@ -20,7 +20,7 @@ export default function UserOrder({ orders }) {
     const displayedOrders = activeTab === "preparing" ? ordersPreparing : (activeTab === "ready" ? ordersReady : ordersDelivered);
 
     return (
-        <div className="h-screen w-full bg-gray-100">
+        <div className="h-full w-full bg-gray-100">
 
             <div className="flex items-center w-full p-2 bg-white shadow rounded-b-xl">
                 <IconButton
@@ -113,13 +113,21 @@ export default function UserOrder({ orders }) {
                         ))
                     ) : (
                         <div className="w-full flex items-center justify-center">
-                            <Typography variant="small" color="blue-gray" className="self-center bg">
-                                {activeTab == "preparing" ? "Nenhum pedido solicitado ate o momento." : (activeTab == "preparing" ? "Nenhum pedido entregue ate o momento." : "Nenhum pedido entregue ate o momento.")}
+                            <Typography variant="small" color="blue-gray" className="self-center">
+                                {activeTab == "preparing" ? "Nenhum pedido solicitado ate o momento." : (activeTab == "ready" ? "Nenhum pedido pronto ate o momento." : "Nenhum pedido entregue ate o momento.")}
                             </Typography>
                         </div>
                     )}
 
                 </div>
+            </div>
+            <div className="w-full h-40 text-center bg-gray-100">
+                <button
+                    className=" text-blue-500 hover:bg-blue-700 "
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                >
+                    Voltar ao Topo
+                </button>
             </div>
             <NavigationBar />
         </div >

@@ -23,7 +23,8 @@ class StoreOrderProductRequest extends FormRequest
             'product_id' => 'required|exists:products,id',
             'quantity'   => 'required|integer|min:1',
             'price'      => 'required|numeric|min:0',
-            'status' ,
+            'notes' => 'nullable|string|max:255',
+            'status',
         ];
     }
 }

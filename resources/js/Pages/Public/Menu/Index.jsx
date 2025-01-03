@@ -140,7 +140,7 @@ export default function Menu({ email, order_id, categories }) {
                     <p className="text-slate-600 text-center mt-4">Produto não encontrado</p>
                 )}
             </div>
-            <div className="w-full h-40 text-center bg-[#f9f9f9] ">
+            <div className="w-full h-40 text-center bg-gray-100">
                 <button
                     className=" text-blue-500 hover:bg-blue-700"
                     onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}

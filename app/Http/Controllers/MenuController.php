@@ -5,40 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Models\Product;
 use App\Models\Category;
+use App\Repositories\MenuRepository;
 use App\Http\Requests\StoreMenuRequest;
 use App\Http\Requests\UpdateMenuRequest;
 use Inertia\Inertia;
 
 class MenuController extends Controller
 {
+    private $menuRepository;
+
+    public function __construct(MenuRepository $repository) {
+        $this->menuRepository = $repository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $categories = Category::with('products')
-        ->orderBy('name')->where("status", "Enable")
-        ->has('products')
-        ->get()
-        ->map(function ($category) {
-            return [
-                'id' => $category->id,
-                'name' => $category->name,
-                'status' => $category->status,
-                'image' => $category->image,
-                'products' => $category->products->map(function ($product) {
-                    return [
-                        'id' => $product->id,
-                        'name' => $product->name,
-                        'description' => $product->description,
-                        'price' => $product->price,
-                        'status' => $product->status,
-                        'image' => $product->image,
-                        'created_at' => $product->created_at->format('d-m-Y'),
-                    ];
-                }),
-            ];
-        });
+    {  
+        $categories = $this->menuRepository->getCategoriesWithProducts();
 
         return Inertia::render('Public/Menu/Index', [
             'email' => session('email'),
@@ -76,8 +60,8 @@ class MenuController extends Controller
      */
     public function showProduct(Product $product)
     {
-        $product = Product::with('category')->findOrFail($product->id);
-        // dd($product);
+        $product = $this->menuRepository->getProductWithCategory($product->id);
+
         return Inertia::render('Public/Menu/Show', compact('product'));
     }
 
