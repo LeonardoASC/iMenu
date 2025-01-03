@@ -15,14 +15,15 @@ use App\Http\Controllers\{
     Admin\OrderController,
     Admin\RoleAndAbilityController,
     Admin\UserController,
-    Admin\OrderProductController
+    Admin\OrderProductController,
+    Admin\ChargeController,
 };
 
 Route::get('/', fn() => Inertia::render('Public/Welcome'));
 Route::post('/create-session', [SessionController::class, 'create'])->name('create-session');
 Route::get('/login', fn() => Inertia::render('Auth/Login'))->name('login');
 
-Route::middleware(['check.session'])->group(function () {  
+Route::middleware(['check.session'])->group(function () {
     Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
     Route::get('/menu/{product}', [MenuController::class, 'showProduct'])->name('menu.showProduct');
     Route::get('/order/userorder', [OrderController::class, 'userOrder'])->name('order.userOrder');
@@ -63,6 +64,9 @@ Route::middleware('auth')->group(function () {
         Route::post('/usuarios/{id}/restore', [UserController::class, 'restore'])->name('admin.users.restore');
         Route::delete('/usuarios/{id}/force', [UserController::class, 'forceDelete'])->name('admin.users.forceDelete');
         Route::resource('/usuarios', UserController::class)->names('admin.users')->parameters(['usuarios' => 'user',]);
+
+        Route::resource('/charges', ChargeController::class);
+        Route::delete('/charges/{id}/force', [ChargeController::class, 'forceDelete'])->name('charge.forceDelete');
     });
 });
 

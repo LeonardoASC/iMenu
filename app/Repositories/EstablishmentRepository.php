@@ -9,8 +9,8 @@ class EstablishmentRepository extends BaseRepository
 {
     protected Model $model;
 
-    public function __construct(Establishment $estabelishment) {
-        $this->model = $estabelishment;
+    public function __construct(Establishment $establishment) {
+        $this->model = $establishment;
     }
 
     public function getAll($request = null)

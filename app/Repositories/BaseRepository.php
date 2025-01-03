@@ -35,6 +35,7 @@ class BaseRepository implements IBaseRepository
 
     public function update($data, $model)
     {
+
         $model->update($data);
 
         return $model;

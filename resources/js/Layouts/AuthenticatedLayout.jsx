@@ -116,7 +116,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                     <ShoppingBagIcon className="h-5 w-5" />
                                 </ListItemPrefix>
                                 <Typography color="blue-gray" className="mr-auto font-normal">
-                                    E-Commerce
+                                    E-Gestão
                                 </Typography>
                             </AccordionHeader>
                         </ListItem>
@@ -135,7 +135,15 @@ export default function AuthenticatedLayout({ header, children }) {
                                         <ListItemPrefix>
                                             <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                                         </ListItemPrefix>
-                                        Products
+                                        Produtos
+                                    </ListItem>
+                                </Link>
+                                <Link href={route('charges.index')}>
+                                    <ListItem>
+                                        <ListItemPrefix>
+                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                                        </ListItemPrefix>
+                                        Nossas Taxas
                                     </ListItem>
                                 </Link>
                                 <Link href={route('order.index')}>
@@ -143,7 +151,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                         <ListItemPrefix>
                                             <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                                         </ListItemPrefix>
-                                        Orders
+                                        Comandas
                                     </ListItem>
                                 </Link>
                                 <Link href={route('table.index')}>
@@ -151,7 +159,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                         <ListItemPrefix>
                                             <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                                         </ListItemPrefix>
-                                        Tables
+                                        Mesas
                                     </ListItem>
                                 </Link>
                                 <Link href={route('establishment.index')}>
@@ -159,7 +167,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                         <ListItemPrefix>
                                             <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
                                         </ListItemPrefix>
-                                        Establishments
+                                        Estabelecimentos
                                     </ListItem>
                                 </Link>
                                 <Link href={route('admin.users.index')}>

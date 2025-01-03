@@ -35,29 +35,29 @@ const TABS = [
     },
 ];
 
-const TABLE_HEAD = ["Category", "Status", "created_at", ""];
+const TABLE_HEAD = ["Fees", "Valor", "Descrição", "Tipo", "Opcional", "Status", "created_at", ""];
 
-export function TableCategory({ categories }) {
-    const categoryData = categories.data || [];
-console.log(categoryData);
+export function TableCharge({ charges }) {
+    const chargeData = charges.data || [];
+
     const { delete: forceDelete } = useForm();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+    const [selectedChargeId, setSelectedChargeId] = useState(null);
 
     const handleDelete = (id) => {
-        setSelectedCategoryId(id);
+        setSelectedChargeId(id);
         setIsModalOpen(true);
     };
 
     const handleConfirmDelete = () => {
-        forceDelete(route("category.forceDelete", selectedCategoryId));
+        forceDelete(route("charge.forceDelete", selectedChargeId));
         setIsModalOpen(false);
     };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
-        setSelectedCategoryId(null);
+        setSelectedChargeId(null);
     };
 
     return (
@@ -67,30 +67,20 @@ console.log(categoryData);
                     <div>
                         <div className="flex items-center gap-2">
                             <Typography variant="h5" color="blue-gray">
-                                Categories List
+                                charges List
                             </Typography>
-                            <Tooltip
-                            animate={{
-                                mount: { scale: 1, y: 0 },
-                                unmount: { scale: 0, y: 25 },
-                            }}
-                            content="Atenção!!! Ao desabilitar uma categoria, todos os produtos associados a ela ficaram indisponiveis para o cliente."
-                            placement="left"
-                            >
-                                <InformationCircleIcon className="h-5 w-5" />
-                            </Tooltip>
                         </div>
                         <Typography color="gray" className="mt-1 font-normal">
-                            See information about all Categories
+                            See information about all charges
                         </Typography>
                     </div>
                     <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
                         <Button variant="outlined" size="sm">
                             view all
                         </Button>
-                        <Link href={route('category.create')}>
+                        <Link href={route('charges.create')}>
                             <Button className="flex items-center gap-3" size="sm">
-                                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Category
+                                <UserPlusIcon strokeWidth={2} className="h-4 w-4" /> Add Charges
                             </Button>
                         </Link>
                     </div>
@@ -134,18 +124,17 @@ console.log(categoryData);
                         </tr>
                     </thead>
                     <tbody>
-                        {categoryData.map(
-                            ({ id, image, name, status, created_at }, index) => {
-                                const isLast = index === categoryData.length - 1;
+                        {chargeData.map(
+                            ({ id, name, value, description, type, is_optional, status, created_at }, index) => {
+                                const isLast = index === chargeData.length - 1;
                                 const classes = isLast
                                     ? "p-4"
                                     : "p-4 border-b border-blue-gray-50";
 
                                 return (
-                                    <tr key={name}>
+                                    <tr key={id}>
                                         <td className={classes}>
                                             <div className="flex items-center gap-3">
-                                                <Avatar src={`/storage/${image}`} alt={name} size="sm" />
                                                 <div className="flex flex-col">
                                                     <Typography
                                                         variant="small"
@@ -153,6 +142,58 @@ console.log(categoryData);
                                                         className="font-normal"
                                                     >
                                                         {name}
+                                                    </Typography>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className={classes}>
+                                            <div className="flex items-center gap-3">
+                                                <div className="flex flex-col">
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal"
+                                                    >
+                                                        {value}
+                                                    </Typography>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className={classes}>
+                                            <div className="flex items-center gap-3">
+                                                <div className="flex flex-col">
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal"
+                                                    >
+                                                        {description}
+                                                    </Typography>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className={classes}>
+                                            <div className="flex items-center gap-3">
+                                                <div className="flex flex-col">
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal"
+                                                    >
+                                                        {type}
+                                                    </Typography>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td className={classes}>
+                                            <div className="flex items-center gap-3">
+                                                <div className="flex flex-col">
+                                                    <Typography
+                                                        variant="small"
+                                                        color="blue-gray"
+                                                        className="font-normal"
+                                                    >
+                                                        {is_optional == 0 ? "SIM" : "NÃO"}
                                                     </Typography>
                                                 </div>
                                             </div>
@@ -177,21 +218,21 @@ console.log(categoryData);
                                             </Typography>
                                         </td>
                                         <td className={classes}>
-                                            <Tooltip content="Show Category">
-                                                <Link href={route('category.show', id)}>
+                                            <Tooltip content="Show Charge">
+                                                <Link href={route('charges.show', id)}>
                                                     <IconButton variant="text">
                                                         <EyeIcon className="h-4 w-4" />
                                                     </IconButton>
                                                 </Link>
                                             </Tooltip>
-                                            <Tooltip content="Edit Category">
-                                                <Link href={route('category.edit', id)}>
+                                            <Tooltip content="Edit charges">
+                                                <Link href={route('charges.edit', id)}>
                                                     <IconButton variant="text">
                                                         <PencilIcon className="h-4 w-4" />
                                                     </IconButton>
                                                 </Link>
                                             </Tooltip>
-                                            <Tooltip content="Delete Category">
+                                            <Tooltip content="Delete Charge">
                                                 <IconButton
                                                     variant="text"
                                                     onClick={() => handleDelete(id)}
@@ -209,16 +250,16 @@ console.log(categoryData);
             </CardBody>
             <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4 ">
                 <Typography variant="small" color="blue-gray" className="font-normal">
-                    Page {categories.current_page} of {categories.last_page}
+                    Page {charges.current_page} of {charges.last_page}
                 </Typography>
                 <div className="flex gap-2">
                     <Button
                         variant="outlined"
                         size="sm"
-                        disabled={!categories.prev_page_url}
+                        disabled={!charges.prev_page_url}
                         onClick={() => {
-                            if (categories.prev_page_url) {
-                                router.visit(categories.prev_page_url);
+                            if (charges.prev_page_url) {
+                                router.visit(charges.prev_page_url);
                             }
                         }}
                     >
@@ -227,10 +268,10 @@ console.log(categoryData);
                     <Button
                         variant="outlined"
                         size="sm"
-                        disabled={!categories.next_page_url}
+                        disabled={!charges.next_page_url}
                         onClick={() => {
-                            if (categories.next_page_url) {
-                                router.visit(categories.next_page_url);
+                            if (charges.next_page_url) {
+                                router.visit(charges.next_page_url);
                             }
                         }}
                     >

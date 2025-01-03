@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             TableSeeder::class,
             ProductSeeder::class,
             OrderSeeder::class,
+            ChargeSeeder::class,
         ]);
     }
 }
