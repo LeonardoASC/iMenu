@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     Input,
     Button,
@@ -7,7 +7,7 @@ import {
 } from "@material-tailwind/react";
 import { Link } from '@inertiajs/react';
 
-export default function Form({ data, setData, errors, processing = false, handleSubmit, isShow = false, isEdit = false, product, categoriesEnable }) {
+export default function Form({ data, setData, errors, processing = false, handleSubmit, isShow = false, isEdit = false, product, categoriesEnable = [] }) {
 
     const [imageName, setImageName] = useState('');
     const fileInputRef = useRef(null);
@@ -84,12 +84,25 @@ export default function Form({ data, setData, errors, processing = false, handle
                         onChange={(value) => setData('category_id', value)}
                         disabled={isShow}
                     >
-                        {categoriesEnable.map((category) => (
-                            <Option key={category.id} value={category.id}>{category.name}</Option>
-                        ))}
+                        {isShow ? (
+                            product?.category ? (
+                                <Option key={product.category.id} value={product.category.id}>
+                                    {product.category.name}
+                                </Option>
+                            ) : (
+                                <Option disabled>No category associated</Option>
+                            )
+                        ) : (
+                            categoriesEnable.map((category) => (
+                                <Option key={category.id} value={category.id}>
+                                    {category.name}
+                                </Option>
+                            ))
+                        )}
                     </Select>
                     {errors?.category_id && <span className="text-red-500">{errors.category_id}</span>}
-                    
+
+
                     <Select
                         label="Select Status"
                         required={!isEdit}
@@ -125,6 +138,7 @@ export default function Form({ data, setData, errors, processing = false, handle
                             </Button>
                             <input
                                 type="file"
+                                name="image" 
                                 accept="image/*"
                                 ref={fileInputRef}
                                 style={{ display: 'none' }}

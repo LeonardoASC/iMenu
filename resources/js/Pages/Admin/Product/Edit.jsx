@@ -1,22 +1,15 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/react';
-import {
-    Card,
-    Input,
-    Button,
-    Typography,
-    Option,
-    Select
-} from "@material-tailwind/react";
+import { Card } from "@material-tailwind/react";
 import React from 'react';
-import { router } from '@inertiajs/react'
 import Form from './Partials/Form';
 import CardHeader from './Partials/CardHeader';
 
 
 export default function Edit({ product, categories }) {
 
-    const { data, setData, processing, errors } = useForm({
+    const { data, setData, processing, errors, post } = useForm({
+        _method: 'put',
         name: product.name,
         description: product.description,
         price: product.price,
@@ -26,12 +19,11 @@ export default function Edit({ product, categories }) {
     });
 
     const submit = (e) => {
-        e.preventDefault();
-        router.post(route('product.update', product.id), {
-            ...data,
-            _method: 'put',
+        e?.preventDefault()
+        post(`/admin/product/${product.id}`, {
+            forceFormData: true,
         });
-    };
+    }
 
     if (!product) {
         return <div>Loading...</div>;

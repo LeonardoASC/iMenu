@@ -31,7 +31,6 @@ export default function Show({ product, categoriesEnable }) {
                     setData={setData}
                     isShow={true}
                     product={product}
-                    categoriesEnable={categoriesEnable}
                 />
             </Card>
         </AuthenticatedLayout>

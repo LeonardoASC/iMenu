@@ -60,13 +60,10 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        $product->load(['category' => function ($query) {
-            $query->where('status', 'Enable');
-        }]);
-        if ($product->image) {
-            $product->image = $product->image;
-        }
-        return Inertia::render('Admin/Product/Show', compact('product'));
+        $product->load('category');
+        return Inertia::render('Admin/Product/Show', [
+            'product' => $product,
+        ]);
     }
 
     /**
@@ -97,7 +94,7 @@ class ProductController extends Controller
 
         $product = $this->productRepository->update($data, $product);
 
-        return Redirect::route('product.index', $product->id)->with('message', 'Produto atualizada com sucesso.');
+        return Redirect::route('product.index', $product->id)->with('message', 'Produto atualizado com sucesso.');
     }
 
     /**
