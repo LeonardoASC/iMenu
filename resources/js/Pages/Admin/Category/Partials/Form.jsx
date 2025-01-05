@@ -34,7 +34,7 @@ export default function Form({ data, setData, errors, processing = false, handle
                         label="Name"
                         value={data?.name}
                         onChange={(e) => setData('name', e?.target?.value)}
-                        required={!isEdit}
+                        required={!isEdit && !isShow}
                         error={errors?.name}
                         size="lg"
                         placeholder="Ex: Eletrônicos"
@@ -47,7 +47,7 @@ export default function Form({ data, setData, errors, processing = false, handle
                     <Select
                         label="Select Status"
                         required={!isEdit}
-                        value={data.status || 'Enable'}
+                        value={data.status || setData('status', 'Enable')}
                         onChange={(value) => setData('status', value)}
                         disabled={isShow}
                     >
