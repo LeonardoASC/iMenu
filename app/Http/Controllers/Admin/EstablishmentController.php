@@ -115,18 +115,18 @@ class EstablishmentController extends Controller
     {
         $this->establishmentRepository->destroy($establishment);
 
-        return Redirect::route('establishments.index')->with('message', 'Estabelecimento desativado com sucesso.');
+        return Redirect::route('establishment.index')->with('message', 'Estabelecimento desativado com sucesso.');
     }
 
     public function restore(Establishment $establishment)
     {
         $this->establishmentRepository->restore($establishment);
-        return Redirect::route('establishments.index')->with('message', 'Estabelecimento reativado com sucesso.');
+        return Redirect::route('establishment.index')->with('message', 'Estabelecimento reativado com sucesso.');
     }
 
     public function forceDelete(Establishment $establishment)
     {
         $this->establishmentRepository->forceDelete($establishment);
-        return Redirect::route('establishments.index')->with('message', 'Estabelecimento excluído permanentemente.');
+        return Redirect::route('establishment.index')->with('message', 'Estabelecimento excluído permanentemente.');
     }
 }

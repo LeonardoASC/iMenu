@@ -182,7 +182,7 @@ export function TableOrder({ orders }) {
                                             </div>
                                         </td>
                                         <td className={classes}>
-                                            <div className="flex items-center gap-3">
+                                            <div className="flex items-center justify-center gap-3">
                                                 <div className="flex flex-col">
                                                     <Tooltip content={notes}>
                                                         <Typography
@@ -190,21 +190,21 @@ export function TableOrder({ orders }) {
                                                             color="blue-gray"
                                                             className="font-normal truncate max-w-[200px]"
                                                         >
-                                                            {notes}
+                                                            {notes ? notes : '...'}
                                                         </Typography>
                                                     </Tooltip>
                                                 </div>
                                             </div>
                                         </td>
                                         <td className={classes}>
-                                            <div className="flex items-center gap-3">
+                                            <div className="flex items-center justify-center  gap-3">
                                                 <div className="flex flex-col">
                                                     <Typography
                                                         variant="small"
                                                         color="blue-gray"
                                                         className="font-normal"
                                                     >
-                                                        {total}
+                                                        {status == 'open' ? "Comanda em Aberto": 'R$' + total}
                                                     </Typography>
                                                 </div>
                                             </div>

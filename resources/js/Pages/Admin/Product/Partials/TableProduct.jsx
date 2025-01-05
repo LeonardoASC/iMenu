@@ -177,8 +177,8 @@ export function TableProduct({ products }) {
                                                 <Chip
                                                     variant="ghost"
                                                     size="sm"
-                                                    value={status ? "Enable" : "Disabled"}
-                                                    color={status ? "green" : "blue-gray"}
+                                                    value={status == "Enable" ? "Enable" : "Disabled"}
+                                                    color={status == "Enable"  ? "green" : "blue-gray"}
                                                 />
                                             </div>
                                         </td>
