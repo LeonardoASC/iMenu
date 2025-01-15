@@ -1,6 +1,6 @@
 import { Input } from "@material-tailwind/react";
  
-export function InputCustomStyles(props) {
+export default function InputCustomStyles(props) {
   return (
       <Input
         {...props}

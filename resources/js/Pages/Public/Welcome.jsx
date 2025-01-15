@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { useForm, usePage } from '@inertiajs/react';
-import { InputCustomStyles } from '../../Components/InputCustomStyles/InputCustomStyles';
+const InputCustomStyles = React.lazy(() => import('../../Components/InputCustomStyles/InputCustomStyles'));
 
 const Welcome = () => {
     const { props } = usePage();
-    const sessionEmail = props.session_email;
+    const sessionEmail = props.session_email || '';
 
     useEffect(() => {
         if (sessionEmail) {
@@ -34,11 +34,14 @@ const Welcome = () => {
                         <div className="absolute inset-0 bg-yellow-900 bg-opacity-50"></div>
                         <div className="relative z-10 text-center flex flex-col items-center px-4">
                             <div className=" bg-white/10 backdrop-blur-md rounded-xl p-8 max-w-lg mx-auto shadow-xl">
-                                <img
-                                    alt="Sua Empresa"
-                                    src="https://tailwindui.com/plus/img/logos/mark.svg?color=red&shade=600"
-                                    className="h-16 w-auto mb-4 drop-shadow-lg mx-auto"
-                                />
+                                <Suspense fallback={<div>Carregando...</div>}>
+                                    <img
+                                        alt="Sua Empresa"
+                                        src="https://tailwindui.com/plus/img/logos/mark.svg?color=red&shade=600"
+                                        className="h-16 w-auto mb-4 drop-shadow-lg mx-auto"
+                                        loading="lazy"
+                                    />
+                                </Suspense>
                                 <h1 className="text-white font-extrabold text-3xl sm:text-5xl mb-4 drop-shadow-lg">
                                     Bem-vindo ao Cardápio Online!
                                 </h1>
@@ -177,7 +180,7 @@ const Welcome = () => {
                                         >
                                             Seu E-mail:
                                         </label>
-                                        <InputCustomStyles
+                                        {/* <InputCustomStyles
                                             type="email"
                                             placeholder="exemplo@dominio.com"
                                             id="email"
@@ -185,7 +188,15 @@ const Welcome = () => {
                                             value={data.email}
                                             onChange={(e) => setData('email', e.target.value)}
                                             required
-                                        />
+                                        /> */}
+                                        <Suspense fallback={<div>Carregando...</div>}>
+                                            <InputCustomStyles
+                                                type="email"
+                                                placeholder="exemplo@dominio.com"
+                                                value={data.email}
+                                                onChange={(e) => setData('email', e.target.value)}
+                                            />
+                                        </Suspense>
                                         {errors.email && (
                                             <div className="text-red-600 text-sm mt-1">
                                                 {errors.email}

@@ -31,6 +31,7 @@ export default function Menu({ email, order_id, categories }) {
     const handleProductClick = (product) => {
         router.get(`/menu/${product}`);
     };
+
     const handleChatClick = () => {
         router.get(`/chat`);
     };
@@ -90,7 +91,7 @@ export default function Menu({ email, order_id, categories }) {
                                 alt={category.name}
                                 className="w-6 h-6 rounded-full absolute top-0 bg-black md:sticky"
                             />
-                            <span className={`px-2 text-start ${selectedCategoryId === category.id ? 'text-white text-sm font-bold' : 'text-gray-600 text-xs'}`}>{category.name}</span>
+                            <span className={`px-2 text-start ${selectedCategoryId === category.id ? 'text-white text-sm font-bold' : 'text-gray-600 text-sm'}`}>{category.name}</span>
                         </button>
                     ))}
                 </div>
