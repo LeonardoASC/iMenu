@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 import { Button, Switch, Typography } from '@material-tailwind/react'
 import React from 'react'
 
-export default function FormAbilities({ handleSubmit, data, setData, errors, abilities, processing=false, viewMode = false }) {
+export default function FormAbilities({ handleSubmit, data, setData, errors, abilities, processing=false, isSHow = false }) {
     const handleChange = (e) => {
         const abilityId = parseInt(e.target.value);
         setData('abilities', e.target.checked
@@ -27,14 +27,16 @@ export default function FormAbilities({ handleSubmit, data, setData, errors, abi
                     <div>
                         <Typography color="blue-gray">{data?.title}</Typography>
                     </div>
-                    <div>
-                        {data.abilities.length > 0 && (
-                            <Button variant='text' size='sm' onClick={() => handleSelectNone()}>Desabilitar Tudo</Button>
-                        )}
-                        {data.abilities.length < abilities.length && (
-                            <Button variant='text' size='sm' onClick={() =>handleSelectAll()}>Habilitar Tudo</Button>
-                        )}
-                    </div>
+                    {!isSHow &&
+                        <div>
+                            {data?.abilities?.length > 0 && (
+                                <Button variant='text' size='sm' onClick={() => handleSelectNone()}>Desabilitar Tudo</Button>
+                            )}
+                            {data?.abilities?.length < abilities.length && (
+                                <Button variant='text' size='sm' onClick={() =>handleSelectAll()}>Habilitar Tudo</Button>
+                            )}
+                        </div>
+                    }
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -46,6 +48,7 @@ export default function FormAbilities({ handleSubmit, data, setData, errors, abi
                                     value={ability.id}
                                     checked={data.abilities.includes(ability.id)}
                                     onChange={handleChange}
+                                    disabled={isSHow}
                                 />
                                 <Typography>{ability.title}</Typography>
                             </div>
@@ -58,11 +61,11 @@ export default function FormAbilities({ handleSubmit, data, setData, errors, abi
                                 Voltar
                             </Button>
                         </Link>
-                        <Button type="submit" disabled={processing}>
+                        {!isSHow && <Button type="submit" disabled={processing}>
                             Confirmar
-                        </Button>
+                        </Button>}
                     </div>
-                    <InputError message={errors.abilities} className="mt-4 text-end" />
+                    <InputError message={errors?.abilities} className="mt-4 text-end" />
                 </form>
 
             </div>
