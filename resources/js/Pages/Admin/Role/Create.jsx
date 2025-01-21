@@ -5,32 +5,27 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import React from 'react';
-import Form from './Partials/FormAbilities';
+import Form from './Partials/Form';
 import CardHeader from './Partials/CardHeader';
 
 export default function Create(props) {
     const { data, setData, post, processing, errors } = useForm({
         name: '',
-        last_name: '',
-        email: '',
-        phone: '',
-        password: '',
-        password_confirmation: '',
-        role: '',
+        title: '',
     });
 
     const submit = (e) => {
         e?.preventDefault()
-        post('/admin/usuarios');
+        post('/admin/cargos');
     }
 
     return (
         <AuthenticatedLayout>
-            <Head title="Cadastrar Usuário" />
+            <Head title="Cadastrar Cargo" />
             <Card className="bg-white p-4 shadow-xl">
                 <CardHeader
-                    title="Cadastrar Usuário"
-                    description="Complete os campos abaixo para cadastrar um novo usuário."
+                    title="Cadastrar Cargo"
+                    description="Complete os campos abaixo para cadastrar um novo cargo."
                 />
                 <hr className="mt-4" />
                 <Form
@@ -39,7 +34,6 @@ export default function Create(props) {
                     errors={errors}
                     processing={processing}
                     handleSubmit={submit}
-                    roles={props.roles}
                 />
             </Card>
         </AuthenticatedLayout>

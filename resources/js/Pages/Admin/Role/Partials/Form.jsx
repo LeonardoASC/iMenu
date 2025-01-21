@@ -6,10 +6,11 @@ import {
 import { Link } from '@inertiajs/react';
 
 export default function Form({ data, setData, errors, processing = false, handleSubmit, isShow = false, isEdit = false, role }) {
+
     return (
         <div>
-            <form className="mt-4 mb-2 w-80 max-w-screen-lg sm:w-96" onSubmit={handleSubmit}>
-                <div className="mb-1 flex flex-col gap-6">
+            <form className={`mt-4 mb-2 sm:w-96 ${isShow && 'md:w-full'}`} onSubmit={handleSubmit}>
+                <div className={`mb-1 flex ${!isShow ? 'flex-col' : ''} gap-6`}>
                     <Input
                         id="name"
                         name="name"
@@ -19,7 +20,7 @@ export default function Form({ data, setData, errors, processing = false, handle
                         error={errors?.name}
                         size="lg"
                         autoComplete="name"
-                        disabled={true}
+                        disabled={isEdit || isShow}
                     />
                     {errors?.name && <span className="text-red-500 text-xs">{errors.name}</span>}
                     <Input
@@ -36,8 +37,7 @@ export default function Form({ data, setData, errors, processing = false, handle
                     />
                 </div>
 
-                <div className="mt-4 flex gap-2">
-
+                {!isShow && <div className="mt-4 flex gap-2">
                     <Link href={route('admin.roles.index')}>
                         <Button>Voltar</Button>
                     </Link>
@@ -46,14 +46,14 @@ export default function Form({ data, setData, errors, processing = false, handle
                             {isEdit ? 'Salvar' : 'Cadastrar'}
                         </Button>
                     )}
-                    {isShow && (
-                        <Link href={route('admin.roles.edit', role.id)} className="w-full">
+                    {isEdit && (
+                        <Link href={route('admin.roles.edit', role?.id)} className="w-full">
                             <Button fullWidth>
                                 Editar
                             </Button>
                         </Link>
                     )}
-                </div>
+                </div>}
             </form>
         </div>
     );

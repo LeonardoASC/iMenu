@@ -43,14 +43,15 @@ class RoleAndAbilityController extends Controller implements HasMiddleware
 
     public function create()
     {
-        return abort(404);
+        $abilities = $this->roleAndAbilityRepository->getAllAbilities();
+        return Inertia::render('Admin/Role/Create', compact('abilities'));
     }
 
     public function store(StoreRoleRequest $request)
     {
         $data = $request->all();
         $role = $this->roleAndAbilityRepository->createRole($data);
-        return Redirect::route('admin.roles.index', $role->id)->with('message', 'Cargo adicionado com sucesso.');
+        return Redirect::route('admin.roles.editAbilities', $role->id)->with('message', 'Cargo adicionado com sucesso.');
     }
 
     // public function abilities(Request $request)
