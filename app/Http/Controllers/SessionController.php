@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\User;
+use App\Models\Table;
 use Inertia\Inertia;
 
 class SessionController extends Controller
@@ -22,12 +23,18 @@ class SessionController extends Controller
             ['email' => $email],
             ['name' => 'Cliente Anônimo']
         );
-        session(['user_id' => $myuser->id ]);
 
+        session(['user_id' => $myuser->id]);
+
+        $table = Table::first(); //mudar aqui para quando criar o qrcode(o qrcode que vai informar o id da mesa)
+        if (!$table) {
+            return redirect()->back()->withErrors(['mesa' => 'Não há mesas disponíveis. Entre em contato com o estabelecimento.']);
+        }
+        
         $order = Order::firstOrCreate(
             ['user_id' => $myuser->id, 'status' => 'open'],
             [
-                'table_id' => 1,
+                'table_id' => $table->id, 
                 'total' => null,
             ]
         );
@@ -35,5 +42,4 @@ class SessionController extends Controller
 
         return redirect()->route('menu.index');
     }
-
 }

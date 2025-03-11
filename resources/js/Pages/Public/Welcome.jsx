@@ -202,6 +202,11 @@ const Welcome = () => {
                                                 {errors.email}
                                             </div>
                                         )}
+                                        {errors.mesa && (
+                                            <div className="text-red-600 text-sm mt-2">
+                                                {errors.mesa}
+                                            </div>
+                                        )}
                                     </div>
 
                                     <button
@@ -211,6 +216,7 @@ const Welcome = () => {
                                     >
                                         {processing ? 'Carregando...' : 'Entrar no Cardápio'}
                                     </button>
+
                                 </form>
                             </div>
                         </div>
