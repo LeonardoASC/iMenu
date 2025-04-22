@@ -35,7 +35,6 @@ export default function Edit({ category }) {
                     description="Fill in the fields below to edit a category."
                     isEdit={true}
                 />
-                <hr className="mt-4" />
                 <Form
                     data={data}
                     setData={setData}

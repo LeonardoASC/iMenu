@@ -22,7 +22,6 @@ export default function Show({ category }) {
                     title="Show Category"
                     description="Below you will be able to view image, name and status."
                 />
-                <hr className="mt-4" />
                 <Form
                     data={data}
                     setData={setData}

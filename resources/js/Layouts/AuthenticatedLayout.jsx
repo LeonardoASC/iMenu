@@ -1,221 +1,199 @@
-import React from "react";
+import React from 'react';
+import { Link, usePage, router } from '@inertiajs/react';
 import {
-    Card,
-    Typography,
-    List,
-    ListItem,
-    ListItemPrefix,
-    ListItemSuffix,
-    Chip,
-    Accordion,
-    AccordionHeader,
-    AccordionBody,
-    Alert,
-    Input,
-} from "@material-tailwind/react";
-import {
+    Bars3Icon,
+    XMarkIcon,
     PresentationChartBarIcon,
     ShoppingBagIcon,
     UserCircleIcon,
     Cog6ToothIcon,
     InboxIcon,
     PowerIcon,
-} from "@heroicons/react/24/solid";
-import {
-    ChevronRightIcon,
     ChevronDownIcon,
-    CubeTransparentIcon,
-    MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
-import NavLink from '@/Components/NavLink';
-import Dropdown from '@/Components/Dropdown';
-import { Link, usePage } from '@inertiajs/react';
+} from '@heroicons/react/24/outline';
 
 export default function AuthenticatedLayout({ header, children }) {
-    const [open, setOpen] = React.useState(0);
-    const user = usePage().props.auth.user;
+    const [sidebarOpen, setSidebarOpen] = React.useState(false);
+    const [openMenu, setOpenMenu] = React.useState(0);
+    const { props, url } = usePage();
+    const { auth } = props;
+    const user = auth?.user || {};
 
-
-    const handleOpen = (value) => {
-        setOpen(open === value ? 0 : value);
-    };
+    const toggleMenu = (index) => setOpenMenu(openMenu === index ? 0 : index);
+    const segments = url ? url.split('/').filter(Boolean) : [];
 
     return (
-        <div className="h-screen bg-gray-100 flex">
-            <Card className="h-full w-[20rem] max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-                <div className="mb-2 flex items-center gap-4 p-4">
-                    <img src="https://docs.material-tailwind.com/img/logo-ct-dark.png" alt="brand" className="h-8 w-8" />
-                    <Typography variant="h5" color="blue-gray">
-                        <NavLink
-                            href={route('dashboard')}
-                            active={route().current('dashboard')}
-                        >
-                            Dashboard
-                        </NavLink>
-                    </Typography>
+        <div className="flex h-screen bg-gray-100 overflow-x-hidden">
+            <div onClick={() => setSidebarOpen(false)}
+                className={`fixed inset-0 bg-black bg-opacity-50 z-20 md:hidden ${sidebarOpen ? 'block' : 'hidden'}`}
+            />
 
-                </div>
-                <div className="p-2">
-                    <Input icon={<MagnifyingGlassIcon className="h-5 w-5" />} label="Search" />
-                </div>
-                <List>
-                    <Accordion
-                        open={open === 1}
-                        icon={
-                            <ChevronDownIcon
-                                strokeWidth={2.5}
-                                className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`}
-                            />
-                        }
-                    >
-                        <ListItem className="p-0" selected={open === 1}>
-                            <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3">
-                                <ListItemPrefix>
-                                    <PresentationChartBarIcon className="h-5 w-5" />
-                                </ListItemPrefix>
-                                <Typography color="blue-gray" className="mr-auto font-normal">
-                                    Dashboard
-                                </Typography>
-                            </AccordionHeader>
-                        </ListItem>
-                        <AccordionBody className="py-1">
-                            <List className="p-0">
-                                <ListItem>
-                                    <ListItemPrefix>
-                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                    </ListItemPrefix>
-                                    Analytics
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemPrefix>
-                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                    </ListItemPrefix>
-                                    Reporting
-                                </ListItem>
-                                <ListItem>
-                                    <ListItemPrefix>
-                                        <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                    </ListItemPrefix>
-                                    Projects
-                                </ListItem>
-                            </List>
-                        </AccordionBody>
-                    </Accordion>
-                    <Accordion
-                        open={open === 2}
-                        icon={
-                            <ChevronDownIcon
-                                strokeWidth={2.5}
-                                className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`}
-                            />
-                        }
-                    >
-                        <ListItem className="p-0" selected={open === 2}>
-                            <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
-                                <ListItemPrefix>
-                                    <ShoppingBagIcon className="h-5 w-5" />
-                                </ListItemPrefix>
-                                <Typography color="blue-gray" className="mr-auto font-normal">
-                                    E-Gestão
-                                </Typography>
-                            </AccordionHeader>
-                        </ListItem>
-                        <AccordionBody className="py-1">
-                            <List className="p-0">
-                                <Link href={route('category.index')}>
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        Categoria
-                                    </ListItem>
-                                </Link>
-                                <Link href={route('product.index')}>
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        Produtos
-                                    </ListItem>
-                                </Link>
-                                <Link href={route('charges.index')}>
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        Nossas Taxas
-                                    </ListItem>
-                                </Link>
-                                <Link href={route('order.index')}>
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        Comandas
-                                    </ListItem>
-                                </Link>
-                                <Link href={route('table.index')}>
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        Mesas
-                                    </ListItem>
-                                </Link>
-                                <Link href={route('establishment.index')}>
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        Estabelecimentos
-                                    </ListItem>
-                                </Link>
-                                <Link href={route('admin.users.index')}>
-                                    <ListItem>
-                                        <ListItemPrefix>
-                                            <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                                        </ListItemPrefix>
-                                        Usuários
-                                    </ListItem>
-                                </Link>
-                            </List>
-                        </AccordionBody>
-                    </Accordion>
-                    <hr className="my-2 border-blue-gray-50" />
-                    <ListItem>
-                        <ListItemPrefix>
-                            <InboxIcon className="h-5 w-5" />
-                        </ListItemPrefix>
-                        Inbox
-                        <ListItemSuffix>
-                            <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
-                        </ListItemSuffix>
-                    </ListItem>
-                    <Link href={route('profile.edit')}>
-                        <ListItem className="flex items-center">
-                            <ListItemPrefix>
-                                <UserCircleIcon className="h-5 w-5" />
-                            </ListItemPrefix>
-                            Profile
-                        </ListItem>
+            <aside className={`
+                fixed inset-y-0 left-0 w-64 bg-white border-r border-gray-200 z-30 
+                transform transition-transform duration-300 ease-in-out flex flex-col
+                ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:static md:translate-x-0
+            `}>
+                <div className="flex items-center justify-between px-4 py-4  bg-[#2B2D42]">
+                    <Link href={route('dashboard')} className="text-xl font-semibold text-white">
+                        Dashboard
                     </Link>
-                    <ListItem>
-                        <ListItemPrefix>
-                            <Cog6ToothIcon className="h-5 w-5" />
-                        </ListItemPrefix>
-                        Settings
-                    </ListItem>
-                    <Link href={route('logout')} method="post" as="button">
-                        <ListItem>
-                            <ListItemPrefix>
-                                <PowerIcon className="h-5 w-5" />
-                            </ListItemPrefix>
-                            Log Out
-                        </ListItem>
-                    </Link>
-                </List>
-            </Card>
-            <main className="flex-1 px-6 py-10 ">{children}</main>
+                    <button className="md:hidden" onClick={() => setSidebarOpen(false)}>
+                        <XMarkIcon className="h-6 w-6 text-white" />
+                    </button>
+                </div>
+
+                <div className="px-4 py-3">
+                    <input type="text" placeholder="Search"
+                        className="w-full px-3 py-2 text-sm border border-blue-300 bg-blue-50 rounded focus:outline-none focus:ring focus:border-blue-300"
+                    />
+                </div>
+
+                <nav className="flex-1 overflow-y-auto ">
+                    <ul className="px-4 py-2 space-y-1 ">
+                        <li>
+                            <button onClick={() => toggleMenu(1)}
+                                className="flex items-center w-full px-2 py-2 text-gray-700  hover:bg-gray-100 rounded"
+                            >
+                                <PresentationChartBarIcon className="h-5 w-5 mr-3" />
+                                <span>Dashboard</span>
+                                <ChevronDownIcon
+                                    className={`h-4 w-4 ml-auto transform transition-transform duration-200 ${openMenu === 1 ? 'rotate-180' : ''}`}
+                                />
+                            </button>
+                            {openMenu === 1 && (
+                                <ul className="pl-10 mt-1 space-y-1">
+                                    <li>
+                                        <Link href="#" className="block px-2 py-1 text-gray-600 hover:bg-gray-100 rounded">
+                                            Analytics
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="#" className="block px-2 py-1 text-gray-600 hover:bg-gray-100 rounded">
+                                            Reporting
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href="#" className="block px-2 py-1 text-gray-600 hover:bg-gray-100 rounded">
+                                            Projects
+                                        </Link>
+                                    </li>
+                                </ul>
+                            )}
+                        </li>
+
+                        <li>
+                            <button
+                                onClick={() => toggleMenu(2)}
+                                className="flex items-center w-full px-2 py-2 text-gray-700 hover:bg-gray-100 rounded"
+                            >
+                                <ShoppingBagIcon className="h-5 w-5 mr-3" />
+                                <span>E‑Gestão</span>
+                                <ChevronDownIcon
+                                    className={`h-4 w-4 ml-auto transform transition-transform duration-200 ${openMenu === 2 ? 'rotate-180' : ''}`}
+                                />
+                            </button>
+                            {openMenu === 2 && (
+                                <ul className="pl-10 mt-1 space-y-1">
+                                    <li>
+                                        <Link href={route('category.index')} className="block px-2 py-1 text-gray-600 hover:bg-gray-100 rounded">
+                                            Categoria
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href={route('product.index')} className="block px-2 py-1 text-gray-600 hover:bg-gray-100 rounded">
+                                            Produtos
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href={route('charges.index')} className="block px-2 py-1 text-gray-600 hover:bg-gray-100 rounded">
+                                            Nossas Taxas
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href={route('order.index')} className="block px-2 py-1 text-gray-600 hover:bg-gray-100 rounded">
+                                            Comandas
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href={route('table.index')} className="block px-2 py-1 text-gray-600 hover:bg-gray-100 rounded">
+                                            Mesas
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href={route('establishment.index')} className="block px-2 py-1 text-gray-600 hover:bg-gray-100 rounded">
+                                            Estabelecimentos
+                                        </Link>
+                                    </li>
+                                    <li>
+                                        <Link href={route('admin.users.index')} className="block px-2 py-1 text-gray-600 hover:bg-gray-100 rounded">
+                                            Usuários
+                                        </Link>
+                                    </li>
+                                </ul>
+                            )}
+                        </li>
+
+                        <li className="pt-4">
+                            <hr className="border-gray-200" />
+                        </li>
+
+                        <li>
+                            <Link href="#" className="flex items-center px-2 py-2 text-gray-700 hover:bg-gray-100 rounded">
+                                <InboxIcon className="h-5 w-5 mr-3" />
+                                <span>Inbox</span>
+                                <span className="ml-auto text-xs text-gray-500">14</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href={route('profile.edit')} className="flex items-center px-2 py-2 text-gray-700 hover:bg-gray-100 rounded">
+                                <UserCircleIcon className="h-5 w-5 mr-3" />
+                                Profile
+                            </Link>
+                        </li>
+                        <li>
+                            <Link href="#" className="flex items-center px-2 py-2 text-gray-700 hover:bg-gray-100 rounded">
+                                <Cog6ToothIcon className="h-5 w-5 mr-3" />
+                                Settings
+                            </Link>
+                        </li>
+
+                    </ul>
+                </nav>
+            </aside>
+
+            <div className="flex flex-col flex-1 ">
+                <header className="flex items-center justify-between bg-[#2B2D42] border-b border-gray-200 p-4 md:hidden ">
+                    <button onClick={() => setSidebarOpen(true)}>
+                        <Bars3Icon className="h-6 w-6 text-white" />
+                    </button>
+                    <div>{header}</div>
+                </header>
+
+                <header className="hidden md:flex items-center justify-between bg-[#2B2D42] border-b border-gray-200 p-4">
+                    <div className="flex items-center space-x-4">
+                        {user.profile_photo_url && (
+                            <img src={user.profile_photo_url} alt={user.name} className="h-8 w-8 rounded-full" />
+                        )}
+                        <nav className="flex items-center space-x-2 text-white text-sm">
+                            {segments.map((seg, idx) => (
+                                <span key={idx} className="capitalize">/ {seg.replace(/-/g, ' ')}</span>
+                            ))}
+                        </nav>
+                    </div>
+                    <div className="flex items-center space-x-4">
+                        <span className="text-white capitalize text-xl">{user.name}</span>
+                        <button
+                            onClick={() => router.visit(route('logout'), { method: 'post' })}
+                            className="flex items-center text-white hover:text-gray-800 focus:outline-none"
+                        >
+                            <PowerIcon className="h-5 w-5 mr-1" />
+                            Logout
+                        </button>
+                    </div>
+                </header>
+
+                <main className="flex-1 overflow-auto p-4">{children}</main>
+            </div>
         </div>
     );
 }

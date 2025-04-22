@@ -31,7 +31,6 @@ export default function Create() {
                     title="Create Category"
                     description="Fill in the fields below to create a new category."
                 />
-                <hr className="mt-4" />
                 <Form
                     data={data}
                     setData={setData}
