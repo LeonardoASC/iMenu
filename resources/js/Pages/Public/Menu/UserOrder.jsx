@@ -34,7 +34,7 @@ export default function UserOrder({ orders }) {
                     <p>Estamos preparando o seu pedido</p>
                 </div>
             </div>
-            <div className="flex space-x-4 m-4">
+            <div className="flex justify-evenly space-x-4 m-4">
                 <button
                     onClick={() => setActiveTab("preparing")}
                     className={`pb-2 ${activeTab === "preparing"
